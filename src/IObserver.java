@@ -2,43 +2,43 @@ package src;
 
 /**
  * 
- * Observer DP
+ * Observer DP - Observer GUIWindow changes
  * 
  */
-public interface IObserver {
+public abstract interface IObserver {
 
     void contentUpdated();
 
 }
 
-interface IObservable{
+abstract interface IObservable<TObservable extends IObservable<TObservable, EObserver>, EObserver extends IObserver>{
 
-    IObservable getObservable();
-    void observe(IObserver observer);
-    void stopObserving(IObserver observer);
+    TObservable getObservable();
+    void observe(EObserver observer);
+    void stopObserving(EObserver observer);
     void contentUpdated();
     void notifyObservers(Object o);
 
 }
 
-enum GUIWindowObservableComponents{
+enum ViewableObservableComponents{
     none,
-    windowCreation,
-    panelCreation,
+    creation,
     view,
+    destroy,
 
 }
-interface IObserverGUIWindow extends IObserver{
+interface IObserverViewable extends IObserver{
 
-    void windowCreated();
-    void panelCreated();
-    void viewed();
+    void created(IObservableViewable viewable);
+    void viewed(IObservableViewable viewable);
+    void destroyed(IObservableViewable  viewable);
 
 }
-interface IObservableGUIWindow extends IObservable{
+interface IObservableViewable extends IObservable<IObservableViewable, IObserverViewable>{
 
-    void windowCreated();
-    void panelCreated();
+    void created();
     void viewed();
+    void destroyed();
 
 }

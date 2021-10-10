@@ -1,5 +1,6 @@
 package src;
 
+import java.util.UUID;
 
 /**
  * 
@@ -25,8 +26,24 @@ public class Resource {
      */
     private Resource(){}
 
+    public UUID getUUID(){
+        return UUID.randomUUID();
+    }
+    public UUID getUUIDFrom(String uuidStr){
+        return UUID.fromString(uuidStr);
+    }
 
+    public char splittingInputCharacter = '￼';
+    public char splittingReplaceCharacter = ' ';
+    public String splittingInputCharacterStr(){
+        return Character.toString(splittingInputCharacter);
+    }
 
+    public String savePath = "save/";
+    public String tenantLoginFile = "tenantLogin.txt";
+    public String ownerAgentLoginFile = "ownerAgentLogin.txt";
+    public String adminLoginFile = "adminLogin.txt";
+    public String propertyFile = "properties.txt";
 
     public int mainMenu_WindowWidth = 1440;
     public int mainMenu_WindowHeight = 900;

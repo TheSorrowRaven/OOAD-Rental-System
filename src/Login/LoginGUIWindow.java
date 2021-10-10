@@ -1,5 +1,4 @@
 package src.Login;
-import src.CLI;
 import src.GUIWindow;
 
 /**
@@ -23,23 +22,35 @@ public class LoginGUIWindow extends GUIWindow {
     }
 
     @Override
-    protected void onCreatePanel() {
-        
+    public void onCreatePanel() {
+        LoginGUIPanel loginPanel = new LoginGUIPanel(this);
+        attachPanel(loginPanel);
     }
 
     @Override
-    protected void onView() {
+    public void onView() {
         setVisible(true);
     }
 
     @Override
-    protected void onSwitched() {
+    public void onPreparingToSwitch() {
         
     }
 
     @Override
-    protected void onDestroy() {
+    public void onSwitchedOff() {
+        setVisible(false);
+    }
+
+    @Override
+    public void onSwitchedIn() {
         
     }
+
+    @Override
+    public void onDestroy() {
+        
+    }
+
 
 }

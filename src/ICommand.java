@@ -5,18 +5,8 @@ package src;
  * Command DP
  * 
  */
-public interface ICommand {
+public interface ICommand<T> {
     
-    void execute(Object data);
+    boolean execute(T data);
 
 }
-
-
-class Command implements ICommand{
-
-    @Override
-    public void execute(Object data){
-
-    }
-}
-
