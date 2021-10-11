@@ -1,5 +1,6 @@
 package src;
 
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
 
 
     //This serves as a quick lookup for the Resource singleton
-    public Resource Resource(){
+    public static Resource Resource(){
         return Resource.instance();
     }
 
@@ -31,23 +32,29 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
 
 
 
-    private ArrayList<GUIPanel> panels = new ArrayList<GUIPanel>();
+    private ArrayList<GUIPanel<?>> panels = new ArrayList<GUIPanel<?>>();
+
+    public ArrayList<GUIPanel<?>> getPanels(){
+        return panels;
+    }
 
     public GUIWindow(){
 
     }
 
+    public abstract String getWindowTitle();
+
     /**
      * Call this in onCreatePanel
      */
     @Override
-    public void attachPanel(GUIPanel panel){
+    public void attachPanel(GUIPanel<?> panel){
         panels.add(panel);
-        panel.onCreate();
+        panel.onCreateInternal();
         panel.onCreatePanel();
     }
     @Override
-    public void detachPanel(GUIPanel panel){
+    public void detachPanel(GUIPanel<?> panel){
         panels.remove(panel);
     }
 
@@ -56,9 +63,16 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
      */
     public abstract void onCreate();
     public final void onCreateInternal(){
+        defaultWindowSettings();
         defaultCreation();
         onCreate();
         created();
+    }
+
+    private void defaultWindowSettings(){
+        setTitle(getWindowTitle());
+        setResizable(false);
+        setBackground(Resource().window_background_color);
     }
 
     private void defaultCreation(){
@@ -104,7 +118,7 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
 
     @Override
     public void onViewAttachPanels(){
-        for (GUIPanel panel : panels){
+        for (GUIPanel<?> panel : panels){
             add(panel);
             panel.onViewInternal();
         }

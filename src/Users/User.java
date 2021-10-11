@@ -22,6 +22,10 @@ public abstract class User<T extends User<T>> implements ISerializable<User<T>> 
         return id;
     }
 
+    public void newUserGenerateUUID(){
+        id = Resource().getUUID();
+    }
+
     @Override
     public String getSaveableText() {
         return Input.combineData(id.toString(), username, password);

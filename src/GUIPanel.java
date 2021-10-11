@@ -1,48 +1,135 @@
 package src;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.HashSet;
+
+import java.util.*;
+import java.awt.*;
+import javax.swing.plaf.FontUIResource;
 
 /**
  * 
  * This GUIPanel serves as a GUI container (like a page container below menu bar)
  * 
  */
-public abstract class GUIPanel extends JPanel implements IObservableViewable, IViewable, IPanelHandler {
+public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IObservableViewable, IViewable, IPanelHandler {
     
     //This serves as a quick lookup for the Resource singleton
-    public Resource Resource(){
+    public static Resource Resource(){
         return Resource.instance();
     }
 
-    public GUIPanel self(){
+    public GUIPanel<T> self(){
         return this;
+    }
+
+    public static void setDefaultUIFont(FontUIResource f){
+        Enumeration<?> keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+            if (value instanceof FontUIResource){
+                UIManager.put(key, f);
+            }
+        }
+    }
+
+    public static JLabel JLabel(String text){
+        JLabel label = new JLabel(text);
+        label.setForeground(Resource().general_text_color);
+
+        return label;
+    }
+    public static JTextField JTextField(){
+        JTextField textField = new JTextField();
+        textField.setBackground(Resource().general_background_color);
+        textField.setForeground(Resource().general_text_color);
+        textField.setBorder(Resource().general_border_compound);
+
+        textField.setCaretColor(Resource().general_caret_color);
+
+        return textField;
+    }
+    public static JPasswordField JPasswordField(){
+        JPasswordField passwordField = new JPasswordField();
+        passwordField.setBackground(Resource().general_background_color);
+        passwordField.setForeground(Resource().general_text_color);
+        passwordField.setBorder(Resource().general_border_compound);
+
+        passwordField.setCaretColor(Resource().general_caret_color);
+
+        return passwordField;
+    }
+    public static Button JButton(String text){
+        Button button = new Button(text);
+        button.setBackground(Resource().general_background_color);
+        button.setForeground(Resource().general_text_color);
+        button.setBorder(Resource().general_border_compound);
+        button.setFocusPainted(false);
+
+        return button;
     }
 
 
 
 
+    public final T parent;
 
-    public final GUIWindow parentWindow;
+    private ArrayList<GUIPanel<?>> panels = new ArrayList<GUIPanel<?>>();
 
-    private ArrayList<GUIPanel> panels = new ArrayList<GUIPanel>();
+    public ArrayList<GUIPanel<?>> getPanels(){
+        return panels;
+    }
 
-    public GUIPanel(GUIWindow parentWindow){
-        this.parentWindow = parentWindow;
+    public GUIPanel(T parent){
+        this.parent = parent;
+        setDefaultUIFont(Resource().general_font_resource);
+    }
+
+    public void generalFont(Component comp){
+        comp.setFont(Resource().general_font);
+    }
+
+    public void defaultComponentSettings(Component comp){
+    }
+
+
+    @Override
+    public void add(Component comp, Object constraints){
+        defaultComponentSettings(comp);
+        super.add(comp, constraints);
+    }
+    @Override
+    public Component add(Component comp){
+        defaultComponentSettings(comp);
+        return super.add(comp);
+    }
+    @Override
+    public Component add(Component comp, int index){
+        defaultComponentSettings(comp);
+        return super.add(comp, index);
+    }
+    @Override
+    public void add(Component comp, Object constraints, int index){
+        defaultComponentSettings(comp);
+        super.add(comp, constraints, index);
+    }
+    @Override
+    public Component add(String name, Component comp){
+        defaultComponentSettings(comp);
+        return super.add(name, comp);
     }
 
     /**
      * Call this in onCreatePanel
      */
     @Override
-    public void attachPanel(GUIPanel panel){
+    public void attachPanel(GUIPanel<?> panel){
         panels.add(panel);
-        panel.onCreate();
+        panel.onCreateInternal();
         panel.onCreatePanel();
     }
     @Override
-    public void detachPanel(GUIPanel panel){
+    public void detachPanel(GUIPanel<?> panel){
         panels.remove(panel);
     }
 
@@ -51,8 +138,13 @@ public abstract class GUIPanel extends JPanel implements IObservableViewable, IV
      */
     public abstract void onCreate();
     public final void onCreateInternal(){
+        defaultPanelSettings();
         onCreate();
         created();
+    }
+
+    private void defaultPanelSettings(){
+        setBackground(Resource().panel_default_background_color);
     }
 
     /**
@@ -74,7 +166,7 @@ public abstract class GUIPanel extends JPanel implements IObservableViewable, IV
 
     @Override
     public void onViewAttachPanels(){
-        for (GUIPanel panel : panels){
+        for (GUIPanel<?> panel : panels){
             add(panel);
             panel.onViewInternal();
         }
@@ -107,7 +199,7 @@ public abstract class GUIPanel extends JPanel implements IObservableViewable, IV
     }
 
 
-    protected void navigatePanelTo(GUIPanel window){
+    protected void navigatePanelTo(GUIPanel<T> window){
         //TODO
     }
 

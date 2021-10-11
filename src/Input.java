@@ -15,7 +15,8 @@ public class Input {
      * @return
      */
     public static String standardize(String text){
-        return text.replace(Resource().splittingInputCharacter, Resource().splittingReplaceCharacter);
+        String standard = text == null ? "" : text.replace(Resource().splittingInputCharacter, Resource().splittingReplaceCharacter);
+        return standard;
     }
 
     /**

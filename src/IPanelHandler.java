@@ -5,8 +5,8 @@ package src;
  */
 public interface IPanelHandler {
     
-    void attachPanel(GUIPanel panel);
-    void detachPanel(GUIPanel panel);
+    void attachPanel(GUIPanel<?> panel);
+    void detachPanel(GUIPanel<?> panel);
 
     void onViewAttachPanels();
 
