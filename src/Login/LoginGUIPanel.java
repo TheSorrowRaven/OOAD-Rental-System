@@ -12,6 +12,7 @@ import java.awt.*;
 
 public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnable {
     
+    private JLabel errorLabel;
 
     public LoginGUIPanel(LoginGUIWindow parent) {
         super(parent);
@@ -52,9 +53,18 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
 
         ctr.insets = Resource().general_inset_bottom;
 
-        JButton loginWithTenantButton = JButton(Resource().login_str_button_LoginAsTenant);
-        JButton loginWithOwnerAgentButton = JButton(Resource().login_str_button_LoginAsOwnerAgent);
-        JButton loginWithAdminButton = JButton(Resource().login_str_button_LoginAsAdmin);
+        errorLabel = JLabel(Resource().login_str_error_text);
+        errorLabel.setForeground(Resource().general_error_text_color);
+        errorLabel.setBackground(Resource().general_error_background_color);
+        errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        errorLabel.setOpaque(true);
+        errorLabel.setVisible(false);
+        add(errorLabel, ctr);
+        ctr.gridy++;
+
+        JButton loginWithTenantButton = Button(Resource().login_str_button_LoginAsTenant);
+        JButton loginWithOwnerAgentButton = Button(Resource().login_str_button_LoginAsOwnerAgent);
+        JButton loginWithAdminButton = Button(Resource().login_str_button_LoginAsAdmin);
         loginWithTenantButton.addActionListener(parent.loginController.getLoginTenantAction());
         loginWithOwnerAgentButton.addActionListener(parent.loginController.getLoginOwnerAgentAction());
         loginWithAdminButton.addActionListener(parent.loginController.getLoginAdminAction());
@@ -97,7 +107,6 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
         
     }
 
-
     public ArrayList<ILoginnable> loginnables = new ArrayList<ILoginnable>();
     @Override
     public ArrayList<ILoginnable> getLoginnables() {
@@ -115,24 +124,17 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
     @Override
     public void notifyLoginError() {
 
-        CLI.log("ERROR");
+        errorLabel.setVisible(true);
 
         notifyLoginErrorChildren();
     }
 
     @Override
     public void notifyLoginSuccessful(User<?> user){
-        CLI.log("SUCCESS?");
-        if (user instanceof Tenant tenant){
-            CLI.log("is tenant");
-        }
-        else if (user instanceof OwnerAgent ownerAgent){
-            CLI.log("is ownerAgent");
-        }
-        else if (user instanceof Admin admin){
-            CLI.log("is admin");
-        }
+        errorLabel.setVisible(false);
+
     }
+
 
 
     

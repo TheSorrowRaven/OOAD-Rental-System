@@ -4,7 +4,7 @@ package src.Users;
 /**
  * Potential Tenant
  */
-public class Tenant extends User<Tenant> {
+public class TenantUser extends User<TenantUser> {
 
 
     @Override
@@ -13,8 +13,8 @@ public class Tenant extends User<Tenant> {
     }
 
     @Override
-    protected Tenant createUser() {
-        return new Tenant();
+    public TenantUser createUser() {
+        return new TenantUser();
     }
     
 }

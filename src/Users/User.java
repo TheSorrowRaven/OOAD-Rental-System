@@ -14,6 +14,16 @@ public abstract class User<T extends User<T>> implements ISerializable<User<T>> 
         return Resource.instance();
     }
 
+    public static <T extends User<T>> T getNewUserFromClass(Class<T> userClass){
+        try {
+            return userClass.getDeclaredConstructor().newInstance();
+        } catch (Exception e){
+            CLI.log("Class type is not the same as the requested type");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public UUID id;
     public String username;
     public String password;
@@ -22,8 +32,19 @@ public abstract class User<T extends User<T>> implements ISerializable<User<T>> 
         return id;
     }
 
-    public void newUserGenerateUUID(){
+    private void newUserGenerateUUID(){
         id = Resource().getUUID();
+    }
+    private void newUserSetUsername(String username){
+        this.username = username;
+    }
+    private void newUserSetPassword(String password){
+        this.password = password;
+    }
+    public void newUserSet(String username, String password){
+        newUserGenerateUUID();
+        newUserSetUsername(username);
+        newUserSetPassword(password);
     }
 
     @Override
@@ -52,6 +73,6 @@ public abstract class User<T extends User<T>> implements ISerializable<User<T>> 
         return c;
     }
 
-    protected abstract T createUser();
+    public abstract T createUser();
     
 }

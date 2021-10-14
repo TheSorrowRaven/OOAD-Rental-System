@@ -6,17 +6,17 @@ import java.util.UUID;
 /**
  * Owner or Agent
  */
-public class OwnerAgent extends User<OwnerAgent>{
+public class OwnerAgentUser extends User<OwnerAgentUser>{
 
     @Override
-    protected OwnerAgent createUser() {
-        return new OwnerAgent();
+    public OwnerAgentUser createUser() {
+        return new OwnerAgentUser();
     }
     
     public boolean isAgent;
 
     private UUID supportingOwnerAgentID;    //This exists to cache the id while loading halfway (the other may not be loaded yet)
-    public OwnerAgent supportingOwnerAgent; //Load this via id
+    public OwnerAgentUser supportingOwnerAgent; //Load this via id
 
     @Override
     public String getFilePath() {
@@ -29,9 +29,9 @@ public class OwnerAgent extends User<OwnerAgent>{
     }
 
     @Override
-    public int loadSaveableSplitTextIntoUser(String[] split, OwnerAgent user) {
+    public int loadSaveableSplitTextIntoUser(String[] split, OwnerAgentUser user) {
         int c = super.loadSaveableSplitTextIntoUser(split, user);
-        OwnerAgent ownerAgent = (OwnerAgent)user;
+        OwnerAgentUser ownerAgent = (OwnerAgentUser)user;
         ownerAgent.isAgent = Boolean.parseBoolean(split[c++]);
         supportingOwnerAgentID = Resource().getUUIDFrom(split[c++]);
         return c;

@@ -11,6 +11,7 @@ import src.Users.*;
  */
 public class Login {
 
+    //Line numbers are for deletion
     private int lastReadUserLineNumber = 0;
     public int getLastReadUserLineNumber(){
         return lastReadUserLineNumber;
@@ -29,45 +30,12 @@ public class Login {
         return user;
     }
 
-    /**
-     * Try to login with tenant with credentials and callbacks
-     */
-    public void tryLoginWithTenant(String username, String password, Command<Tenant> successLoginAction, Command<Object> failedLoginAction){
-        Tenant tenant = getUserFromCredentials(Tenant.class, username, password);
 
-        if (tenant == null){
-            //Credentials invalid
-            failedLoginAction.execute(null);
-            return;
-        }
-        successLoginAction.execute(tenant);
-
-    }
-
-    /**
-     * Try to login with owner/agent with credentials and callbacks
-     */
-    public void tryLoginWithOwnerAgent(String username, String password, Command<OwnerAgent> successLoginAction, Command<Object> failedLoginAction){
-        OwnerAgent ownerAgent = getUserFromCredentials(OwnerAgent.class, username, password);
-
-        if (ownerAgent == null){
-            failedLoginAction.execute(null);
-            return;
-        }
-        successLoginAction.execute(ownerAgent);
-    }
-
-    /**
-     * Try to login with admin with credentials and callbacks
-     */
-    public void tryLoginWithAdmin(String username, String password, Command<Admin> successLoginAction, Command<Object> failedLoginAction){
-        Admin admin = getUserFromCredentials(Admin.class, username, password);
-
+    public void ensureDefaultAdminExists(String defaultUserame, String defaultPassword, String defaultSerializedAdmin){
+        AdminUser admin = tryLogin(AdminUser.class, defaultUserame, defaultPassword);
         if (admin == null){
-            failedLoginAction.execute(null);
-            return;
+            Main.instance().serializer.write(AdminUser.getDefaultAdminUser(defaultSerializedAdmin));
         }
-        successLoginAction.execute(admin);
     }
     
 
@@ -83,14 +51,7 @@ public class Login {
         final String username_ = Input.standardize(username);
         final String password_ = Input.standardize(password);
 
-        T dummy;
-        try {
-            dummy = userClass.getDeclaredConstructor().newInstance();
-        } catch (Exception e){
-            CLI.log("Class type is not the same as the requested type");
-            e.printStackTrace();
-            return null;
-        }
+        T dummy = User.getNewUserFromClass(userClass);
 
         T foundUser = null;
         //var is used here to accomodate the new lambda type extended from Command

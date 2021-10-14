@@ -1,6 +1,7 @@
 package src.Login;
 import java.util.ArrayList;
 
+import src.*;
 import src.GUIPanel;
 import src.GUIWindow;
 
@@ -15,7 +16,7 @@ public class LoginGUIWindow extends GUIWindow implements ILoginnable {
 
     //Initialize on create
     public LoginGUIWindow(){
-        super();
+        super(Resource().login_theme);
         loginController = new LoginController(this);
     }
 
@@ -26,7 +27,7 @@ public class LoginGUIWindow extends GUIWindow implements ILoginnable {
 
     @Override
     public void onCreate(){
-        setSize(Resource().login_window_Width, Resource().login_window_Height);
+        setSize(Resource().login_window_width, Resource().login_window_height);
     }
 
     @Override

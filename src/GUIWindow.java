@@ -1,6 +1,6 @@
 package src;
 
-import java.awt.*;
+//import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
@@ -30,7 +30,10 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
 
 
 
-
+    public final Resource.Theme theme;
+    public Resource.Theme Theme(){
+        return theme;
+    }
 
     private ArrayList<GUIPanel<?>> panels = new ArrayList<GUIPanel<?>>();
 
@@ -38,8 +41,8 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
         return panels;
     }
 
-    public GUIWindow(){
-
+    public GUIWindow(Resource.Theme theme){
+        this.theme = theme;
     }
 
     public abstract String getWindowTitle();
@@ -71,8 +74,8 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
 
     private void defaultWindowSettings(){
         setTitle(getWindowTitle());
-        setResizable(false);
-        setBackground(Resource().window_background_color);
+        //setResizable(false);
+        setBackground(Theme().window_background_color);
     }
 
     private void defaultCreation(){

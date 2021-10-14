@@ -1,16 +1,13 @@
 package src.Login;
 
 import src.*;
+import src.Admin.AdminGUIWindow;
 import src.SystemComponents.CLI;
 import src.Users.*;
 
 import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
-
 public class LoginController {
 
     public Resource Resource(){
@@ -33,6 +30,7 @@ public class LoginController {
     public LoginController(ILoginnable view){
         this.view = view;
         login = new Login();
+        login.ensureDefaultAdminExists(Resource().defaultAdminUsername, Resource().defaultAdminPassword, Resource().defaultAdminEntry);
     }
 
 
@@ -49,28 +47,36 @@ public class LoginController {
             return;
         }
         view.notifyLoginSuccessful(user);
+        loginWindow(user);
+    }
+
+    private void loginWindow(User<?> user){
+        if (user instanceof TenantUser tenant){
+
+        }
+        else if (user instanceof OwnerAgentUser ownerAgent){
+
+        }
+        else if (user instanceof AdminUser admin){
+            Main.instance().nav.newWindow(new AdminGUIWindow(admin));
+        }
     }
 
     public ActionListener getLoginTenantAction(){
         return e -> {
-            login(Tenant.class);
-            // Tenant tenant = new Tenant();
-            // tenant.username = getUsername();
-            // tenant.password = getPassword();
-            // tenant.newUserGenerateUUID();
-            // Main.instance().serializer.write(tenant);
+            login(TenantUser.class);
         };
     }
 
     public ActionListener getLoginOwnerAgentAction(){
         return e->{
-            login(OwnerAgent.class);
+            login(OwnerAgentUser.class);
         };
     }
 
     public ActionListener getLoginAdminAction(){
         return e->{
-            login(Admin.class);
+            login(AdminUser.class);
         };
     }
     private <T extends User<T>> void login(Class<T> userClass){

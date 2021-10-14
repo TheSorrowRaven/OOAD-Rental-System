@@ -2,9 +2,10 @@ package src;
 
 import javax.swing.*;
 
+import src.SystemComponents.CLI;
+
 import java.util.*;
 import java.awt.*;
-import javax.swing.plaf.FontUIResource;
 
 /**
  * 
@@ -22,59 +23,64 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
         return this;
     }
 
-    public static void setDefaultUIFont(FontUIResource f){
-        Enumeration<?> keys = UIManager.getDefaults().keys();
-        while (keys.hasMoreElements()) {
-            Object key = keys.nextElement();
-            Object value = UIManager.get(key);
-            if (value instanceof FontUIResource){
-                UIManager.put(key, f);
-            }
-        }
-    }
-
-    public static JLabel JLabel(String text){
+    public JLabel JLabel(String text){
         JLabel label = new JLabel(text);
-        label.setForeground(Resource().general_text_color);
+        label.setForeground(Theme().text_color);
 
         return label;
     }
-    public static JTextField JTextField(){
+    public JTextField JTextField(){
         JTextField textField = new JTextField();
-        textField.setBackground(Resource().general_background_color);
-        textField.setForeground(Resource().general_text_color);
-        textField.setBorder(Resource().general_border_compound);
+        textField.setBackground(Theme().background_color);
+        textField.setForeground(Theme().text_color);
+        textField.setBorder(Theme().border);
 
-        textField.setCaretColor(Resource().general_caret_color);
+        textField.setCaretColor(Theme().caret_color);
 
         return textField;
     }
-    public static JPasswordField JPasswordField(){
+    public JPasswordField JPasswordField(){
         JPasswordField passwordField = new JPasswordField();
-        passwordField.setBackground(Resource().general_background_color);
-        passwordField.setForeground(Resource().general_text_color);
-        passwordField.setBorder(Resource().general_border_compound);
+        passwordField.setBackground(Theme().background_color);
+        passwordField.setForeground(Theme().text_color);
+        passwordField.setBorder(Theme().border);
 
-        passwordField.setCaretColor(Resource().general_caret_color);
+        passwordField.setCaretColor(Theme().caret_color);
 
         return passwordField;
     }
-    public static Button JButton(String text){
-        Button button = new Button(text);
-        button.setBackground(Resource().general_background_color);
-        button.setForeground(Resource().general_text_color);
-        button.setBorder(Resource().general_border_compound);
-        button.setFocusPainted(false);
 
+    private void setButtonTheme(Button button){
+        button.setBackground(Theme().background_color);
+        button.setForeground(Theme().text_color);
+        button.setPressedColor(Theme().button_pressed_color);
+        button.setHoverColor(Theme().button_hover_color);
+        button.setBorder(Theme().border);
+        button.setFocusPainted(false);
+    }
+    public Button Button(String text){
+        Button button = new Button(text);
+        setButtonTheme(button);
+        return button;
+    }
+    public Button Button(){
+        Button button = new Button();
+        setButtonTheme(button);
         return button;
     }
 
 
+    public Resource.Theme Theme(){
+        return parent.Theme();
+    }
 
 
     public final T parent;
 
+    public JPanel targetPanel;
+
     private ArrayList<GUIPanel<?>> panels = new ArrayList<GUIPanel<?>>();
+    private HashMap<GUIPanel<?>, String> panelsToLayout = new HashMap<GUIPanel<?>, String>();
 
     public ArrayList<GUIPanel<?>> getPanels(){
         return panels;
@@ -82,7 +88,7 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
 
     public GUIPanel(T parent){
         this.parent = parent;
-        setDefaultUIFont(Resource().general_font_resource);
+        setTargetPanel(this);
     }
 
     public void generalFont(Component comp){
@@ -92,30 +98,73 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
     public void defaultComponentSettings(Component comp){
     }
 
+    public void setTargetPanel(JPanel panel){
+        targetPanel = panel;
+    }
 
     @Override
     public void add(Component comp, Object constraints){
         defaultComponentSettings(comp);
-        super.add(comp, constraints);
+        if (targetPanel instanceof GUIPanel<?> guiPanel){
+            guiPanel.parentAdd(comp, constraints);
+        }
+        else{
+            targetPanel.add(comp, constraints);
+        }
     }
     @Override
     public Component add(Component comp){
         defaultComponentSettings(comp);
-        return super.add(comp);
+        if (targetPanel instanceof GUIPanel<?> guiPanel){
+            return guiPanel.parentAdd(comp);
+        }
+        else{
+            return targetPanel.add(comp);
+        }
     }
     @Override
     public Component add(Component comp, int index){
         defaultComponentSettings(comp);
-        return super.add(comp, index);
+        if (targetPanel instanceof GUIPanel<?> guiPanel){
+            return guiPanel.parentAdd(comp, index);
+        }
+        else{
+            return targetPanel.add(comp, index);
+        }
     }
     @Override
     public void add(Component comp, Object constraints, int index){
         defaultComponentSettings(comp);
-        super.add(comp, constraints, index);
+        if (targetPanel instanceof GUIPanel<?> guiPanel){
+            guiPanel.parentAdd(comp, constraints, index);
+        }
+        else{
+            targetPanel.add(comp, constraints, index);
+        }
     }
     @Override
     public Component add(String name, Component comp){
         defaultComponentSettings(comp);
+        if (targetPanel instanceof GUIPanel<?> guiPanel){
+            return guiPanel.parentAdd(name, comp);
+        }
+        else{
+            return targetPanel.add(name, comp);
+        }
+    }
+    private void parentAdd(Component comp, Object constraints){
+        super.add(comp, constraints);
+    }
+    private Component parentAdd(Component comp){
+        return super.add(comp);
+    }
+    private Component parentAdd(Component comp, int index){
+        return super.add(comp, index);
+    }
+    private void parentAdd(Component comp, Object constraints, int index){
+        super.add(comp, constraints, index);
+    }
+    private Component parentAdd(String name, Component comp){
         return super.add(name, comp);
     }
 
@@ -128,9 +177,18 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
         panel.onCreateInternal();
         panel.onCreatePanel();
     }
+    public void attachPanel(GUIPanel<?> panel, String layout){
+        attachPanel(panel);
+        panelsToLayout.put(panel, layout);
+    }
+    /**
+     * Calls destroy when detaching panel
+     */
     @Override
     public void detachPanel(GUIPanel<?> panel){
         panels.remove(panel);
+        panel.onDestroyInternal();
+        panelsToLayout.remove(panel);
     }
 
     /**
@@ -144,7 +202,7 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
     }
 
     private void defaultPanelSettings(){
-        setBackground(Resource().panel_default_background_color);
+        setBackground(Theme().panel_background_color);
     }
 
     /**
@@ -167,7 +225,13 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
     @Override
     public void onViewAttachPanels(){
         for (GUIPanel<?> panel : panels){
-            add(panel);
+            if (panelsToLayout.containsKey(panel)){
+                String layout = panelsToLayout.get(panel);
+                add(panel, layout);
+            }
+            else{
+                add(panel);
+            }
             panel.onViewInternal();
         }
     }
@@ -200,7 +264,7 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
 
 
     protected void navigatePanelTo(GUIPanel<T> window){
-        //TODO
+        //TODO ?
     }
 
 

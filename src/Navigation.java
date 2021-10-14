@@ -65,17 +65,6 @@ public class Navigation implements IObserverViewable {
         });
     }
 
-    // //Startups a new panel
-    // public void newPanel(GUIPanel panel){
-    //     newViewable(panel, panelStack, new Command<GUIPanel>(){
-    //         @Override
-    //         public boolean execute(GUIPanel panel){
-    //             startPanelCreation(panel);
-    //             return false;
-    //         }
-    //     });
-    // }
-
     private void attachObserverToViewable(IObservableViewable viewable){
         viewable.observe(this);
     }
