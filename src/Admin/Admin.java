@@ -88,10 +88,13 @@ public class Admin {
     public <T extends User<T>> ArrayList<T> fetchAllUsersOfType(Class<T> userClass){
         Serializer serializer = Main.instance().serializer;
         ArrayList<User<T>> uncastedArray = serializer.readAll(User.getNewUserFromClass(userClass));
+        if (uncastedArray == null){
+            uncastedArray = new ArrayList<User<T>>(0);
+        }
         ArrayList<T> finalArray = new ArrayList<T>(uncastedArray.size());
         //Checked Cast (Only single class of - TenantUser / User<TenantUser>)
         for (User<T> user : uncastedArray){
-            finalArray.add(user.createUser());
+            finalArray.add(userClass.cast(user));
         }
         return finalArray;
     }

@@ -42,17 +42,17 @@ public class AdminGUIWindow extends MenuGUIWindow {
     }
 
     @Override
-    public void onPreparingToSwitch() {
+    public void onPreparingToFreeze() {
         
     }
 
     @Override
-    public void onSwitchedOff() {
+    public void onFrozen() {
         
     }
 
     @Override
-    public void onSwitchedIn() {
+    public void onThawed() {
         
     }
 

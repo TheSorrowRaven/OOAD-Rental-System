@@ -19,18 +19,18 @@ public interface IViewable {
      * Viewable is going to switch.
      * This is called before the new viewable is created (before onCreate)
      */
-    void onPreparingToSwitch();
+    void onPreparingToFreeze();
 
     /**
      * Viewable is switched (changed to another viewable) in the navigation stack
      * This is called after the new viewable is viewed (onCreate and onView)
      */
-    void onSwitchedOff();
+    void onFrozen();
 
     /**
      * Viewable is switched to this (changed to this viewable) in the navigation stack
      */
-    void onSwitchedIn();
+    void onThawed();
 
     /**
      * Viewable is destroyed (back button)

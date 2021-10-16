@@ -1,11 +1,11 @@
 package src.Admin;
 
-import javax.swing.*;
-
 import src.*;
 import src.SystemComponents.CLI;
 
-public class AdminGUIPanel extends MenuContentGUIPanel {
+import java.awt.*;
+
+public class AdminGUIPanel extends MenuContentGUIPanel<AdminGUIWindow> {
 
     public AdminGUIPanel(AdminGUIWindow parent) {
         super(parent);
@@ -13,27 +13,35 @@ public class AdminGUIPanel extends MenuContentGUIPanel {
 
     @Override
     public void onCreate() {
-        JLabel text = JLabel("CONTENT");
-        add(text);
+        GridLayout grid = new GridLayout(0, 1);
+        setLayout(grid);
+        //BorderLayout borderLayout = new BorderLayout();
+        //setLayout(borderLayout);//Fill Parent
     }
 
     @Override
     public void onCreatePanel() {
+        AdminSubMenuGUIPanel subMenuPanel = new AdminSubMenuGUIPanel(parent);
+        attachPanel(subMenuPanel);
+    }
+
+    @Override
+    public void onPreparingToFreeze() {
         
     }
 
     @Override
-    public void onPreparingToSwitch() {
+    public void onView(){
         
     }
 
     @Override
-    public void onSwitchedOff() {
+    public void onFrozen() {
         
     }
 
     @Override
-    public void onSwitchedIn() {
+    public void onThawed() {
         
     }
 

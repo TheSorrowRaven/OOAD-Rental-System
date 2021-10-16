@@ -33,7 +33,7 @@ public class OwnerAgentUser extends User<OwnerAgentUser>{
         int c = super.loadSaveableSplitTextIntoUser(split, user);
         OwnerAgentUser ownerAgent = (OwnerAgentUser)user;
         ownerAgent.isAgent = Boolean.parseBoolean(split[c++]);
-        supportingOwnerAgentID = Resource().getUUIDFrom(split[c++]);
+        ownerAgent.supportingOwnerAgentID = Resource().getUUIDFrom(split[c++]);
         return c;
     }
 

@@ -14,7 +14,7 @@ public class AdminBarGUIPanel extends MenuBarGUIPanel {
 
     @Override
     public String getMenuBarTitle(){
-        return "Admin";
+        return "Admin"; //TODO change?
     }
 
     @Override
@@ -28,17 +28,17 @@ public class AdminBarGUIPanel extends MenuBarGUIPanel {
     }
 
     @Override
-    public void onPreparingToSwitch() {
+    public void onPreparingToFreeze() {
         
     }
 
     @Override
-    public void onSwitchedOff() {
+    public void onFrozen() {
         
     }
 
     @Override
-    public void onSwitchedIn() {
+    public void onThawed() {
         
     }
 

@@ -33,7 +33,7 @@ public class Navigation implements IObserverViewable {
         IViewable removingWindow = null;
         if (!stack.empty()){
             removingWindow = stack.peek();
-            removingWindow.onPreparingToSwitch();
+            removingWindow.onPreparingToFreeze();
         }
 
         stack.add(viewable);
@@ -41,7 +41,7 @@ public class Navigation implements IObserverViewable {
         startCreationCommand.execute(viewable);
 
         if (removingWindow != null){
-            removingWindow.onSwitchedOff();
+            removingWindow.onFrozen();
         }
 
         viewCommand.execute(viewable);

@@ -3,6 +3,7 @@ package src.Users;
 import src.*;
 import src.SystemComponents.*;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -74,5 +75,29 @@ public abstract class User<T extends User<T>> implements ISerializable<User<T>> 
     }
 
     public abstract T createUser();
+
+    public final int getBaseTableDisplayColumns(){
+        return 2;
+    }
+    public final ArrayList<Object> getBaseTableDisplayColumnsData(){
+        ArrayList<Object> data = new ArrayList<Object>();
+        data.add(username);
+        data.add(password);
+        return data;
+    }
+    /**
+     * For when displaying tables of this data, total columns required, override if require more
+     * @return
+     */
+    public int getTableDisplayColumns(){
+        return 2;   //Username & password
+    }
+    /**
+     * Creates the object data required to display on a table, override if need more
+     * @return
+     */
+    public ArrayList<Object> getTableDisplayColumnsData(){
+        return getBaseTableDisplayColumnsData();
+    }
     
 }

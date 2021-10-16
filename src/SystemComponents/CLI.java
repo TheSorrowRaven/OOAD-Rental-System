@@ -71,6 +71,10 @@ public class CLI {
         if (!canDebugLog()){
             return;
         }
+        if (obj == null){
+            outln(debugPrepend + "null");
+            return;
+        }
         outln(debugPrepend + obj.toString());
     }
 

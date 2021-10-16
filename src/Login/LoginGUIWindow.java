@@ -42,17 +42,17 @@ public class LoginGUIWindow extends GUIWindow implements ILoginnable {
     }
 
     @Override
-    public void onPreparingToSwitch() {
+    public void onPreparingToFreeze() {
         
     }
 
     @Override
-    public void onSwitchedOff() {
+    public void onFrozen() {
         setVisible(false);
     }
 
     @Override
-    public void onSwitchedIn() {
+    public void onThawed() {
         setVisible(true);
     }
 

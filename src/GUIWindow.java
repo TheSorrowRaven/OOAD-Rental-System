@@ -131,21 +131,21 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
      * Window is going to switch.
      * This is called before the new window is created (before onCreate)
      */
-    public abstract void onPreparingToSwitch();
+    public abstract void onPreparingToFreeze();
 
     /**
      * Window is switched (changed to another window) in the navigation stack
      * This is called after the NEW window is viewed (onCreate, onCreatePanel and onView)
      * Set Invisible here
      */
-    public abstract void onSwitchedOff();
+    public abstract void onFrozen();
 
 
     /**
      * Viewable is switched to this (changed to this viewable) in the navigation stack
      * Set Visible here
      */
-    public abstract void onSwitchedIn();
+    public abstract void onThawed();
 
     /**
      * Window is destroyed (back button)

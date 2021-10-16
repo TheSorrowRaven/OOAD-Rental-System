@@ -33,17 +33,17 @@ public final class MenuGUIPanel extends GUIPanel<MenuGUIWindow> {
     }
 
     @Override
-    public void onPreparingToSwitch() {
+    public void onPreparingToFreeze() {
         
     }
 
     @Override
-    public void onSwitchedOff() {
+    public void onFrozen() {
         
     }
 
     @Override
-    public void onSwitchedIn() {
+    public void onThawed() {
         
     }
 

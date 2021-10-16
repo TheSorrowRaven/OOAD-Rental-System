@@ -1,8 +1,8 @@
 package src;
 
-public abstract class MenuContentGUIPanel extends GUIPanel<MenuGUIWindow> {
+public abstract class MenuContentGUIPanel<T extends GUIWindow> extends GUIPanel<T> {
 
-    public MenuContentGUIPanel(MenuGUIWindow parent) {
+    public MenuContentGUIPanel(T parent) {
         super(parent);
     }
 

@@ -2,7 +2,6 @@ package src;
 
 import java.util.UUID;
 import java.awt.*;
-import java.awt.image.*;
 import javax.swing.plaf.*;
 
 import src.SystemComponents.CLI;
@@ -79,9 +78,11 @@ public final class Resource {
         public Color button_pressed_color;
         public Color bar_color;
 
+        public Color border_color;
         public CompoundBorder border;
 
         public Theme border(Color color, int width, EmptyBorder emptyBorder){
+            border_color = color;
             LineBorder line_border = new LineBorder(color, width, true);
             border = new CompoundBorder(line_border, emptyBorder);
             return this;
@@ -142,6 +143,7 @@ public final class Resource {
     public final String adminLoginFile = "adminLogin.txt";
     public final String propertyFile = "properties.txt";
 
+    //IMAGES
     public final String imgPath = "img/";
     public final String logout_icon_img = imgPath + "logout_icon.png";
     public final int icon_width = 25;
@@ -171,8 +173,15 @@ public final class Resource {
 
     //FONT
     public final int general_font_size = 16;
+    public final int general_font_highlight_size = 20;
+    public final int general_font_title_size = 24;
     public final Font general_font = new Font(Font.SERIF, Font.PLAIN, general_font_size);
+    public final Font general_font_highlight = new Font(Font.SERIF, Font.PLAIN, general_font_highlight_size);
+    public final Font general_font_title = new Font(Font.SERIF, Font.PLAIN, general_font_title_size);
     public final FontUIResource general_font_resource = new FontUIResource("Serif", Font.PLAIN, general_font_size);
+
+    //TABLE
+    public final int table_cell_height = 24;
 
     //COLOR
     public final Color color_invisible = new Color(0, 0, 0, 0);
@@ -312,7 +321,20 @@ public final class Resource {
     public final String login_str_error_text = "Invalid Credentials";
 
     public final String admin_window_title = "Admin";
-
+    public final String admin_str_submenu_ViewAllUsers = "All Users";
+    public final String admin_str_submenu_ViewTenants = "Tenants";
+    public final String admin_str_submenu_ViewOwners = "Owners";
+    public final String admin_str_submenu_ViewAgents = "Agents";
+    public final String admin_str_submenu_ViewAdmins = "Admins";
+    public final String admin_str_submenu_CreateAcc = "Create Account";
+    public final String admin_str_content_title_AllUsers = "List of All Users";
+    public final String admin_str_content_title_Tenants = "List of All Tenants";
+    public final String admin_str_content_title_Owners = "List of All Owners";
+    public final String admin_str_content_title_Agents = "List of All Agents";
+    public final String admin_str_content_title_Admins = "List of All Admins";
+    public final String admin_str_content_deletion_instructions = "Tick the checkboxes to select accounts you want to delete, then click delete";
+    public final String admin_str_content_deletion_button = "Delete Selected";
+    
 
 
 

@@ -2,10 +2,12 @@ package src;
 
 import javax.swing.*;
 
+import src.Admin.AdminTableViewGUIPanel;
 import src.SystemComponents.CLI;
 
 import java.util.*;
 import java.awt.*;
+import javax.swing.table.*;
 
 /**
  * 
@@ -49,6 +51,16 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
 
         return passwordField;
     }
+    public JTable JTable(){
+        DefaultTableModel model = new DefaultTableModel(1, 1);
+        JTable table = new JTable(model);
+        table.setBackground(Theme().background_color);
+        table.setForeground(Theme().text_color);
+        table.setGridColor(Theme().border_color);
+        table.setSelectionBackground(Theme().button_hover_color);
+        
+        return table;
+    }
 
     private void setButtonTheme(Button button){
         button.setBackground(Theme().background_color);
@@ -81,6 +93,7 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
 
     private ArrayList<GUIPanel<?>> panels = new ArrayList<GUIPanel<?>>();
     private HashMap<GUIPanel<?>, String> panelsToLayout = new HashMap<GUIPanel<?>, String>();
+    private ArrayList<GUIPanel<?>> frozenPanels = new ArrayList<GUIPanel<?>>();
 
     public ArrayList<GUIPanel<?>> getPanels(){
         return panels;
@@ -168,6 +181,20 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
         return super.add(name, comp);
     }
 
+    @Override
+    public void remove(Component comp){
+        if (targetPanel instanceof GUIPanel<?> guiPanel){
+            guiPanel.parentRemove(comp);
+        }
+        else{
+            targetPanel.remove(comp);
+        }
+    }
+    private void parentRemove(Component comp){
+        super.remove(comp);
+        repaint();
+    }
+
     /**
      * Call this in onCreatePanel
      */
@@ -181,6 +208,14 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
         attachPanel(panel);
         panelsToLayout.put(panel, layout);
     }
+    public void attachFrozenPanel(GUIPanel<?> panel){
+        attachPanel(panel);
+        frozenPanels.add(panel);
+    }
+    public void attachFrozenPanel(GUIPanel<?> panel, String layout){
+        attachPanel(panel, layout);
+        frozenPanels.add(panel);
+    }
     /**
      * Calls destroy when detaching panel
      */
@@ -189,6 +224,33 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
         panels.remove(panel);
         panel.onDestroyInternal();
         panelsToLayout.remove(panel);
+        remove(panel);
+    }
+    public void swapDestroyPanel(GUIPanel<?> oldPanel, GUIPanel<?> newPanel){
+        detachPanel(oldPanel);
+        attachPanel(newPanel);
+        viewAttachedPanel(newPanel);
+    }
+    public void swapDestroyPanel(GUIPanel<?> oldPanel, GUIPanel<?> newPanel, String layout){
+        detachPanel(oldPanel);
+        attachPanel(newPanel, layout);
+        viewAttachedPanel(newPanel);
+    }
+    /**
+     * Make sure targetPanel is accurate!
+     * @param freezingPanel
+     * @param thawingPanel
+     */
+    public void switchExistingPanels(GUIPanel<?> freezingPanel, GUIPanel<?> thawingPanel){
+        freezingPanel.onPreparingToFreeze();
+
+        frozenPanels.add(freezingPanel);
+        frozenPanels.remove(thawingPanel);
+
+        remove(freezingPanel);
+        freezingPanel.onFrozen();
+        addAttachedPanel(thawingPanel);
+        thawingPanel.onThawed();
     }
 
     /**
@@ -220,38 +282,51 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
         onView();
         onViewAttachPanels();
         viewed();
+        revalidate();
     }
 
     @Override
     public void onViewAttachPanels(){
         for (GUIPanel<?> panel : panels){
-            if (panelsToLayout.containsKey(panel)){
-                String layout = panelsToLayout.get(panel);
-                add(panel, layout);
-            }
-            else{
-                add(panel);
-            }
-            panel.onViewInternal();
+            viewAttachedPanel(panel);
         }
+    }
+    protected void viewAttachedPanel(GUIPanel<?> panel){
+        //Skip adding if is frozen
+        if (!frozenPanels.contains(panel)){
+            addAttachedPanel(panel);
+        }
+        panel.onViewInternal();
+    }
+    private void addAttachedPanel(GUIPanel<?> panel){
+        JPanel initialPanel = targetPanel;
+        setTargetPanel(this);
+        if (panelsToLayout.containsKey(panel)){
+            String layout = panelsToLayout.get(panel);
+            add(panel, layout);
+        }
+        else{
+            add(panel);
+        }
+        setTargetPanel(initialPanel);
     }
 
     /**
      * Panel is going to switch.
      * This is called before the new panel is created (before onCreate)
      */
-    public abstract void onPreparingToSwitch();
+    public abstract void onPreparingToFreeze();
 
     /**
      * Panel is switched (changed to another panel) in the navigation stack
      * This is called after the new panel is viewed (onCreate and onView)
      */
-    public abstract void onSwitchedOff();
+    public abstract void onFrozen();
 
     /**
      * Viewable is switched to this (changed to this viewable) in the navigation stack
      */
-    public abstract void onSwitchedIn();
+    public abstract void onThawed();
 
     /**
      * Panel is destroted (back button)
@@ -260,11 +335,6 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
     public final void onDestroyInternal(){
         onDestroy();
         destroyed();
-    }
-
-
-    protected void navigatePanelTo(GUIPanel<T> window){
-        //TODO ?
     }
 
 
