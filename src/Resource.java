@@ -141,15 +141,20 @@ public final class Resource {
     public final char splittingInputCharacter = '\u2000';
     public final char newLineReplacementCharacter = '\u2001';
     public final char nullPlacementCharacter = '\u2002';
-    public final char arrayEndingCharacter = '\u2003';
+    public final char arraySplittingCharacter = '\u2003';
     public final String splittingInputCharacterStr(){
         return Character.toString(splittingInputCharacter);
     }
+    public final String arraySplittingCharacterStr(){
+        return Character.toString(arraySplittingCharacter);
+    }
 
+    public final String defaultAdminUUID = "00000000-0000-0000-0000-000000000000";
     public final String defaultAdminUsername = "admin";
     public final String defaultAdminPassword = "password";
     public final String defaultAdminName = "Admin";
-    public final String defaultAdminEntry = "00000000-0000-0000-0000-000000000000" + splittingInputCharacter + defaultAdminUsername + 
+    public final String defaultAdminEntry = defaultAdminUUID + 
+        splittingInputCharacter + defaultAdminUsername + 
         splittingInputCharacter + defaultAdminPassword + 
         splittingInputCharacter + defaultAdminName;
 
@@ -370,6 +375,8 @@ public final class Resource {
     public final String login_str_prompt_Password = "Password:  ";
     public final String login_str_error_text = "Invalid Credentials";
 
+    public final String bar_back_logout = "Logout";
+
     public final String admin_window_title = "Admin";
     public final String admin_str_submenu_ViewAllUsers = "Users";
     public final String admin_str_submenu_ViewTenants = "Tenants";
@@ -385,7 +392,6 @@ public final class Resource {
     public final String admin_str_content_deletion_title = "User List & Deletion";
     public final String admin_str_content_deletion_instructions = "To delete, tick the checkboxes then click delete";
     public final String admin_str_content_deletion_button = "  Delete Selected  ";
-    
     public final String admin_str_content_create_title = "User Creation";
     public final String admin_str_content_create_instructions = "Note: Username must be unique";
     public final String admin_str_content_create_acc_button = "  Create Account  ";
@@ -394,6 +400,10 @@ public final class Resource {
     public final String admin_str_content_create_name = "  Name:  ";
     public final String admin_str_content_create_success = "Successful";
     public final String admin_str_content_create_fail = "Failure!";
+
+    public final String tenant_window_title = "Tenant";
+
+    public final String ownerAgent_window_title = "Owner/Agent";
 
 
 }

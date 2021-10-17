@@ -2,6 +2,8 @@ package src.Login;
 
 import src.*;
 import src.Admin.AdminGUIWindow;
+import src.OwnerAgent.*;
+import src.Tenant.*;
 import src.SystemComponents.CLI;
 import src.Users.*;
 
@@ -51,14 +53,15 @@ public class LoginController {
     }
 
     private void loginWindow(User<?> user){
+        Navigation nav = Main.instance().nav;
         if (user instanceof TenantUser tenant){
-
+            nav.newWindow(new TenantGUIWindow(tenant));
         }
         else if (user instanceof OwnerAgentUser ownerAgent){
-
+            nav.newWindow(new OwnerAgentGUIWindow(ownerAgent));
         }
         else if (user instanceof AdminUser admin){
-            Main.instance().nav.newWindow(new AdminGUIWindow(admin));
+            nav.newWindow(new AdminGUIWindow(admin));
         }
     }
 

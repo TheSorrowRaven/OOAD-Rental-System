@@ -1,5 +1,7 @@
 package src;
 
+import java.util.ArrayList;
+
 /**
  * This Input class handles string inputs like login details, property names etc for easier saving and loading
  */
@@ -32,6 +34,35 @@ public class Input {
             }
         }
         return split;
+    }
+
+    public static <T> String combineArray(ArrayList<T> array){
+        if (array == null || array.size() == 0){
+            return "";
+        }
+        StringBuilder str = new StringBuilder(checkNull(array.get(0).toString()));
+        for (int i = 0; i < array.size(); i++){
+            T value = array.get(i);
+            String text = value.toString();
+            text = checkNull(text);
+
+            str.append(Resource().arraySplittingCharacter);
+            str.append(text);
+        }
+        return str.toString();
+    }
+
+
+    public static ArrayList<String> separateArray(String arrayText){
+        ArrayList<String> array = new ArrayList<String>();
+        if (arrayText == null || arrayText.equals("")){
+            return array;
+        }
+        String[] split = arrayText.split(Resource().arraySplittingCharacterStr());
+        for (String text : split){
+            array.add(text);
+        }
+        return array;
     }
 
     /**

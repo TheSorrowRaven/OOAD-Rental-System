@@ -2,7 +2,6 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.*;
 import src.SystemComponents.CLI;
 
 public abstract class MenuBarGUIPanel extends GUIPanel<MenuGUIWindow> {

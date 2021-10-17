@@ -14,7 +14,7 @@ public class AdminBarGUIPanel extends MenuBarGUIPanel {
 
     @Override
     public String getMenuBarTitle(){
-        return "Admin"; //TODO change?
+        return Resource().bar_back_logout;
     }
 
     @Override

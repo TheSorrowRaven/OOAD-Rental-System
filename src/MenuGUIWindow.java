@@ -17,6 +17,6 @@ public abstract class MenuGUIWindow extends GUIWindow {
     }
 
     protected abstract MenuBarGUIPanel getMenuBarContentPanel();
-    protected abstract MenuContentGUIPanel getContentGUIPanel();
+    protected abstract MenuContentGUIPanel<?> getContentGUIPanel();
 
 }
