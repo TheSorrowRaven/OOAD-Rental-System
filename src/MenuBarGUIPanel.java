@@ -44,6 +44,9 @@ public abstract class MenuBarGUIPanel extends GUIPanel<MenuGUIWindow> {
 
         Image logoutImage = Resource().getLogoutIcon();
         Button backButton = Button();
+        backButton.addActionListener(e ->{
+            Main.instance().nav.backToLastWindow();
+        });
         backButton.setIcon(new ImageIcon(logoutImage));
         add(backButton, gridBagConstraints);
 

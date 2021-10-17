@@ -6,11 +6,11 @@ import src.Users.*;
 public class AdminGUIWindow extends MenuGUIWindow {
 
 
-    public AdminController admin;
+    public AdminController adminController;
 
     public AdminGUIWindow(AdminUser adminUser) {
         super(Resource().admin_theme);
-        admin = new AdminController(adminUser);
+        adminController = new AdminController(adminUser);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class AdminGUIWindow extends MenuGUIWindow {
     }
 
     @Override
-    protected MenuContentGUIPanel getContentGUIPanel() {
+    protected MenuContentGUIPanel<AdminGUIWindow> getContentGUIPanel() {
         return new AdminGUIPanel(this);
     }
 

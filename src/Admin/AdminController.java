@@ -1,11 +1,14 @@
 package src.Admin;
 
 import src.*;
+import src.Admin.Admin.UserCreationResult;
 import src.Login.ILoginnable;
 import src.Users.*;
 import src.SystemComponents.*;
 import java.awt.event.ActionListener;
 import java.util.*;
+
+import javax.swing.JTextField;
 
 public class AdminController implements IOnUsersChangedObservable {
     
@@ -17,6 +20,10 @@ public class AdminController implements IOnUsersChangedObservable {
     public AdminUser adminUser;
     public Admin admin;
 
+    private JTextField usernameField;
+    private JTextField passwordField;
+    private JTextField nameField;
+
     public AdminController(AdminUser loggedInAdmin){
         adminUser = loggedInAdmin;
         admin = new Admin(adminUser);
@@ -24,41 +31,39 @@ public class AdminController implements IOnUsersChangedObservable {
 
     public ActionListener getViewAllUsersAction(final AdminSubMenuGUIPanel adminSubMenuGUIPanel){
         return e -> {
-            AdminTableViewGUIPanel<?> switchingPanel = adminSubMenuGUIPanel.getAllUsersTablePanel();
+            AdminUserViewGUIPanel<?> switchingPanel = adminSubMenuGUIPanel.getAllUsersTablePanel();
             switchPanels(adminSubMenuGUIPanel, switchingPanel);
         };
     }
     public ActionListener getViewTenantsAction(final AdminSubMenuGUIPanel adminSubMenuGUIPanel){
         return e -> {
-            AdminTableViewGUIPanel<?> switchingPanel = adminSubMenuGUIPanel.getTenantsTablePanel();
+            AdminUserViewGUIPanel<?> switchingPanel = adminSubMenuGUIPanel.getTenantsTablePanel();
             switchPanels(adminSubMenuGUIPanel, switchingPanel);
         };
     }
     public ActionListener getViewOwnersAction(final AdminSubMenuGUIPanel adminSubMenuGUIPanel){
         return e -> {
-            AdminTableViewGUIPanel<?> switchingPanel = adminSubMenuGUIPanel.getOwnersTablePanel();
+            AdminUserViewGUIPanel<?> switchingPanel = adminSubMenuGUIPanel.getOwnersTablePanel();
             switchPanels(adminSubMenuGUIPanel, switchingPanel);
         };
     }
     public ActionListener getViewAgentsActionListener(final AdminSubMenuGUIPanel adminSubMenuGUIPanel){
         return e -> {
-            AdminTableViewGUIPanel<?> switchingPanel = adminSubMenuGUIPanel.getAgentsTablePanel();
+            AdminUserViewGUIPanel<?> switchingPanel = adminSubMenuGUIPanel.getAgentsTablePanel();
             switchPanels(adminSubMenuGUIPanel, switchingPanel);
         };
     }
     public ActionListener getViewAdminsActionListener(final AdminSubMenuGUIPanel adminSubMenuGUIPanel){
         return e -> {
-            AdminTableViewGUIPanel<?> switchingPanel = adminSubMenuGUIPanel.getAdminsTablePanel();
+            AdminUserViewGUIPanel<?> switchingPanel = adminSubMenuGUIPanel.getAdminsTablePanel();
             switchPanels(adminSubMenuGUIPanel, switchingPanel);
         };
     }
 
-    private void switchPanels(final AdminSubMenuGUIPanel adminSubMenuGUIPanel, AdminTableViewGUIPanel<?> switchingPanel){
-        AdminTableViewGUIPanel<?> currentPanel = adminSubMenuGUIPanel.getCurrentTablePanel();
+    private void switchPanels(final AdminSubMenuGUIPanel adminSubMenuGUIPanel, AdminUserViewGUIPanel<?> switchingPanel){
+        GUIPanel<?> currentPanel = adminSubMenuGUIPanel.getCurrentTablePanel();
         if (!currentPanel.equals(switchingPanel)){
             adminSubMenuGUIPanel.switchTableView(switchingPanel);
-            //adminSubMenuGUIPanel.switchExistingPanels(currentPanel, switchingPanel);
-            //adminSubMenuGUIPanel.setCurrentTablePanel(switchingPanel);
             return;
         }
     }
@@ -71,13 +76,60 @@ public class AdminController implements IOnUsersChangedObservable {
         return allUsers;
     }
 
+
+    public <T extends User<T>> ActionListener getDeleteSelectedActionListener(final AdminUserViewGUIPanel<T> adminTable){
+        return e -> {
+            Table table = adminTable.getTable();
+            ArrayList<User<?>> users = adminTable.getUsers();
+            ArrayList<User<?>> deletingUsers = new ArrayList<User<?>>();
+            for (int i = 0; i < table.getRowCount(); i++){
+                boolean isTicked = (Boolean)table.getValueAt(i, adminTable.deletionTickboxColumn);
+                if (isTicked){
+                    deletingUsers.add(users.get(i));
+                }
+            }
+            admin.deleteAllAnyUsers(deletingUsers);
+            createDeleteRefreshCallback();
+        };
+    }
+
+
+
+    public void setCreateAccountTextFields(JTextField usernameField, JTextField passwordField, JTextField nameField){
+        this.usernameField = usernameField;
+        this.passwordField = passwordField;
+        this.nameField = nameField;
+    }
+
+    public <T extends User<T>> ActionListener getCreateAccountActionListener(final AdminCreateAccountGUIPanel<T> adminCreateAccPanel, final Class<T> userClass, final boolean isOwnerAgent){
+        return e -> {
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+            String name = nameField.getText();
+            UserCreationResult result = admin.createAccount(userClass, username, password, name, isOwnerAgent);
+            if (result.isSuccessful()){
+                adminCreateAccPanel.finishCreateClear();
+            }
+            else{
+                adminCreateAccPanel.failedCreate();
+            }
+            createDeleteRefreshCallback();
+        };
+    }
+
+
+
+
+
+
+
     /**
      * Whenever a user is created or deleted, call this function to refresh the tables
      * @param <T>
      * @param userClass
      */
-    public <T extends User<T>> void createDeleteRefreshCallback(Class<T> userClass){
-        usersChangedNotify(userClass);
+    public <T extends User<T>> void createDeleteRefreshCallback(){
+        usersChangedNotify();
     }
 
     private HashSet<IOnUsersChangedObserver> observers = new HashSet<IOnUsersChangedObserver>();
@@ -93,22 +145,24 @@ public class AdminController implements IOnUsersChangedObservable {
     }
 
     @Override
-    public <T extends User<T>> void usersChangedNotify(Class<T> userClass) {
+    public <T extends User<T>> void usersChangedNotify() {
         for (IOnUsersChangedObserver observer : observers){
-            observer.usersChanged(userClass);
+            observer.usersChanged();
         }
     }
+
+
     
 
 }
 
 interface IOnUsersChangedObserver{
-    <T extends User<T>> void usersChanged(Class<T> userClass);
+    <T extends User<T>> void usersChanged();
 }
 interface IOnUsersChangedObservable{
     
     void observe(IOnUsersChangedObserver observer);
     void stopObserving(IOnUsersChangedObserver observer);
-    <T extends User<T>> void usersChangedNotify(Class<T> userClass);
+    <T extends User<T>> void usersChangedNotify();
 
 }

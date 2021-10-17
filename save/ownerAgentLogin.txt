@@ -1,0 +1,5 @@
+c5bb6984-f912-44d1-bdc4-56d03f7ac779 agent agent Agent false  
+55affaf4-5a1b-4ce9-8e5a-9b8645d1b012 oni oni Oni true  
+deee09ea-ec5e-419e-b9ac-d933b4db42dd 5dr467y d54r67y d56r7u true  
+035b1559-def9-4925-9832-9fe9014a19c9 d567yu d56u d5t6u false  
+6ecc6f86-b0bb-463a-8cb8-7f153b2fa6d4 s5r4e 45r7y d5t7yu true  

@@ -13,6 +13,7 @@ import src.GUIWindow;
 public class LoginGUIWindow extends GUIWindow implements ILoginnable {
 
     public LoginController loginController;
+    private LoginGUIPanel loginPanel;
 
     //Initialize on create
     public LoginGUIWindow(){
@@ -32,7 +33,7 @@ public class LoginGUIWindow extends GUIWindow implements ILoginnable {
 
     @Override
     public void onCreatePanel() {
-        LoginGUIPanel loginPanel = new LoginGUIPanel(this);
+        loginPanel = new LoginGUIPanel(this);
         attachPanel(loginPanel);
     }
 
@@ -54,6 +55,7 @@ public class LoginGUIWindow extends GUIWindow implements ILoginnable {
     @Override
     public void onThawed() {
         setVisible(true);
+        loginPanel.onThawed();
     }
 
     @Override

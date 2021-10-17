@@ -13,7 +13,7 @@ public class OwnerAgentUser extends User<OwnerAgentUser>{
         return new OwnerAgentUser();
     }
     
-    public boolean isAgent;
+    public boolean isOwner;
 
     private UUID supportingOwnerAgentID;    //This exists to cache the id while loading halfway (the other may not be loaded yet)
     public OwnerAgentUser supportingOwnerAgent; //Load this via id
@@ -25,15 +25,18 @@ public class OwnerAgentUser extends User<OwnerAgentUser>{
 
     @Override
     public String getSaveableText() {
-        return Input.combineData(super.getSaveableText(), Boolean.toString(isAgent), supportingOwnerAgent.getID().toString());
+        String supportingOwnerAgentID = supportingOwnerAgent != null ? supportingOwnerAgent.getID().toString() : Character.toString(Resource().nullPlacementCharacter);
+        return Input.combineData(super.getSaveableText(), Boolean.toString(isOwner), supportingOwnerAgentID);
     }
 
     @Override
     public int loadSaveableSplitTextIntoUser(String[] split, OwnerAgentUser user) {
         int c = super.loadSaveableSplitTextIntoUser(split, user);
         OwnerAgentUser ownerAgent = (OwnerAgentUser)user;
-        ownerAgent.isAgent = Boolean.parseBoolean(split[c++]);
-        ownerAgent.supportingOwnerAgentID = Resource().getUUIDFrom(split[c++]);
+        ownerAgent.isOwner = Boolean.parseBoolean(split[c++]);
+        if (split[c] != null){
+            ownerAgent.supportingOwnerAgentID = Resource().getUUIDFrom(split[c++]);
+        }
         return c;
     }
 

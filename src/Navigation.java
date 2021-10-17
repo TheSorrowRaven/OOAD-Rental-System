@@ -1,7 +1,6 @@
 package src;
 
 import java.util.Stack;
-import src.*;
 
 /**
  * 
@@ -26,7 +25,6 @@ public class Navigation implements IObserverViewable {
 
 
     private Stack<GUIWindow> windowsStack = new Stack<GUIWindow>();
-    // private Stack<GUIPanel> panelStack = new Stack<GUIPanel>();
 
     //Startup lifecycle and switching of a viewable
     private <T extends IViewable> void newViewable(T viewable, Stack<T> stack, ICommand<T> startCreationCommand, ICommand<T> viewCommand){
@@ -85,10 +83,22 @@ public class Navigation implements IObserverViewable {
         window.onViewInternal();
     }
 
-    // private void startPanelCreation(GUIPanel panel){
-    //     attachObserverToViewable(panel);
-    //     panel.onCreate();
-    // }
+    /**
+     * Backs up the windows stack
+     */
+    public void backToLastWindow(){
+        if (windowsStack.empty()){
+            return;
+        }
+        GUIWindow destroyingWindow = windowsStack.pop();
+        destroyingWindow.disposeWindow();
+
+        if (windowsStack.empty()){
+            return;
+        }
+        GUIWindow thawingWindow = windowsStack.peek();
+        thawingWindow.onThawed();
+    }
 
     /**
      * Flushes the stack, removing it from memory (sent to garbage collector)
@@ -103,17 +113,6 @@ public class Navigation implements IObserverViewable {
         }
     }
 
-    // /**
-    //  * Flushes the stack, removing it from memory (sent to garbage collector)
-    //  * This will reset the back button
-    //  */
-    // public void flushPanelStack(){
-    //     while (!panelStack.isEmpty()){
-    //         GUIPanel panel = panelStack.pop();
-    //         destroyPanel(panel);
-    //     }
-    // }
-
     /**
      * Ends the lifecycle of a window
      * Will also flush the panel stack
@@ -123,14 +122,6 @@ public class Navigation implements IObserverViewable {
         detachObserverFromViewable(window);
         //flushPanelStack();
     }
-
-    // /**
-    //  * Ends the lifecycle of a panel
-    //  */
-    // private void destroyPanel(GUIPanel panel){
-    //     panel.onDestroy();
-    //     detachObserverFromViewable(panel);
-    // }
 
     //OBSERVER
 

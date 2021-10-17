@@ -2,12 +2,12 @@ package src;
 
 import javax.swing.*;
 
-import src.Admin.AdminTableViewGUIPanel;
 import src.SystemComponents.CLI;
 
 import java.util.*;
 import java.awt.*;
 import javax.swing.table.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 /**
  * 
@@ -51,15 +51,39 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
 
         return passwordField;
     }
-    public JTable JTable(){
+    public Table JTable(){
         DefaultTableModel model = new DefaultTableModel(1, 1);
-        JTable table = new JTable(model);
+        Table table = new Table(model);
         table.setBackground(Theme().background_color);
         table.setForeground(Theme().text_color);
         table.setGridColor(Theme().border_color);
         table.setSelectionBackground(Theme().button_hover_color);
+        table.setSelectionBackground(Theme().sub_background_color);
+        table.setSelectionForeground(Theme().sub_text_color);
+
+        JTableHeader headerModel = table.getTableHeader();
+        headerModel.setBackground(Theme().sub_background_color);
+        headerModel.setForeground(Theme().sub_text_color);
         
         return table;
+    }
+    public JScrollPane JScrollPane(Component o){
+        JScrollPane scrollPane = new JScrollPane(o);
+        scrollPane.setBackground(Theme().background_color);
+        scrollPane.setForeground(Theme().text_color);
+        scrollPane.setBorder(Theme().border);
+
+        JViewport viewport = scrollPane.getViewport();
+        viewport.setBackground(Theme().background_color);
+        viewport.setForeground(Theme().text_color);
+
+        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+        verticalScrollBar.setBackground(Theme().sub_background_color);
+
+        JScrollBar horizontalScrollBar = scrollPane.getHorizontalScrollBar();
+        horizontalScrollBar.setBackground(Theme().sub_background_color);
+
+        return scrollPane;
     }
 
     private void setButtonTheme(Button button){
@@ -92,7 +116,7 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
     public JPanel targetPanel;
 
     private ArrayList<GUIPanel<?>> panels = new ArrayList<GUIPanel<?>>();
-    private HashMap<GUIPanel<?>, String> panelsToLayout = new HashMap<GUIPanel<?>, String>();
+    private HashMap<GUIPanel<?>, Object> panelsToLayout = new HashMap<GUIPanel<?>, Object>();
     private ArrayList<GUIPanel<?>> frozenPanels = new ArrayList<GUIPanel<?>>();
 
     public ArrayList<GUIPanel<?>> getPanels(){
@@ -204,7 +228,16 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
         panel.onCreateInternal();
         panel.onCreatePanel();
     }
-    public void attachPanel(GUIPanel<?> panel, String layout){
+    /**
+     * Does not add the panel
+     * @param panel
+     */
+    public void executePanelLifecycle(GUIPanel<?> panel){
+        panel.onCreateInternal();
+        panel.onCreatePanel();
+        panel.onViewInternal();
+    }
+    public void attachPanel(GUIPanel<?> panel, Object layout){
         attachPanel(panel);
         panelsToLayout.put(panel, layout);
     }
@@ -212,7 +245,7 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
         attachPanel(panel);
         frozenPanels.add(panel);
     }
-    public void attachFrozenPanel(GUIPanel<?> panel, String layout){
+    public void attachFrozenPanel(GUIPanel<?> panel, Object layout){
         attachPanel(panel, layout);
         frozenPanels.add(panel);
     }
@@ -302,7 +335,7 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
         JPanel initialPanel = targetPanel;
         setTargetPanel(this);
         if (panelsToLayout.containsKey(panel)){
-            String layout = panelsToLayout.get(panel);
+            Object layout = panelsToLayout.get(panel);
             add(panel, layout);
         }
         else{

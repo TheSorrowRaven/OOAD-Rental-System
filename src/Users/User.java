@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 public abstract class User<T extends User<T>> implements ISerializable<User<T>> {
 
-    public Resource Resource(){
+    public static Resource Resource(){
         return Resource.instance();
     }
 
@@ -28,6 +28,7 @@ public abstract class User<T extends User<T>> implements ISerializable<User<T>> 
     public UUID id;
     public String username;
     public String password;
+    public String name;
 
     public UUID getID(){
         return id;
@@ -42,15 +43,20 @@ public abstract class User<T extends User<T>> implements ISerializable<User<T>> 
     private void newUserSetPassword(String password){
         this.password = password;
     }
-    public void newUserSet(String username, String password){
+    private void newUserSetName(String name){
+        this.name = name;
+    }
+
+    public void newUserSet(String username, String password, String name){
         newUserGenerateUUID();
         newUserSetUsername(username);
         newUserSetPassword(password);
+        newUserSetName(name);
     }
 
     @Override
     public String getSaveableText() {
-        return Input.combineData(id.toString(), username, password);
+        return Input.combineData(id.toString(), username, password, name);
     }
 
     @Override
@@ -71,26 +77,35 @@ public abstract class User<T extends User<T>> implements ISerializable<User<T>> 
         user.id = Resource().getUUIDFrom(split[c++]);
         user.username = split[c++];
         user.password = split[c++];
+        user.name = split[c++];
         return c;
     }
 
     public abstract T createUser();
 
-    public final int getBaseTableDisplayColumns(){
-        return 2;
+    public static final int getBaseTableDisplayColumns(){
+        return 3;
     }
     public final ArrayList<Object> getBaseTableDisplayColumnsData(){
         ArrayList<Object> data = new ArrayList<Object>();
         data.add(username);
         data.add(password);
+        data.add(name);
         return data;
+    }
+    public static final ArrayList<String> getBaseColumnHeaders(){
+        ArrayList<String> array = new ArrayList<String>();
+        array.add(Resource().str_username);
+        array.add(Resource().str_password);
+        array.add(Resource().str_name);
+        return array;
     }
     /**
      * For when displaying tables of this data, total columns required, override if require more
      * @return
      */
     public int getTableDisplayColumns(){
-        return 2;   //Username & password
+        return 3;   //Username & password
     }
     /**
      * Creates the object data required to display on a table, override if need more
@@ -98,6 +113,9 @@ public abstract class User<T extends User<T>> implements ISerializable<User<T>> 
      */
     public ArrayList<Object> getTableDisplayColumnsData(){
         return getBaseTableDisplayColumnsData();
+    }
+    public ArrayList<String> getColumnHeaders(){
+        return getBaseColumnHeaders();
     }
     
 }

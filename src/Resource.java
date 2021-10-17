@@ -78,6 +78,9 @@ public final class Resource {
         public Color button_pressed_color;
         public Color bar_color;
 
+        public Color sub_background_color;
+        public Color sub_text_color;
+
         public Color border_color;
         public CompoundBorder border;
 
@@ -120,22 +123,35 @@ public final class Resource {
             bar_color = color;
             return this;
         }
+        public Theme subBackground(Color color){
+            sub_background_color = color;
+            return this;
+        }
+        public Theme subTextColor(Color color){
+            sub_text_color = color;
+            return this;
+        }
 
     }
 
 
 
 
-    public final String defaultAdminUsername = "admin";
-    public final String defaultAdminPassword = "password";
-    public final String defaultAdminEntry = "00000000-0000-0000-0000-000000000000￼" + defaultAdminUsername + "￼" + defaultAdminPassword;
 
-    public final char splittingInputCharacter = '￼';
-    public final char newLineReplacementCharacter = '�';
-    public final char splittingReplaceCharacter = ' ';
+    public final char splittingInputCharacter = '\u2000';
+    public final char newLineReplacementCharacter = '\u2001';
+    public final char nullPlacementCharacter = '\u2002';
+    public final char arrayEndingCharacter = '\u2003';
     public final String splittingInputCharacterStr(){
         return Character.toString(splittingInputCharacter);
     }
+
+    public final String defaultAdminUsername = "admin";
+    public final String defaultAdminPassword = "password";
+    public final String defaultAdminName = "Admin";
+    public final String defaultAdminEntry = "00000000-0000-0000-0000-000000000000" + splittingInputCharacter + defaultAdminUsername + 
+        splittingInputCharacter + defaultAdminPassword + 
+        splittingInputCharacter + defaultAdminName;
 
     public final String savePath = "save/";
     public final String tenantLoginFile = "tenantLogin.txt";
@@ -165,8 +181,8 @@ public final class Resource {
     }
 
     //WINDOW
-    public final int menu_window_width = 1440;
-    public final int menu_window_height = 900;
+    public final int menu_window_width = 900;
+    public final int menu_window_height = 600;
 
     public final int login_window_width = 900;
     public final int login_window_height = 600;
@@ -175,10 +191,15 @@ public final class Resource {
     public final int general_font_size = 16;
     public final int general_font_highlight_size = 20;
     public final int general_font_title_size = 24;
+    public final int general_font_minor_size = 14;
     public final Font general_font = new Font(Font.SERIF, Font.PLAIN, general_font_size);
     public final Font general_font_highlight = new Font(Font.SERIF, Font.PLAIN, general_font_highlight_size);
     public final Font general_font_title = new Font(Font.SERIF, Font.PLAIN, general_font_title_size);
+    public final Font general_font_minor = new Font(Font.SERIF, Font.PLAIN, general_font_minor_size);
     public final FontUIResource general_font_resource = new FontUIResource("Serif", Font.PLAIN, general_font_size);
+
+    //SCROLL PANE
+    public final int scroll_speed = 16;
 
     //TABLE
     public final int table_cell_height = 24;
@@ -197,6 +218,8 @@ public final class Resource {
     public final Color color_black_7 = Color.decode("#333333");
     public final Color color_black_8 = Color.decode("#363636");
     public final Color color_black_9 = Color.decode("#383838");
+    public final Color color_black_sub_0 = Color.decode("#f5f5b9");
+    public final Color color_black_sub_1 = Color.decode("#8d8d14");
     //Grey Palette - for smoothening colors
     public final Color color_bw_mid = Color.decode("#808080");
     public final Color color_bw_mid_light = Color.decode("#999999");
@@ -220,6 +243,8 @@ public final class Resource {
     public final Color color_theme_purple_4 = Color.decode("#3D2C8D");
     public final Color color_theme_purple_5 = Color.decode("#120933");
     public final Color color_theme_purple_bar = color_black_0;
+    public final Color color_theme_purple_sub_0 = Color.decode("#f5d0e9");
+    public final Color color_theme_purple_sub_1 = Color.decode("#a11373");
     //Red Theme - light to dark
     public final Color color_theme_red_0 = Color.decode("#f3cfd9");
     public final Color color_theme_red_1 = Color.decode("#e88ca6");
@@ -228,6 +253,8 @@ public final class Resource {
     public final Color color_theme_red_4 = Color.decode("#7D1935");
     public final Color color_theme_red_5 = Color.decode("#300b15");
     public final Color color_theme_red_bar = color_black_0;
+    public final Color color_theme_red_sub_0 = Color.decode("#ffddc6");
+    public final Color color_theme_red_sub_1 = Color.decode("#c75b14");
     //Violeto Theme - light to dark
     public final Color color_theme_violeto_0 = Color.decode("#e2e9f6");
     public final Color color_theme_violeto_1 = Color.decode("#a6b6d4");
@@ -236,6 +263,8 @@ public final class Resource {
     public final Color color_theme_violeto_4 = Color.decode("#3E2C41");
     public final Color color_theme_violeto_5 = Color.decode("#1b1320");
     public final Color color_theme_violeto_bar = color_black_0;
+    public final Color color_theme_violeto_sub_0 = Color.decode("#beeef3");
+    public final Color color_theme_violeto_sub_1 = Color.decode("#328c95");
 
     //Main Colors
     public final Color window_background_color = color_black_0;
@@ -249,6 +278,9 @@ public final class Resource {
     public final Color general_error_text_color = color_white_0;
     public final Color general_error_background_color = color_red_dark_0;
     public final Color general_bar_color = color_black_0;
+    public final Color general_sub_background_color = color_black_sub_1;
+    public final Color general_sub_text_color = color_black_sub_0;
+
 
 
     //BORDER
@@ -268,7 +300,9 @@ public final class Resource {
         .border(general_border_color, general_border_width, general_border_empty)
         .buttonHover(general_button_hover_color)
         .buttonPressed(general_button_pressed_color)
-        .barColor(general_bar_color);
+        .barColor(general_bar_color)
+        .subBackground(general_sub_background_color)
+        .subTextColor(general_sub_text_color);
     public final Theme purple_theme = new Theme().windowBackground(window_background_color)
         .panelBackgroundColor(color_theme_purple_5)
         .textColor(color_theme_purple_0)
@@ -277,7 +311,9 @@ public final class Resource {
         .border(color_theme_purple_2, general_border_width, general_border_empty)
         .buttonHover(color_theme_purple_3)
         .buttonPressed(color_theme_purple_4)
-        .barColor(color_theme_purple_bar);
+        .barColor(color_theme_purple_bar)
+        .subBackground(color_theme_purple_sub_1)
+        .subTextColor(color_theme_purple_sub_0);
     public final Theme red_theme = new Theme().windowBackground(window_background_color)
         .panelBackgroundColor(color_theme_red_5)
         .textColor(color_theme_red_0)
@@ -286,7 +322,9 @@ public final class Resource {
         .border(color_theme_red_2, general_border_width, general_border_empty)
         .buttonHover(color_theme_red_3)
         .buttonPressed(color_theme_red_4)
-        .barColor(color_theme_red_bar);
+        .barColor(color_theme_red_bar)
+        .subBackground(color_theme_red_sub_1)
+        .subTextColor(color_theme_red_sub_0);
     public final Theme violeto_theme = new Theme().windowBackground(window_background_color)
         .panelBackgroundColor(color_theme_violeto_5)
         .textColor(color_theme_violeto_0)
@@ -295,7 +333,9 @@ public final class Resource {
         .border(color_theme_violeto_2, general_border_width, general_border_empty)
         .buttonHover(color_theme_violeto_3)
         .buttonPressed(color_theme_violeto_4)
-        .barColor(color_theme_violeto_bar);
+        .barColor(color_theme_violeto_bar)
+        .subBackground(color_theme_violeto_sub_1)
+        .subTextColor(color_theme_violeto_sub_0);
 
     public final Theme login_theme = black_theme;
     public final Theme admin_theme = red_theme;
@@ -306,36 +346,54 @@ public final class Resource {
 
     //LAYOUT
     public final int general_inset_value = 5;
+    public final int general_inset_medium_value = 10;
     public final int general_inset_major_value = 50;
+    public final int general_inset_wide_value = 40;
     public final Insets general_inset_bottom = new Insets(0, 0, general_inset_value, 0);
     public final Insets general_inset_all = new Insets(general_inset_value, general_inset_value, general_inset_value, general_inset_value);
     public final Insets general_inset_bottom_major_spacing = new Insets(0, 0, general_inset_major_value, 0);
+    public final Insets general_inset_wide = new Insets(general_inset_value, general_inset_wide_value, general_inset_value, general_inset_wide_value);
+    public final Insets general_inset_medium = new Insets(general_inset_medium_value, general_inset_medium_value, general_inset_medium_value, general_inset_medium_value);
 
     //STRING
+    public final String str_user = "User";
+    public final String str_username = "Username";
+    public final String str_password = "Password";
+    public final String str_name = "Name";
+
+
     public final String login_window_title = "Login";
-    public final String login_str_button_LoginAsTenant = "Login As Tenant";
-    public final String login_str_button_LoginAsOwnerAgent = "Login As Owner/Agent";
-    public final String login_str_button_LoginAsAdmin = "Login As Admin";
-    public final String login_str_prompt_Username = "Username: ";
-    public final String login_str_prompt_Password = "Password: ";
+    public final String login_str_button_LoginAsTenant = "  Login As Tenant  ";
+    public final String login_str_button_LoginAsOwnerAgent = "  Login As Owner/Agent  ";
+    public final String login_str_button_LoginAsAdmin = "  Login As Admin  ";
+    public final String login_str_prompt_Username = "Username:  ";
+    public final String login_str_prompt_Password = "Password:  ";
     public final String login_str_error_text = "Invalid Credentials";
 
     public final String admin_window_title = "Admin";
-    public final String admin_str_submenu_ViewAllUsers = "All Users";
+    public final String admin_str_submenu_ViewAllUsers = "Users";
     public final String admin_str_submenu_ViewTenants = "Tenants";
     public final String admin_str_submenu_ViewOwners = "Owners";
     public final String admin_str_submenu_ViewAgents = "Agents";
     public final String admin_str_submenu_ViewAdmins = "Admins";
-    public final String admin_str_submenu_CreateAcc = "Create Account";
-    public final String admin_str_content_title_AllUsers = "List of All Users";
-    public final String admin_str_content_title_Tenants = "List of All Tenants";
-    public final String admin_str_content_title_Owners = "List of All Owners";
-    public final String admin_str_content_title_Agents = "List of All Agents";
-    public final String admin_str_content_title_Admins = "List of All Admins";
-    public final String admin_str_content_deletion_instructions = "Tick the checkboxes to select accounts you want to delete, then click delete";
-    public final String admin_str_content_deletion_button = "Delete Selected";
+    public final String admin_str_content_title_AllUsers = "Users";
+    public final String admin_str_content_title_Tenants = "Tenants";
+    public final String admin_str_content_title_Owners = "Owners";
+    public final String admin_str_content_title_Agents = "Agents";
+    public final String admin_str_content_title_Admins = "Admins";
+    public final String admin_str_content_deletion_table_header = "Delete";
+    public final String admin_str_content_deletion_title = "User List & Deletion";
+    public final String admin_str_content_deletion_instructions = "To delete, tick the checkboxes then click delete";
+    public final String admin_str_content_deletion_button = "  Delete Selected  ";
     
-
+    public final String admin_str_content_create_title = "User Creation";
+    public final String admin_str_content_create_instructions = "Note: Username must be unique";
+    public final String admin_str_content_create_acc_button = "  Create Account  ";
+    public final String admin_str_content_create_username = "  Username:  ";
+    public final String admin_str_content_create_password = "  Password:  ";
+    public final String admin_str_content_create_name = "  Name:  ";
+    public final String admin_str_content_create_success = "Successful";
+    public final String admin_str_content_create_fail = "Failure!";
 
 
 }

@@ -158,6 +158,10 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
     private final void windowClosedDestroy(){
         onDestroyInternal();
     }
+    public final void disposeWindow(){
+        onDestroyInternal();
+        dispose();
+    }
 
     protected void navigateWindowTo(GUIWindow window){
         Main.instance().nav.newWindow(window);

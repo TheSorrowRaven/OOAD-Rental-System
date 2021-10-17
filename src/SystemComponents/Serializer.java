@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.print.DocFlavor.STRING;
+
 import src.*;
 
 import java.io.BufferedReader;
@@ -96,27 +98,42 @@ public class Serializer {
 
 
 
+    /**
+     * Removes for each casted entry row processed in execution
+     * @param <T>
+     * @param serializable
+     * @param execution Override the one with the line number
+     */
+    public <T extends ISerializable<T>> void removeForEach(ISerializable<T> serializable, ICommand<T> execution){
+        final ArrayList<Integer> linesToDelete = new ArrayList<Integer>();
+        var readForEachCommand = new Command<T>(){
+            @Override
+            public boolean execute(T data){
+                return false;
+            }
+            @Override
+            public boolean execute(T data, Object lineNumber){
+                boolean deleteThis = execution.execute(data, lineNumber);
+                if (deleteThis){
+                    linesToDelete.add((Integer)lineNumber);
+                }
+                return false;   //Always return false to assert dominance
+            }
+        };
+        readForEach(serializable, readForEachCommand);
+        remove(serializable, linesToDelete);
+    }
 
-    public <T extends ISerializable<T>> void remove(ISerializable<T> serializable, int lineNumber){
+    public <T extends ISerializable<T>> void remove(ISerializable<T> serializable, ArrayList<Integer> lineNumbers){
         String filePath = getFilePathFromSerializable(serializable);
         File file = new File(filePath);
         if (!file.exists()){
             return;
         }
         ArrayList<String> fileLines = new ArrayList<String>();
-
+        
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            int lineCount = 1;
-            while ((line = br.readLine()) != null) {
-                if (lineCount == lineNumber){   //Skip the line to delete
-                    lineCount++;
-                    continue;
-                }
-                fileLines.add(line);
-                lineCount++;
-            }
-            
+            removeProcessLine(br, fileLines, lineNumbers);            
         }
         catch (FileNotFoundException notFoundEx){
             CLI.log("File Not Found while remove");
@@ -127,6 +144,31 @@ public class Serializer {
             ioEx.printStackTrace();
         }
         
+        removeWrite(file, fileLines);
+    }
+    public <T extends ISerializable<T>> void remove(ISerializable<T> serializable, int lineNumber){
+        ArrayList<Integer> lineNumbers = new ArrayList<>(1);
+        lineNumbers.add(lineNumber);
+        remove(serializable, lineNumbers);
+    }
+    private void removeProcessLine(BufferedReader br, ArrayList<String> fileLines, ArrayList<Integer> lineNumbers){
+        String line;
+        int lineCount = 1;
+        try {
+            while ((line = br.readLine()) != null) {
+                if (lineNumbers.contains(lineCount)){   //Skip the line to delete
+                    lineCount++;
+                    continue;
+                }
+                fileLines.add(line);
+                lineCount++;
+            }
+        } catch (IOException e) {
+            CLI.log("IO Exception occured while remove");
+            e.printStackTrace();
+        }
+    }
+    private void removeWrite(File file, ArrayList<String> fileLines){
         //No append mode, rewrite the entire file
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))){
             for (String str : fileLines){
@@ -141,7 +183,6 @@ public class Serializer {
             CLI.log("IO Exception occured while remove");
             ioEx.printStackTrace();
         }
-
     }
 
 

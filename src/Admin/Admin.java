@@ -50,7 +50,7 @@ public class Admin {
      * @param password
      * @return
      */
-    public <T extends User<T>> UserCreationResult createAccount(Class<T> userClass, String username, String password){
+    public <T extends User<T>> UserCreationResult createAccount(Class<T> userClass, String username, String password, String name, boolean isOwnerAgent){
 
         UserCreationResult result = new UserCreationResult();
         User<?> existingUser = userExists(username);
@@ -60,15 +60,19 @@ public class Admin {
             return result;
         }
 
-        User<T> user = checkedCreateAccount(userClass, username, password);
+        User<T> user = checkedCreateAccount(userClass, username, password, name, isOwnerAgent);
         result.setUser(user);
         result.setSuccessful(true);
         return result;
 
     }
-    private <T extends User<T>> User<T> checkedCreateAccount(Class<T> userClass, String username, String password){
+    private <T extends User<T>> User<T> checkedCreateAccount(Class<T> userClass, String username, String password, String name, boolean isOwnerAgent){
         T user = User.getNewUserFromClass(userClass);
-        user.newUserSet(username, password);
+        user.newUserSet(username, password, name);
+
+        if (user instanceof OwnerAgentUser ownerAgent){
+            ownerAgent.isOwner = isOwnerAgent;
+        }
 
         Main.instance().serializer.write(user);
 
@@ -153,11 +157,15 @@ public class Admin {
             }
             @Override
             public boolean execute(User<T> user){
-                if (user.username == username){
+                if (user.username.equals(username)){
                     existingUser = user;
                     return true;
                 }
                 return false;
+            }
+            @Override
+            public boolean execute(User<T> user, Object discard){
+                return execute(user);
             }
         };
         serializer.readForEach(dummy, command);
@@ -169,6 +177,53 @@ public class Admin {
         this.loggedInAdmin = loggedInAdmin;
     }
 
+    public void deleteAllAnyUsers(ArrayList<User<?>> users){
+        ArrayList<TenantUser> tenants = new ArrayList<TenantUser>();;
+        ArrayList<OwnerAgentUser> ownerAgents = new ArrayList<OwnerAgentUser>();
+        ArrayList<AdminUser> admins = new ArrayList<AdminUser>();
+        for (User<?> user : users){
+            if (user instanceof TenantUser tenant){
+                tenants.add(tenant);
+            }
+            else if (user instanceof OwnerAgentUser ownerAgent){
+                ownerAgents.add(ownerAgent);
+            }
+            else if (user instanceof AdminUser admin){
+                admins.add(admin);
+            }
+        }
+        deleteTenants(tenants);
+        deleteOwnerAgent(ownerAgents);
+        deleteAdmins(admins);
+    }
+    public void deleteTenants(ArrayList<TenantUser> tenants){
+        deleteUser(TenantUser.class, tenants);
+    }
+    public void deleteOwnerAgent(ArrayList<OwnerAgentUser> ownerAgents){
+        deleteUser(OwnerAgentUser.class, ownerAgents);
+    }
+    public void deleteAdmins(ArrayList<AdminUser> admins){
+        deleteUser(AdminUser.class, admins);
+    }
+
+    public <T extends User<T>> void deleteUser(Class<T> userClass, ArrayList<T> users){
+        if (users.size() == 0){
+            return;
+        }
+        var executionCommand = new Command<User<T>>(){
+            @Override
+            public boolean execute(User<T> user, Object lineNumber){
+                for (T t : users){
+                    if (t.username.equals(user.username)){
+                        return true;
+                    }
+                }
+                return false;
+            }
+        };
+        T dummy = User.getNewUserFromClass(userClass);
+        Main.instance().serializer.removeForEach(dummy, executionCommand);
+    }
     
 
 

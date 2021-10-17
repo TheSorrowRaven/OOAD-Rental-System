@@ -12,6 +12,10 @@ import java.awt.*;
 
 public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnable {
     
+
+    private JTextField usernameField;
+    private JTextField passwordField;
+
     private JLabel errorLabel;
 
     public LoginGUIPanel(LoginGUIWindow parent) {
@@ -34,7 +38,7 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
 
 
         JLabel usernameLabel = JLabel(Resource().login_str_prompt_Username);
-        JTextField usernameField = JTextField();
+        usernameField = JTextField();
         parent.loginController.attachUsernameTextField(usernameField);
         add(usernameLabel, ctr);
         ctr.gridy++;
@@ -42,7 +46,7 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
         ctr.gridy++;
 
         JLabel passwordLabel = JLabel(Resource().login_str_prompt_Password);
-        JPasswordField passwordField = JPasswordField();
+        passwordField = JPasswordField();
         parent.loginController.attachPasswordTextField(passwordField);
         add(passwordLabel, ctr);
         ctr.gridy++;
@@ -99,12 +103,17 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
 
     @Override
     public void onThawed() {
-        
+        clearTextFields();
     }
 
     @Override
     public void onDestroy() {
         
+    }
+
+    private void clearTextFields(){
+        usernameField.setText("");
+        passwordField.setText("");
     }
 
     public ArrayList<ILoginnable> loginnables = new ArrayList<ILoginnable>();

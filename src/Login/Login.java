@@ -47,10 +47,7 @@ public class Login {
      * @param password
      * @return User if credentials are valid, else null
      */
-    private <T extends User<T>> T getUserFromCredentials(Class<T> userClass, String username, String password){
-        final String username_ = Input.standardize(username);
-        final String password_ = Input.standardize(password);
-
+    private <T extends User<T>> T getUserFromCredentials(Class<T> userClass, final String username, final String password){
         T dummy = User.getNewUserFromClass(userClass);
 
         T foundUser = null;
@@ -66,7 +63,7 @@ public class Login {
             }
             @Override
             public boolean execute(User<T> user){
-                if (user.username.equals(username_) && user.password.equals(password_)){
+                if (user.username.equals(username) && user.password.equals(password)){
                     this.user = userClass.cast(user);
                     return true;
                 }
@@ -74,7 +71,7 @@ public class Login {
             }
             @Override
             public boolean execute(User<T> user, Object lineNumber){
-                if (user.username.equals(username_) && user.password.equals(password_)){
+                if (user.username.equals(username) && user.password.equals(password)){
                     this.user = userClass.cast(user);
                     this.lineNumber = (Integer)lineNumber;
                     return true;

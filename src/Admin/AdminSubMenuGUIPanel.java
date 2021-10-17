@@ -40,20 +40,18 @@ public class AdminSubMenuGUIPanel extends GUIPanel<AdminGUIWindow> {
         JButton viewOwnersButton = Button(Resource().admin_str_submenu_ViewOwners);
         JButton viewAgentsButton = Button(Resource().admin_str_submenu_ViewAgents);
         JButton viewAdminsButton = Button(Resource().admin_str_submenu_ViewAdmins);
-        JButton createAccButton = Button(Resource().admin_str_submenu_CreateAcc);
 
-        viewAllButton.addActionListener(parent.admin.getViewAllUsersAction(this));
-        viewTenantsButton.addActionListener(parent.admin.getViewTenantsAction(this));
-        viewOwnersButton.addActionListener(parent.admin.getViewOwnersAction(this));
-        viewAgentsButton.addActionListener(parent.admin.getViewAgentsActionListener(this));
-        viewAdminsButton.addActionListener(parent.admin.getViewAdminsActionListener(this));
+        viewAllButton.addActionListener(parent.adminController.getViewAllUsersAction(this));
+        viewTenantsButton.addActionListener(parent.adminController.getViewTenantsAction(this));
+        viewOwnersButton.addActionListener(parent.adminController.getViewOwnersAction(this));
+        viewAgentsButton.addActionListener(parent.adminController.getViewAgentsActionListener(this));
+        viewAdminsButton.addActionListener(parent.adminController.getViewAdminsActionListener(this));
 
         viewAllButton.setFont(Resource().general_font_highlight);
         viewTenantsButton.setFont(Resource().general_font_highlight);
         viewOwnersButton.setFont(Resource().general_font_highlight);
         viewAgentsButton.setFont(Resource().general_font_highlight);
         viewAdminsButton.setFont(Resource().general_font_highlight);
-        createAccButton.setFont(Resource().general_font_highlight);
 
         add(viewAllButton, gbc);
         gbc.gridx++;
@@ -65,41 +63,39 @@ public class AdminSubMenuGUIPanel extends GUIPanel<AdminGUIWindow> {
         gbc.gridx++;
         add(viewAdminsButton, gbc);
         gbc.gridx++;
-        add(createAccButton, gbc);
-        gbc.gridx++;
 
     }
 
-    private AdminTableViewGUIPanel<?> currentTablePanel;
+    private GUIPanel<?> currentTablePanel;
 
-    public void setCurrentTablePanel(AdminTableViewGUIPanel<?> newPanel){
+    public void setCurrentTablePanel(GUIPanel<?> newPanel){
         currentTablePanel = newPanel;
     }
-    public AdminTableViewGUIPanel<?> getCurrentTablePanel(){
+    public GUIPanel<?> getCurrentTablePanel(){
         return currentTablePanel;
     }
-    public AdminTableViewGUIPanel<?> getAllUsersTablePanel(){
-        AdminTableViewGUIPanel<?> allUsersTablePanel = new AdminTableViewGUIPanel<>(parent);
+    public AdminUserViewGUIPanel<?> getAllUsersTablePanel(){
+        AdminUserViewGUIPanel<?> allUsersTablePanel = new AdminUserViewGUIPanel<>(parent);
         allUsersTablePanel.initializeTitle(Resource().admin_str_content_title_AllUsers);
         return allUsersTablePanel;
     }
-    public AdminTableViewGUIPanel<TenantUser> getTenantsTablePanel(){
-        AdminTableViewGUIPanel<TenantUser> tenantsTablePanel = new AdminTableViewGUIPanel<TenantUser>(parent, TenantUser.class);
+    public AdminUserViewGUIPanel<TenantUser> getTenantsTablePanel(){
+        AdminUserViewGUIPanel<TenantUser> tenantsTablePanel = new AdminUserViewGUIPanel<TenantUser>(parent, TenantUser.class);
         tenantsTablePanel.initializeTitle(Resource().admin_str_content_title_Tenants);
         return tenantsTablePanel;
     }
-    public AdminTableViewGUIPanel<OwnerAgentUser> getOwnersTablePanel(){
-        AdminTableViewGUIPanel<OwnerAgentUser> ownersTablePanel = new AdminTableViewGUIPanel<OwnerAgentUser>(parent, OwnerAgentUser.class, true);
+    public AdminUserViewGUIPanel<OwnerAgentUser> getOwnersTablePanel(){
+        AdminUserViewGUIPanel<OwnerAgentUser> ownersTablePanel = new AdminUserViewGUIPanel<OwnerAgentUser>(parent, OwnerAgentUser.class, true);
         ownersTablePanel.initializeTitle(Resource().admin_str_content_title_Owners);
         return ownersTablePanel;
     }
-    public AdminTableViewGUIPanel<OwnerAgentUser> getAgentsTablePanel(){
-        AdminTableViewGUIPanel<OwnerAgentUser> agentsTablePanel = new AdminTableViewGUIPanel<OwnerAgentUser>(parent, OwnerAgentUser.class, false);
+    public AdminUserViewGUIPanel<OwnerAgentUser> getAgentsTablePanel(){
+        AdminUserViewGUIPanel<OwnerAgentUser> agentsTablePanel = new AdminUserViewGUIPanel<OwnerAgentUser>(parent, OwnerAgentUser.class, false);
         agentsTablePanel.initializeTitle(Resource().admin_str_content_title_Agents);
         return agentsTablePanel;
     }
-    public AdminTableViewGUIPanel<AdminUser> getAdminsTablePanel(){
-        AdminTableViewGUIPanel<AdminUser> adminsTablePanel = new AdminTableViewGUIPanel<AdminUser>(parent, AdminUser.class);
+    public AdminUserViewGUIPanel<AdminUser> getAdminsTablePanel(){
+        AdminUserViewGUIPanel<AdminUser> adminsTablePanel = new AdminUserViewGUIPanel<AdminUser>(parent, AdminUser.class);
         adminsTablePanel.initializeTitle(Resource().admin_str_content_title_Admins);
         return adminsTablePanel;
     }
@@ -108,15 +104,15 @@ public class AdminSubMenuGUIPanel extends GUIPanel<AdminGUIWindow> {
     public void onCreatePanel() {
 
         setTargetPanel(this);
-
         switchTableView(getAllUsersTablePanel());
         
     }
 
-    public void switchTableView(AdminTableViewGUIPanel<?> newPanel){
+    public void switchTableView(GUIPanel<?> newPanel){
         setTargetPanel(this);
-        AdminTableViewGUIPanel<?> previous = getCurrentTablePanel();
+        GUIPanel<?> previous = getCurrentTablePanel();
         if (previous != null){
+            previous.onDestroyInternal();
             remove(previous);
         }
         attachPanel(newPanel, BorderLayout.CENTER);
@@ -155,3 +151,4 @@ public class AdminSubMenuGUIPanel extends GUIPanel<AdminGUIWindow> {
     }
     
 }
+ 

@@ -10,16 +10,6 @@ public class Input {
     }
 
     /**
-     * Replaces and standardizes special characters to not mess up saving and loading
-     * @param text
-     * @return
-     */
-    public static String standardize(String text){
-        String standard = text == null ? "" : text.replace(Resource().splittingInputCharacter, Resource().splittingReplaceCharacter);
-        return standard;
-    }
-
-    /**
      * Combines an array of Strings into one by inserting the split character
      */
     public static String combineData(String... data){
@@ -36,6 +26,11 @@ public class Input {
 
     public static String[] separateIntoData(String combined){
         String[] split = combined.split(Resource().splittingInputCharacterStr());
+        for (int i = 0; i < split.length; i++){
+            if (split[i].equals(Character.toString(Resource().nullPlacementCharacter))){
+                split[i] = null;
+            }
+        }
         return split;
     }
 
