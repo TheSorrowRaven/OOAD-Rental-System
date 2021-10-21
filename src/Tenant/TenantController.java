@@ -1,8 +1,9 @@
 package src.Tenant;
 
+import src.Property.PropertyController;
 import src.Users.*;
 
-public class TenantController {
+public class TenantController extends PropertyController {
     
     public TenantUser loggedInTenant;
 

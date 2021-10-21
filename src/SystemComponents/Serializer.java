@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import javax.print.DocFlavor.STRING;
 
 import src.*;
+import src.Users.OwnerAgentUser;
+import src.Users.User;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -68,7 +70,7 @@ public class Serializer {
     }
 
 
-    public <T extends ISerializable<T>> void write(ISerializable<T> serializable){
+    public <T extends ISerializable<T>> void write(T serializable){
         String filePath = getFilePathFromSerializable(serializable);
         checkCreateFile(filePath);
         File file = new File(filePath);
@@ -89,8 +91,8 @@ public class Serializer {
 
     }
 
-    public <T extends ISerializable<T>> void writeAll(ArrayList<ISerializable<T>> serializables){
-        for (ISerializable<T> serializable : serializables){
+    public <T extends ISerializable<T>> void writeAll(ArrayList<T> serializables){
+        for (T serializable : serializables){
             write(serializable);
         }
     }
@@ -104,7 +106,7 @@ public class Serializer {
      * @param serializable
      * @param execution Override the one with the line number
      */
-    public <T extends ISerializable<T>> void removeForEach(ISerializable<T> serializable, ICommand<T> execution){
+    public <T extends ISerializable<T>> void removeForEach(T serializable, ICommand<T> execution){
         final ArrayList<Integer> linesToDelete = new ArrayList<Integer>();
         var readForEachCommand = new Command<T>(){
             @Override
@@ -124,7 +126,7 @@ public class Serializer {
         remove(serializable, linesToDelete);
     }
 
-    public <T extends ISerializable<T>> void remove(ISerializable<T> serializable, ArrayList<Integer> lineNumbers){
+    public <T extends ISerializable<T>> void remove(T serializable, ArrayList<Integer> lineNumbers){
         String filePath = getFilePathFromSerializable(serializable);
         File file = new File(filePath);
         if (!file.exists()){
@@ -146,7 +148,7 @@ public class Serializer {
         
         removeWrite(file, fileLines);
     }
-    public <T extends ISerializable<T>> void remove(ISerializable<T> serializable, int lineNumber){
+    public <T extends ISerializable<T>> void remove(T serializable, int lineNumber){
         ArrayList<Integer> lineNumbers = new ArrayList<>(1);
         lineNumbers.add(lineNumber);
         remove(serializable, lineNumbers);
@@ -200,7 +202,7 @@ public class Serializer {
      * @param serializable The object for saving and loading (dummy)
      * @return A list of all objects. Null if file does not exist
      */
-    public <T extends ISerializable<T>> ArrayList<T> readAll(ISerializable<T> serializable){
+    public <T extends ISerializable<T>> ArrayList<T> readAll(T serializable){
         String filePath = getFilePathFromSerializable(serializable);
         File file = new File(filePath);
         if (!file.exists()){
@@ -226,7 +228,11 @@ public class Serializer {
      * @param serializable The object for saving and loading (dummy)
      * @param execution Action for each loaded <T> object. Additional parameter in execution is line number to refer to when deleting
      */
-    public <T extends ISerializable<T>> void readForEach(ISerializable<T> serializable, ICommand<T> execution){
+    // public <T extends ISerializable<T>> void readForEach(ISerializable<T> serializable, ICommand<T> execution){
+    //     readForEachT(serializable, execution);
+    // }
+
+    public <T extends ISerializable<T>> void readForEach(T serializable, ICommand<T> execution) {
         String filePath = getFilePathFromSerializable(serializable);
         File file = new File(filePath);
         if (!file.exists()){

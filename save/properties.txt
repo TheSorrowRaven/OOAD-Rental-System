@@ -1,0 +1,3 @@
+57e9712c-f9f7-4dea-a24b-036b253a2a25 Peaceful Town Block World false Apartment 23 sqr inch 2 1 Gym Kitchen 100 098f3645-8e0f-4f42-bcec-b67caacf45ab
+0da71f46-dd05-4a96-89d4-d8b6a9634118 Lame pla InGDSand false TripleStorey 1000 sqr ft 27 7 WaterHeater Security 5000 098f3645-8e0f-4f42-bcec-b67caacf45ab
+f5ec2b7e-5ce3-433d-af07-b23ba4b39a31 TRAHSH GSDF true Apartment 60 sqr ft 21 7 Wifi Aircon SwimmingPool 14060 098f3645-8e0f-4f42-bcec-b67caacf45ab

@@ -91,9 +91,9 @@ public class Admin {
     }
     public <T extends User<T>> ArrayList<T> fetchAllUsersOfType(Class<T> userClass){
         Serializer serializer = Main.instance().serializer;
-        ArrayList<User<T>> uncastedArray = serializer.readAll(User.getNewUserFromClass(userClass));
+        ArrayList<T> uncastedArray = serializer.readAll(User.getNewUserFromClass(userClass));
         if (uncastedArray == null){
-            uncastedArray = new ArrayList<User<T>>(0);
+            uncastedArray = new ArrayList<T>(0);
         }
         ArrayList<T> finalArray = new ArrayList<T>(uncastedArray.size());
         //Checked Cast (Only single class of - TenantUser / User<TenantUser>)
@@ -150,13 +150,13 @@ public class Admin {
     private <T extends User<T>> User<T> userExistsForType(Class<T> userClass, final String username){
         Serializer serializer = Main.instance().serializer;
         T dummy = User.getNewUserFromClass(userClass);
-        var command = new Command<User<T>>(){
-            private User<T> existingUser;
-            public User<T> getExistingUser(){
+        var command = new Command<T>(){
+            private T existingUser;
+            public T getExistingUser(){
                 return existingUser;
             }
             @Override
-            public boolean execute(User<T> user){
+            public boolean execute(T user){
                 if (user.username.equals(username)){
                     existingUser = user;
                     return true;
@@ -164,7 +164,7 @@ public class Admin {
                 return false;
             }
             @Override
-            public boolean execute(User<T> user, Object discard){
+            public boolean execute(T user, Object discard){
                 return execute(user);
             }
         };
@@ -210,9 +210,9 @@ public class Admin {
         if (users.size() == 0){
             return;
         }
-        var executionCommand = new Command<User<T>>(){
+        var executionCommand = new Command<T>(){
             @Override
-            public boolean execute(User<T> user, Object lineNumber){
+            public boolean execute(T user, Object lineNumber){
                 for (T t : users){
                     if (t.username.equals(user.username)){
                         return true;

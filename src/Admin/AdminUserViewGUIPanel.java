@@ -175,7 +175,7 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends GUIPanel<AdminGUIW
         int columns = sample.getTableDisplayColumns();
         model.setColumnCount(columns + 1);
         var columnModel = table.getColumnModel();
-        ArrayList<String> columnHeaders = sample.getColumnHeaders();
+        ArrayList<String> columnHeaders = sample.getColumnHeaders(ownerAgent);
         int c = 0;
         for (; c < columns; c++){
             table.getColumnModel().getColumn(c).setHeaderValue(columnHeaders.get(c));

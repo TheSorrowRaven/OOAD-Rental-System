@@ -9,13 +9,13 @@ import java.util.UUID;
 /**
  * This User class represents a loginnable user
  */
-public abstract class User<T extends User<T>> implements ISerializable<User<T>> {
+public abstract class User<T extends User<T>> implements ISerializable<T> {
 
     public static Resource Resource(){
         return Resource.instance();
     }
 
-    public static <T extends User<T>> T getNewUserFromClass(Class<T> userClass){
+    public static <T> T getNewUserFromClass(Class<T> userClass){
         try {
             return userClass.getDeclaredConstructor().newInstance();
         } catch (Exception e){
@@ -114,8 +114,11 @@ public abstract class User<T extends User<T>> implements ISerializable<User<T>> 
     public ArrayList<Object> getTableDisplayColumnsData(){
         return getBaseTableDisplayColumnsData();
     }
-    public ArrayList<String> getColumnHeaders(){
+    public ArrayList<String> getColumnHeaders(boolean isOwnerAgent){
         return getBaseColumnHeaders();
+    }
+    public final ArrayList<String> getColumnHeaders(){
+        return getColumnHeaders(false);
     }
     
 }

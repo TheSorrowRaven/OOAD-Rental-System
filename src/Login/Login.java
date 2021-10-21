@@ -52,7 +52,7 @@ public class Login {
 
         T foundUser = null;
         //var is used here to accomodate the new lambda type extended from Command
-        var checkCommand = new Command<User<T>>(){
+        var checkCommand = new Command<T>(){
             private T user = null;
             private int lineNumber = 0;
             public T getUser(){
@@ -62,7 +62,7 @@ public class Login {
                 return lineNumber;
             }
             @Override
-            public boolean execute(User<T> user){
+            public boolean execute(T user){
                 if (user.username.equals(username) && user.password.equals(password)){
                     this.user = userClass.cast(user);
                     return true;
@@ -70,7 +70,7 @@ public class Login {
                 return false;
             }
             @Override
-            public boolean execute(User<T> user, Object lineNumber){
+            public boolean execute(T user, Object lineNumber){
                 if (user.username.equals(username) && user.password.equals(password)){
                     this.user = userClass.cast(user);
                     this.lineNumber = (Integer)lineNumber;

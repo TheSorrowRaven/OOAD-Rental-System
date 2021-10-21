@@ -41,7 +41,7 @@ public class Input {
             return "";
         }
         StringBuilder str = new StringBuilder(checkNull(array.get(0).toString()));
-        for (int i = 0; i < array.size(); i++){
+        for (int i = 1; i < array.size(); i++){
             T value = array.get(i);
             String text = value.toString();
             text = checkNull(text);

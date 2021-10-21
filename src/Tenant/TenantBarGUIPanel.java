@@ -2,6 +2,7 @@ package src.Tenant;
 
 import src.MenuBarGUIPanel;
 import src.MenuGUIWindow;
+import javax.swing.*;
 
 public class TenantBarGUIPanel extends MenuBarGUIPanel {
 
@@ -10,8 +11,21 @@ public class TenantBarGUIPanel extends MenuBarGUIPanel {
     }
 
     @Override
+    public void onCreate(){
+        super.onCreate();
+        ctr.gridx++;
+        
+    }
+
+    //TODO LEFT? Edit profile, change name?
+    //Admin properties
+    //Admin set owner/agent
+    //owner/agent instructions
+
+    @Override
     public String getMenuBarTitle() {
-        return Resource().bar_back_logout;
+        TenantController tenantController = ((TenantGUIWindow)parent).tenantController;
+        return tenantController.loggedInTenant.name;
     }
 
     @Override

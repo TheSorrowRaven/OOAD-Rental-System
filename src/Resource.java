@@ -351,6 +351,7 @@ public final class Resource {
 
     //LAYOUT
     public final int general_inset_value = 5;
+    public final int general_inset_tiny_value = 2;
     public final int general_inset_medium_value = 10;
     public final int general_inset_major_value = 50;
     public final int general_inset_wide_value = 40;
@@ -359,12 +360,25 @@ public final class Resource {
     public final Insets general_inset_bottom_major_spacing = new Insets(0, 0, general_inset_major_value, 0);
     public final Insets general_inset_wide = new Insets(general_inset_value, general_inset_wide_value, general_inset_value, general_inset_wide_value);
     public final Insets general_inset_medium = new Insets(general_inset_medium_value, general_inset_medium_value, general_inset_medium_value, general_inset_medium_value);
+    public final Insets general_inset_tiny = new Insets(general_inset_tiny_value, general_inset_tiny_value, general_inset_tiny_value, general_inset_tiny_value);
 
     //STRING
     public final String str_user = "User";
     public final String str_username = "Username";
     public final String str_password = "Password";
     public final String str_name = "Name";
+    public final String str_address = "Address";
+    public final String str_active = "Status";
+    public final String str_type = "Type";
+    public final String str_rent = "Rent";
+    public final String str_facilities = "Facilities";
+    public final String str_rooms = "Rooms";
+    public final String str_size = "Size";
+    public final String str_bathrooms = "Bathrooms";
+    public final String str_owner = "Owner";
+    public final String str_agent = "Agent";
+    public final String str_unassigned_ownerAgent = ""; //show empty
+    public final String str_filter = "Filter Facilities";
 
 
     public final String login_window_title = "Login";
@@ -404,6 +418,24 @@ public final class Resource {
     public final String tenant_window_title = "Tenant";
 
     public final String ownerAgent_window_title = "Owner/Agent";
+    public final String ownerAgent_str_edit_active = "Is Active:  ";
+    public final String ownerAgent_str_edit_name = "Name:  ";
+    public final String ownerAgent_str_edit_address = "Address:  ";
+    public final String ownerAgent_str_edit_type = "Type:  ";
+    public final String ownerAgent_str_edit_size = "Size:  ";
+    public final String ownerAgent_str_edit_rooms = "Rooms:  ";
+    public final String ownerAgent_str_edit_bathrooms = "Bathrooms:  ";
+    public final String ownerAgent_str_edit_rent = "Rent:  ";
+    public final String ownerAgent_str_edit_facilities = "Facilities:  ";
+    public final String ownerAgent_str_table_header_delete = "Delete";
+    public final String ownerAgent_str_table_header_edit = "Edit";
+    public final String ownerAgent_str_table_button_edit = "Edit";
+    public final String ownerAgent_str_button_createEdit_create = "Create";
+    public final String ownerAgent_str_button_createEdit_edit = "Apply Changes";
+    public final String ownerAgent_str_button_restoreEdit = "Stop Editing";
+    public final String ownerAgent_str_button_delete = "Delete Selected";
 
+    public final String property_str_filter_instructions = "Filter facilities by ticking any facility. Untick all to show all";
+    public final String property_str_sort_instructions = "Sort properties by clicking on the header. Click again on the same one to sort in reverse order";
 
 }

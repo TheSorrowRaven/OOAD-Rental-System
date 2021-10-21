@@ -1,13 +1,11 @@
 package src;
 
 import javax.swing.*;
-
-import src.SystemComponents.CLI;
+import javax.swing.table.*;
 
 import java.awt.*;
-import java.awt.image.*;
 
-public class Button extends JButton {
+public class Button extends JButton implements TableCellRenderer {
     
     public static Resource Resource(){
         return Resource.instance();
@@ -19,23 +17,17 @@ public class Button extends JButton {
     private ICommand<?> onPressed;
     private ICommand<?> onHover;
 
-    private BufferedImage image;
+    private String name;
 
     public Button(String name){
         super(name);
         super.setContentAreaFilled(false);
+        this.name = name;
         
     }
     public Button(){
         super();
         super.setContentAreaFilled(false);
-    }
-
-
-
-    public void setBufferedImage(BufferedImage image){
-        this.image = image;
-        repaint();
     }
 
     @Override
@@ -53,31 +45,15 @@ public class Button extends JButton {
             g.setColor(getBackground());
         }
         g.fillRect(0, 0, getWidth(), getHeight());
-        // Graphics ig = getImageGraphics();
-        // if (ig != null){
-        //     CLI.log("Painting ");
-        //     super.paintComponent(ig);
-        // }
-        // else{
-        // }
 
 
         super.paintComponent(g);
-        //tryPaintWithImage(model, g);
     }
 
-    private Graphics getImageGraphics(){
-        if (image == null){
-            return null;
-        }
-        return image.getGraphics();
-    }
-    private void tryPaintWithImage(ButtonModel model, Graphics g){
-        //g.drawImage(image, 0, 0);
-        if (image == null){
-            return;
-        }
-        paint(image.createGraphics());
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        setText(name);
+        return this;
     }
 
     public void setPressedColor(Color pressedColor){

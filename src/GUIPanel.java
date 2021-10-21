@@ -6,8 +6,10 @@ import src.SystemComponents.CLI;
 
 import java.util.*;
 import java.awt.*;
+import java.text.NumberFormat;
+import src.Property.*;
+
 import javax.swing.table.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 
 /**
  * 
@@ -33,23 +35,54 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
     }
     public JTextField JTextField(){
         JTextField textField = new JTextField();
-        textField.setBackground(Theme().background_color);
-        textField.setForeground(Theme().text_color);
-        textField.setBorder(Theme().border);
-
-        textField.setCaretColor(Theme().caret_color);
+        setTextFieldTheme(textField);
 
         return textField;
     }
     public JPasswordField JPasswordField(){
         JPasswordField passwordField = new JPasswordField();
-        passwordField.setBackground(Theme().background_color);
-        passwordField.setForeground(Theme().text_color);
-        passwordField.setBorder(Theme().border);
-
-        passwordField.setCaretColor(Theme().caret_color);
+        setTextFieldTheme(passwordField);
 
         return passwordField;
+    }
+    public JFormattedTextField JFormattedTextField(NumberFormat f){
+        JFormattedTextField formattedField = new JFormattedTextField(f);
+        setTextFieldTheme(formattedField);
+
+        return formattedField;
+    }
+    private void setTextFieldTheme(JTextField field){
+        field.setBackground(Theme().background_color);
+        field.setForeground(Theme().text_color);
+        field.setBorder(Theme().border);
+
+        field.setCaretColor(Theme().caret_color);
+    }
+    public JSpinner JSpinner(SpinnerModel model){
+        JSpinner spinner = new JSpinner(model);
+        spinner.setBackground(Theme().background_color);
+        spinner.setForeground(Theme().text_color);
+        spinner.setBorder(Theme().border);
+
+        Component c = spinner.getEditor().getComponent(0);
+        c.setBackground(Theme().background_color);
+        c.setForeground(Theme().text_color);
+        
+        return spinner;
+    }
+    public <E> JComboBox<E> JComboBox(E[] types){
+        JComboBox<E> combo = new JComboBox<>(types);
+        combo.setBackground(Theme().background_color);
+        combo.setForeground(Theme().text_color);
+        
+        return combo;
+    }
+    public JCheckBox JCheckBox(String text){
+        JCheckBox checkBox = new JCheckBox(text);
+        checkBox.setBackground(Theme().background_color);
+        checkBox.setForeground(Theme().text_color);
+
+        return checkBox;
     }
     public Table JTable(){
         DefaultTableModel model = new DefaultTableModel(1, 1);

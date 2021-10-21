@@ -7,7 +7,7 @@ import src.SystemComponents.CLI;
 public abstract class MenuBarGUIPanel extends GUIPanel<MenuGUIWindow> {
 
     protected JPanel gridBagPanel;
-    protected GridBagConstraints gridBagConstraints;
+    protected GridBagConstraints ctr;
 
     public MenuBarGUIPanel(MenuGUIWindow parent) {
         super(parent);
@@ -28,11 +28,11 @@ public abstract class MenuBarGUIPanel extends GUIPanel<MenuGUIWindow> {
         setLayout(flowLayout);
 
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.fill = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.insets = Resource().general_inset_all;
+        ctr = new GridBagConstraints();
+        ctr.fill = 0;
+        ctr.gridy = 0;
+        ctr.gridx = 0;
+        ctr.insets = Resource().general_inset_all;
 
         gridBagPanel = new JPanel();
         gridBagPanel.setBackground(Resource().color_invisible);
@@ -47,11 +47,11 @@ public abstract class MenuBarGUIPanel extends GUIPanel<MenuGUIWindow> {
             Main.instance().nav.backToLastWindow();
         });
         backButton.setIcon(new ImageIcon(logoutImage));
-        add(backButton, gridBagConstraints);
+        add(backButton, ctr);
 
-        gridBagConstraints.gridx ++;
+        ctr.gridx ++;
         JLabel label = JLabel(getMenuBarTitle());
-        add(label, gridBagConstraints);
+        add(label, ctr);
     }
 
     @Override
