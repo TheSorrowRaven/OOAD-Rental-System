@@ -18,11 +18,9 @@ public class AdminGUIWindow extends MenuGUIWindow {
         return Resource().admin_window_title;
     }
 
-
-
     @Override
     protected MenuBarGUIPanel getMenuBarContentPanel() {
-        return new AdminBarGUIPanel(this);
+        return new AdminBarGUIPanel(this, adminController.adminUser);
     }
 
     @Override
@@ -43,16 +41,6 @@ public class AdminGUIWindow extends MenuGUIWindow {
 
     @Override
     public void onPreparingToFreeze() {
-        
-    }
-
-    @Override
-    public void onFrozen() {
-        
-    }
-
-    @Override
-    public void onThawed() {
         
     }
 

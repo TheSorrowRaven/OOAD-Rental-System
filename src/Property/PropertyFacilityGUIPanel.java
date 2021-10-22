@@ -47,11 +47,11 @@ public class PropertyFacilityGUIPanel extends GUIPanel<GUIWindow> {
         setBackground(Theme().background_color);
         setLayout(new GridBagLayout());
 
-        GridBagConstraints ctr = new GridBagConstraints();
-        ctr.fill = GridBagConstraints.HORIZONTAL;
-        ctr.gridx = 0;
-        ctr.gridy = 0;
-        ctr.insets = Resource().general_inset_tiny;
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = Resource().general_inset_tiny;
 
         var facilities = PropertyListing.Facility.values();
         for (int i = 0; i < facilities.length; i++){
@@ -60,12 +60,12 @@ public class PropertyFacilityGUIPanel extends GUIPanel<GUIWindow> {
             checkBoxes[i] = JCheckBox(f.getName());
             checkBoxes[i].addItemListener(property.getOnFacilityChangedFor(f));
 
-            add(checkBoxes[i], ctr);
+            add(checkBoxes[i], gbc);
 
-            ctr.gridx++;
-            if (ctr.gridx == columns){
-                ctr.gridx = 0;
-                ctr.gridy++;
+            gbc.gridx++;
+            if (gbc.gridx == columns){
+                gbc.gridx = 0;
+                gbc.gridy++;
             }
         }
 

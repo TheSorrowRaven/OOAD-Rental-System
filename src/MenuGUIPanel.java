@@ -1,15 +1,16 @@
 package src;
 
 import java.awt.*;
+import src.Users.*;
 
 import src.SystemComponents.CLI;
 
 public final class MenuGUIPanel extends GUIPanel<MenuGUIWindow> {
 
     public MenuBarGUIPanel menuBar;
-    public MenuContentGUIPanel menuContent;
+    public MenuContentGUIPanel<?> menuContent;
 
-    public MenuGUIPanel(MenuGUIWindow parent, MenuBarGUIPanel menuBar, MenuContentGUIPanel menuContent) {
+    public MenuGUIPanel(MenuGUIWindow parent, MenuBarGUIPanel menuBar, MenuContentGUIPanel<?> menuContent) {
         super(parent);
         this.menuBar = menuBar;
         this.menuContent = menuContent;
@@ -44,7 +45,8 @@ public final class MenuGUIPanel extends GUIPanel<MenuGUIWindow> {
 
     @Override
     public void onThawed() {
-        
+        menuBar.onThawed();
+        menuContent.onThawed();
     }
 
     @Override

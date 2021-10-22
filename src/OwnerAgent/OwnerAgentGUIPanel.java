@@ -18,7 +18,7 @@ public class OwnerAgentGUIPanel extends MenuContentGUIPanel<OwnerAgentGUIWindow>
     public JPanel panel;
 
     private JScrollPane scrollPane;
-    private GridBagConstraints ctr;
+    private GridBagConstraints gbc;
 
     private PropertyFacilityFilterGUIPanel propertyFacilityFilter;
 
@@ -28,12 +28,12 @@ public class OwnerAgentGUIPanel extends MenuContentGUIPanel<OwnerAgentGUIWindow>
 
     @Override
     public void onCreate() {
-        ctr = new GridBagConstraints();
-        ctr.fill = GridBagConstraints.BOTH;
-        ctr.gridx = 0;
-        ctr.gridy = 0;
-        ctr.weightx = 1;
-        ctr.weighty = 1;
+        gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
         setLayout(new GridBagLayout());
         panel = new JPanel();
         panel.setBackground(Theme().panel_background_color);
@@ -43,24 +43,31 @@ public class OwnerAgentGUIPanel extends MenuContentGUIPanel<OwnerAgentGUIWindow>
         scrollPane.setBorder(null);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.getVerticalScrollBar().setUnitIncrement(Resource().scroll_speed);
-        add(scrollPane, ctr);
-        ctr.gridy++;
+        scrollPane.getHorizontalScrollBar().setUnitIncrement(Resource().scroll_speed);
+        add(scrollPane, gbc);
+        gbc.gridy++;
 
     }
 
     @Override
     public void onCreatePanel() {
-        PropertyTableGUIPanel propertyTableGUIPanel = new PropertyTableGUIPanel(parent, this, parent.ownerAgentController.loggedInOwnerAgent);
+        PropertyTableGUIPanel propertyTableGUIPanel = new PropertyTableGUIPanel(parent, this, parent.ownerAgentController.loggedInOwnerAgent, true);
         OwnerAgentCreateEditGUIPanel createEditPanel = new OwnerAgentCreateEditGUIPanel(parent, this, propertyTableGUIPanel);
-        panel.add(createEditPanel, ctr);
-        ctr.gridy++;
+        panel.add(createEditPanel, gbc);
+        gbc.gridy++;
 
         propertyFacilityFilter = new PropertyFacilityFilterGUIPanel(parent, this);
-        panel.add(propertyFacilityFilter, ctr);
+        panel.add(propertyFacilityFilter, gbc);
         executePanelLifecycle(propertyFacilityFilter);
-        ctr.gridy++;
+        gbc.gridy++;
 
-        panel.add(propertyTableGUIPanel, ctr);
+        
+        JLabel sortInstructions = JLabel(Resource().property_str_sort_instructions);
+        sortInstructions.setFont(Resource().general_font_minor);
+        panel.add(sortInstructions, gbc);
+        gbc.gridy++;
+
+        panel.add(propertyTableGUIPanel, gbc);
         createEditPanel.setPropertyTablePanel(propertyTableGUIPanel);
         executePanelLifecycle(createEditPanel);
         executePanelLifecycle(propertyTableGUIPanel);
@@ -111,15 +118,7 @@ public class OwnerAgentGUIPanel extends MenuContentGUIPanel<OwnerAgentGUIWindow>
 
     @Override
     public ItemListener getOnFacilityChangedFor(Facility facility) {
-        return new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                JCheckBox facilityCheckBox = (JCheckBox)e.getItem();
-                if (facilityCheckBox.getParent() == propertyFacilityFilter.getPropertyFacilityGUIPanel()){
-                    propertyFacilityFilter.facilityFilterChanged(facilityCheckBox, facility);
-                }
-            }
-        };
+        return parent.ownerAgentController.getOnFacilityChanged(facility, propertyFacilityFilter);
     }
 
     @Override

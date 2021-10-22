@@ -186,11 +186,14 @@ public final class Resource {
     }
 
     //WINDOW
-    public final int menu_window_width = 900;
-    public final int menu_window_height = 600;
+    public final int menu_window_width = 1280;
+    public final int menu_window_height = 720;
 
     public final int login_window_width = 900;
     public final int login_window_height = 600;
+    
+    public final int profile_window_width = 450;
+    public final int profile_window_height = 200;
 
     //FONT
     public final int general_font_size = 16;
@@ -346,6 +349,7 @@ public final class Resource {
     public final Theme admin_theme = red_theme;
     public final Theme tenant_theme = violeto_theme;
     public final Theme ownerAgent_theme = purple_theme;
+    public final Theme profile_theme = black_theme;
 
     
 
@@ -397,11 +401,13 @@ public final class Resource {
     public final String admin_str_submenu_ViewOwners = "Owners";
     public final String admin_str_submenu_ViewAgents = "Agents";
     public final String admin_str_submenu_ViewAdmins = "Admins";
+    public final String admin_str_submenu_ViewProperties = "Properties";
     public final String admin_str_content_title_AllUsers = "Users";
     public final String admin_str_content_title_Tenants = "Tenants";
     public final String admin_str_content_title_Owners = "Owners";
     public final String admin_str_content_title_Agents = "Agents";
     public final String admin_str_content_title_Admins = "Admins";
+    public final String admin_str_content_title_Properties = "Properties";
     public final String admin_str_content_deletion_table_header = "Delete";
     public final String admin_str_content_deletion_title = "User List & Deletion";
     public final String admin_str_content_deletion_instructions = "To delete, tick the checkboxes then click delete";
@@ -433,9 +439,16 @@ public final class Resource {
     public final String ownerAgent_str_button_createEdit_create = "Create";
     public final String ownerAgent_str_button_createEdit_edit = "Apply Changes";
     public final String ownerAgent_str_button_restoreEdit = "Stop Editing";
-    public final String ownerAgent_str_button_delete = "Delete Selected";
 
+    public final String property_str_button_delete = "Delete Selected";
     public final String property_str_filter_instructions = "Filter facilities by ticking any facility. Untick all to show all";
     public final String property_str_sort_instructions = "Sort properties by clicking on the header. Click again on the same one to sort in reverse order";
+    public final String property_str_delete_instructions = "To delete properties, check the tickboxes and click on the button";
+
+    public final String profile_str_button_edit = "Edit Profile";
+    public final String profile_str_change_name = "Change Name: ";
+    public final String profile_str_change_password = "Change Password: ";
+    public final String profile_str_button_save = "Save Settings";
+    public final String profile_window_title = "Profile";
 
 }

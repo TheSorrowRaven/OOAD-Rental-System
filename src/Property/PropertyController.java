@@ -5,6 +5,7 @@ import javax.swing.table.*;
 
 import src.*;
 import src.Property.PropertyListing.Facilities;
+import src.Property.PropertyListing.Facility;
 import src.SystemComponents.CLI;
 
 import javax.swing.event.*;
@@ -42,7 +43,7 @@ public class PropertyController {
                 int column = tablePanel.table.columnAtPoint(e.getPoint());
                 if (column == data.columnCount){
                     return;
-                    //Delete option
+                    //Delete option, no need to sort
                 }
                 Comparator<PropertyListing> comparator = data.getComparatorFromColumn(column);
                 tablePanel.refreshTable(comparator);
@@ -52,6 +53,18 @@ public class PropertyController {
 
     public void filterBy(Facilities fs){
         tablePanel.refreshTable(null, fs);
+    }
+
+    public ItemListener getOnFacilityChanged(Facility facility, PropertyFacilityFilterGUIPanel propertyFacilityFilter){
+        return new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                JCheckBox facilityCheckBox = (JCheckBox)e.getItem();
+                if (facilityCheckBox.getParent() == propertyFacilityFilter.getPropertyFacilityGUIPanel()){
+                    propertyFacilityFilter.facilityFilterChanged(facilityCheckBox, facility);
+                }
+            }
+        };
     }
 
 }

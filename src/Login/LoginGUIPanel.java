@@ -25,13 +25,13 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
     @Override
     public void onCreate() {
         
-        GridBagConstraints ctr = new GridBagConstraints();
-        ctr.insets = Resource().general_inset_bottom;
-        ctr.fill = 1;
-        ctr.gridheight = 1;
-        ctr.gridwidth = 1;
-        ctr.gridx = 0;
-        ctr.gridy = 0;
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = Resource().general_inset_bottom;
+        gbc.fill = 1;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
         GridBagLayout gridLayout = new GridBagLayout();
         setLayout(gridLayout);
 
@@ -40,22 +40,22 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
         JLabel usernameLabel = JLabel(Resource().login_str_prompt_Username);
         usernameField = JTextField();
         parent.loginController.attachUsernameTextField(usernameField);
-        add(usernameLabel, ctr);
-        ctr.gridy++;
-        add(usernameField, ctr);
-        ctr.gridy++;
+        add(usernameLabel, gbc);
+        gbc.gridy++;
+        add(usernameField, gbc);
+        gbc.gridy++;
 
         JLabel passwordLabel = JLabel(Resource().login_str_prompt_Password);
         passwordField = JPasswordField();
         parent.loginController.attachPasswordTextField(passwordField);
-        add(passwordLabel, ctr);
-        ctr.gridy++;
+        add(passwordLabel, gbc);
+        gbc.gridy++;
 
-        ctr.insets = Resource().general_inset_bottom_major_spacing;
-        add(passwordField, ctr);
-        ctr.gridy++;
+        gbc.insets = Resource().general_inset_bottom_major_spacing;
+        add(passwordField, gbc);
+        gbc.gridy++;
 
-        ctr.insets = Resource().general_inset_bottom;
+        gbc.insets = Resource().general_inset_bottom;
 
         errorLabel = JLabel(Resource().login_str_error_text);
         errorLabel.setForeground(Resource().general_error_text_color);
@@ -63,8 +63,8 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
         errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
         errorLabel.setOpaque(true);
         errorLabel.setVisible(false);
-        add(errorLabel, ctr);
-        ctr.gridy++;
+        add(errorLabel, gbc);
+        gbc.gridy++;
 
         JButton loginWithTenantButton = Button(Resource().login_str_button_LoginAsTenant);
         JButton loginWithOwnerAgentButton = Button(Resource().login_str_button_LoginAsOwnerAgent);
@@ -72,12 +72,12 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
         loginWithTenantButton.addActionListener(parent.loginController.getLoginTenantAction());
         loginWithOwnerAgentButton.addActionListener(parent.loginController.getLoginOwnerAgentAction());
         loginWithAdminButton.addActionListener(parent.loginController.getLoginAdminAction());
-        add(loginWithTenantButton, ctr);
-        ctr.gridy++;
-        add(loginWithOwnerAgentButton, ctr);
-        ctr.gridy++;
-        add(loginWithAdminButton, ctr);
-        ctr.gridy++;
+        add(loginWithTenantButton, gbc);
+        gbc.gridy++;
+        add(loginWithOwnerAgentButton, gbc);
+        gbc.gridy++;
+        add(loginWithAdminButton, gbc);
+        gbc.gridy++;
 
 
     }

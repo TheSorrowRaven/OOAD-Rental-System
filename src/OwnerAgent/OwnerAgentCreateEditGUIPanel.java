@@ -163,11 +163,15 @@ public class OwnerAgentCreateEditGUIPanel extends GUIPanel<OwnerAgentGUIWindow> 
         updateCreateEditButton();
         createEditButton.addActionListener(parent.ownerAgentController.getCreateEditListener(tablePanel));
         add(createEditButton, gbc);
-
-
-        deleteButton = Button(Resource().ownerAgent_str_button_delete);
-        deleteButton.addActionListener(parent.ownerAgentController.getDeleteActionListener());
         gbc.gridy++;
+
+        JLabel deleteLabel = JLabel(Resource().property_str_delete_instructions);
+        deleteLabel.setFont(Resource().general_font_minor);
+        add(deleteLabel, gbc);
+        gbc.gridy++;
+
+        deleteButton = Button(Resource().property_str_button_delete);
+        deleteButton.addActionListener(parent.ownerAgentController.getDeleteActionListener());
         add(deleteButton, gbc);
 
     }

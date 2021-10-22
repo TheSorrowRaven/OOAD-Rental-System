@@ -10,13 +10,11 @@ import src.SystemComponents.CLI;
 import src.Users.*;
 import java.util.*;
 
-public class AdminUserViewGUIPanel<T extends User<T>> extends GUIPanel<AdminGUIWindow> implements IOnUsersChangedObserver {
+public class AdminUserViewGUIPanel<T extends User<T>> extends AdminViewGUIPanel implements IOnUsersChangedObserver {
 
     public boolean isAllUsers;
     public Class<T> handlingUserClass;
     public boolean ownerAgent;
-
-    public String title;
 
     public int deletionTickboxColumn;
 
@@ -39,10 +37,6 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends GUIPanel<AdminGUIW
         isAllUsers = true;
     }
 
-    public void initializeTitle(String title){
-        this.title = title;
-    }
-
     public Table getTable(){
         return table;
     }
@@ -53,36 +47,9 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends GUIPanel<AdminGUIW
     @Override
     public void onCreate() {
 
+        super.onCreate();
+
         parent.adminController.observe(this);
-
-        setBackground(Theme().panel_background_color);
-        
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
-        panel.setBackground(Theme().background_color);
-        JScrollPane panelScroll = JScrollPane(panel);
-        panelScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        panelScroll.getVerticalScrollBar().setUnitIncrement(Resource().scroll_speed);
-        add(panelScroll);
-
-        setTargetPanel(panel);
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = 0;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        gbc.insets = Resource().general_inset_all;
-        gbc.anchor = GridBagConstraints.CENTER;
-
-
-        JLabel titleLabel = JLabel(this.title);
-        titleLabel.setFont(Resource().general_font_title);
-        add(titleLabel, gbc);
-        gbc.gridy++;
-
 
         if (!isAllUsers){
 
@@ -91,7 +58,6 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends GUIPanel<AdminGUIW
             executePanelLifecycle(createAccountPanel);
             gbc.gridy++;
         }
-        
 
         JLabel deleteTitleLabel = JLabel(Resource().admin_str_content_deletion_title);
         add(deleteTitleLabel, gbc);
@@ -101,12 +67,12 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends GUIPanel<AdminGUIW
         add(deleteInstructionsLabel, gbc);
         gbc.gridy++;
 
-        //gbc.anchor = GridBagConstraints.EAST;
         JButton deleteButton = Button(Resource().admin_str_content_deletion_button);
         deleteButton.addActionListener(parent.adminController.getDeleteSelectedActionListener(this));
         add(deleteButton, gbc);
         gbc.gridy++;
 
+        gbc.fill = 1;
         gbc.anchor = GridBagConstraints.CENTER;
         table = JTable();
         table.setRowHeight(Resource().table_cell_height);
@@ -123,31 +89,14 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends GUIPanel<AdminGUIW
     }
 
     @Override
-    public void onCreatePanel() {
-        
-    }
-
-    @Override
-    public void onView() {
-        
-    }
-
-    @Override
-    public void onPreparingToFreeze() {
-        
-    }
-
-    @Override
-    public void onFrozen() {
-    }
-
-    @Override
     public void onThawed() {
+        super.onThawed();
         refreshTable();
     }
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         parent.adminController.stopObserving(this);
     }
 

@@ -40,18 +40,21 @@ public class AdminSubMenuGUIPanel extends GUIPanel<AdminGUIWindow> {
         JButton viewOwnersButton = Button(Resource().admin_str_submenu_ViewOwners);
         JButton viewAgentsButton = Button(Resource().admin_str_submenu_ViewAgents);
         JButton viewAdminsButton = Button(Resource().admin_str_submenu_ViewAdmins);
+        JButton viewPropertiesButton = Button(Resource().admin_str_submenu_ViewProperties);
 
         viewAllButton.addActionListener(parent.adminController.getViewAllUsersAction(this));
         viewTenantsButton.addActionListener(parent.adminController.getViewTenantsAction(this));
         viewOwnersButton.addActionListener(parent.adminController.getViewOwnersAction(this));
         viewAgentsButton.addActionListener(parent.adminController.getViewAgentsActionListener(this));
         viewAdminsButton.addActionListener(parent.adminController.getViewAdminsActionListener(this));
+        viewPropertiesButton.addActionListener(parent.adminController.getViewPropertiesActionListener(this));
 
         viewAllButton.setFont(Resource().general_font_highlight);
         viewTenantsButton.setFont(Resource().general_font_highlight);
         viewOwnersButton.setFont(Resource().general_font_highlight);
         viewAgentsButton.setFont(Resource().general_font_highlight);
         viewAdminsButton.setFont(Resource().general_font_highlight);
+        viewPropertiesButton.setFont(Resource().general_font_highlight);
 
         add(viewAllButton, gbc);
         gbc.gridx++;
@@ -62,6 +65,8 @@ public class AdminSubMenuGUIPanel extends GUIPanel<AdminGUIWindow> {
         add(viewAgentsButton, gbc);
         gbc.gridx++;
         add(viewAdminsButton, gbc);
+        gbc.gridx++;
+        add(viewPropertiesButton, gbc);
         gbc.gridx++;
 
     }
@@ -98,6 +103,11 @@ public class AdminSubMenuGUIPanel extends GUIPanel<AdminGUIWindow> {
         AdminUserViewGUIPanel<AdminUser> adminsTablePanel = new AdminUserViewGUIPanel<AdminUser>(parent, AdminUser.class);
         adminsTablePanel.initializeTitle(Resource().admin_str_content_title_Admins);
         return adminsTablePanel;
+    }
+    public AdminPropertyViewGUIPanel getPropertiesTablePanel(){
+        AdminPropertyViewGUIPanel propertiesPanel = new AdminPropertyViewGUIPanel(parent);
+        propertiesPanel.initializeTitle(Resource().admin_str_content_title_Properties);
+        return propertiesPanel;
     }
 
     @Override
@@ -144,10 +154,6 @@ public class AdminSubMenuGUIPanel extends GUIPanel<AdminGUIWindow> {
     @Override
     public void onDestroy() {
         
-    }
-    
-    public void swapContentPanel(){
-
     }
     
 }

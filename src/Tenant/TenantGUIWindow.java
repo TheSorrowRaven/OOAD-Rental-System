@@ -38,23 +38,13 @@ public class TenantGUIWindow extends MenuGUIWindow {
     }
 
     @Override
-    public void onFrozen() {
-        
-    }
-
-    @Override
-    public void onThawed() {
-        
-    }
-
-    @Override
     public void onDestroy() {
         
     }
 
     @Override
     protected MenuBarGUIPanel getMenuBarContentPanel() {
-        return new TenantBarGUIPanel(this);
+        return new TenantBarGUIPanel(this, tenantController.loggedInTenant);
     }
 
     @Override

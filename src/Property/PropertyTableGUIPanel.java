@@ -6,8 +6,7 @@ import src.SystemComponents.CLI;
 import src.Users.*;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
 
 import java.awt.*;
 import java.util.*;
@@ -16,9 +15,8 @@ import javax.swing.table.*;
 public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
 
     public PropertyController propertyController;
-    public boolean isEditable;
+    public boolean canDelete;
     public Table table;
-    private IProperty property;
 
     private PropertyListing editingProperty;
     public ArrayList<PropertyListing> properties;
@@ -26,12 +24,11 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
     public int deletionTickboxColumn;
     private OwnerAgentUser limitingOwnerAgent;
 
-    public PropertyTableGUIPanel(GUIWindow parent, IProperty property, OwnerAgentUser limitingOwnerAgent) {
+    public PropertyTableGUIPanel(GUIWindow parent, IProperty property, OwnerAgentUser limitingOwnerAgent, boolean canDelete) {
         super(parent);
         propertyController = property.getPropertyController();
-        isEditable = property.isEditable();
-        this.property = property;
         this.limitingOwnerAgent = limitingOwnerAgent;
+        this.canDelete = canDelete;
     }
 
     public void clearSelection(){
@@ -43,6 +40,7 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
 
         setLayout(new GridLayout(0, 1));
 
+
         table = JTable();
         table.setRowHeight(Resource().table_cell_height);
         table.getTableHeader().setReorderingAllowed(false);
@@ -50,6 +48,8 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.getTableHeader().addMouseListener(propertyController.getHeaderOnClick(this));
         refreshTable();
+
+        table.editable = canDelete; //Enable clicking of checkbox
 
         JScrollPane scrollPane = JScrollPane(table);
         scrollPane.setBorder(null);
@@ -142,7 +142,7 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
                     }
                 }
                 ArrayList<Object> propDisplayColumns = prop.getTableData();
-                if (isEditable){
+                if (canDelete){
                     propDisplayColumns.add(false);
                 }
                 model.addRow(propDisplayColumns.toArray());
@@ -165,10 +165,9 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
     private void refreshHeader(DefaultTableModel model){
 
         PropertyListing.PropertyTableMetaData propertyTableMetaData = new PropertyListing.PropertyTableMetaData();
-        table.editable = isEditable;
 
         int columns = propertyTableMetaData.columnCount;
-        model.setColumnCount(columns + (isEditable ? 1 : 0));
+        model.setColumnCount(columns + (canDelete ? 1 : 0));
         TableColumnModel columnModel = table.getColumnModel();
         String[] columnHeaders = propertyTableMetaData.headers;
         int c = 0;
@@ -176,7 +175,7 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
             columnModel.getColumn(c).setHeaderValue(columnHeaders[c]);
             table.setEditableColumnClass(c, propertyTableMetaData.classes[c]);
         }
-        if (isEditable){
+        if (canDelete){
             columnModel.getColumn(c).setHeaderValue(Resource().ownerAgent_str_table_header_delete);
             table.setEditableColumnClass(c, Boolean.class);
             table.addEditableColumn(c);

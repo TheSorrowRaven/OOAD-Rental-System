@@ -2,16 +2,18 @@ package src.OwnerAgent;
 
 import src.MenuBarGUIPanel;
 import src.MenuGUIWindow;
+import src.Users.*;
 
 public class OwnerAgentBarGUIPanel extends MenuBarGUIPanel {
 
-    public OwnerAgentBarGUIPanel(MenuGUIWindow parent) {
-        super(parent);
+    public OwnerAgentBarGUIPanel(MenuGUIWindow parent, User<?> loggedInUser) {
+        super(parent, loggedInUser);
     }
 
     @Override
     public String getMenuBarTitle() {
-        return Resource().bar_back_logout;
+        OwnerAgentController ownerAgentController = ((OwnerAgentGUIWindow)parent).ownerAgentController;
+        return ownerAgentController.loggedInOwnerAgent.name;
     }
 
     @Override
@@ -21,11 +23,6 @@ public class OwnerAgentBarGUIPanel extends MenuBarGUIPanel {
 
     @Override
     public void onFrozen() {
-        
-    }
-
-    @Override
-    public void onThawed() {
         
     }
 

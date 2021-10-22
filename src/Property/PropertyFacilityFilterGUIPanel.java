@@ -24,23 +24,23 @@ public class PropertyFacilityFilterGUIPanel extends GUIPanel<GUIWindow> {
     @Override
     public void onCreate() {
         setLayout(new GridBagLayout());
-        GridBagConstraints ctr = new GridBagConstraints();
-        ctr.fill = 0;
-        ctr.gridx = 0;
-        ctr.gridy = 0;
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
         facilityPanel = new PropertyFacilityGUIPanel(parent, property);
         JLabel filterLabel = JLabel(Resource().str_filter);
         filterLabel.setBackground(Theme().sub_background_color);
         filterLabel.setForeground(Theme().sub_text_color);
-        add(filterLabel, ctr);
-        ctr.gridy++;
+        add(filterLabel, gbc);
+        gbc.gridy++;
 
         JLabel filterInstructionsLabel = JLabel(Resource().property_str_filter_instructions);
         filterInstructionsLabel.setFont(Resource().general_font_minor);
-        add(filterInstructionsLabel, ctr);
-        ctr.gridy++;
+        add(filterInstructionsLabel, gbc);
+        gbc.gridy++;
 
-        attachPanel(facilityPanel, ctr);
+        attachPanel(facilityPanel, gbc);
 
     }
 

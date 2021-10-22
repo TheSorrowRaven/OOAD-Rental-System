@@ -7,10 +7,11 @@ import src.Users.*;
 import src.SystemComponents.*;
 import java.awt.event.ActionListener;
 import java.util.*;
+import src.Property.*;
 
 import javax.swing.JTextField;
 
-public class AdminController implements IOnUsersChangedObservable {
+public class AdminController extends PropertyController implements IOnUsersChangedObservable {
     
     public Resource Resource(){
         return Resource.instance();
@@ -59,8 +60,14 @@ public class AdminController implements IOnUsersChangedObservable {
             switchPanels(adminSubMenuGUIPanel, switchingPanel);
         };
     }
+    public ActionListener getViewPropertiesActionListener(final AdminSubMenuGUIPanel adminSubMenuGUIPanel){
+        return e -> {
+            AdminPropertyViewGUIPanel switchingPanel = adminSubMenuGUIPanel.getPropertiesTablePanel();
+            switchPanels(adminSubMenuGUIPanel, switchingPanel);
+        };
+    }
 
-    private void switchPanels(final AdminSubMenuGUIPanel adminSubMenuGUIPanel, AdminUserViewGUIPanel<?> switchingPanel){
+    private void switchPanels(final AdminSubMenuGUIPanel adminSubMenuGUIPanel, AdminViewGUIPanel switchingPanel){
         GUIPanel<?> currentPanel = adminSubMenuGUIPanel.getCurrentTablePanel();
         if (!currentPanel.equals(switchingPanel)){
             adminSubMenuGUIPanel.switchTableView(switchingPanel);
@@ -118,6 +125,22 @@ public class AdminController implements IOnUsersChangedObservable {
     }
 
 
+
+    public ActionListener getDeletePropertiesActionListener(){
+        return e -> {
+            Table table = tablePanel.table;
+            ArrayList<PropertyListing> properties = tablePanel.properties;
+            ArrayList<PropertyListing> deletingProps = new ArrayList<PropertyListing>();
+            for (int i = 0; i < table.getRowCount(); i++){
+                boolean isTicked = (Boolean)table.getValueAt(i, tablePanel.deletionTickboxColumn);
+                if (isTicked){
+                    deletingProps.add(properties.get(i));
+                }
+            }
+            admin.deleteProperties(deletingProps);
+            tablePanel.refreshTable();
+        };
+    }
 
 
 

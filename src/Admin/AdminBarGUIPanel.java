@@ -5,17 +5,21 @@ import javax.swing.JLabel;
 
 import src.*;
 import src.SystemComponents.CLI;
+import src.Users.*;
 
 public class AdminBarGUIPanel extends MenuBarGUIPanel {
 
-    public AdminBarGUIPanel(MenuGUIWindow parent) {
-        super(parent);
+    public AdminBarGUIPanel(MenuGUIWindow parent, User<?> loggedInUser) {
+        super(parent, loggedInUser);
     }
 
     @Override
     public String getMenuBarTitle(){
-        return Resource().bar_back_logout;
+        AdminController adminController = ((AdminGUIWindow)parent).adminController;
+        return adminController.adminUser.name;
     }
+
+
 
     @Override
     public void onCreate(){
@@ -34,11 +38,6 @@ public class AdminBarGUIPanel extends MenuBarGUIPanel {
 
     @Override
     public void onFrozen() {
-        
-    }
-
-    @Override
-    public void onThawed() {
         
     }
 

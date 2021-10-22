@@ -2,25 +2,23 @@ package src.Tenant;
 
 import src.MenuBarGUIPanel;
 import src.MenuGUIWindow;
+import src.SystemComponents.CLI;
+
 import javax.swing.*;
+import src.Users.*;
 
 public class TenantBarGUIPanel extends MenuBarGUIPanel {
 
-    public TenantBarGUIPanel(MenuGUIWindow parent) {
-        super(parent);
+    public TenantBarGUIPanel(MenuGUIWindow parent, User<?> loggedInUser) {
+        super(parent, loggedInUser);
     }
 
     @Override
     public void onCreate(){
         super.onCreate();
-        ctr.gridx++;
+        gbc.gridx++;
         
     }
-
-    //TODO LEFT? Edit profile, change name?
-    //Admin properties
-    //Admin set owner/agent
-    //owner/agent instructions
 
     @Override
     public String getMenuBarTitle() {
@@ -35,11 +33,6 @@ public class TenantBarGUIPanel extends MenuBarGUIPanel {
 
     @Override
     public void onFrozen() {
-        
-    }
-
-    @Override
-    public void onThawed() {
         
     }
 

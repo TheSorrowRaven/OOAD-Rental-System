@@ -15,7 +15,7 @@ public class TenantGUIPanel extends MenuContentGUIPanel<TenantGUIWindow> impleme
     public JPanel panel;
     
     private JScrollPane scrollPane;
-    private GridBagConstraints ctr;
+    private GridBagConstraints gbc;
     
     private PropertyFacilityFilterGUIPanel propertyFacilityFilter;
 
@@ -25,34 +25,44 @@ public class TenantGUIPanel extends MenuContentGUIPanel<TenantGUIWindow> impleme
 
     @Override
     public void onCreate() {
-        ctr = new GridBagConstraints();
-        ctr.fill = GridBagConstraints.BOTH;
-        ctr.gridx = 0;
-        ctr.gridy = 0;
-        ctr.weightx = 1;
-        ctr.weighty = 1;
+        gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.insets = Resource().general_inset_all;
+        gbc.anchor = GridBagConstraints.CENTER;
         setLayout(new GridBagLayout());
         panel = new JPanel();
         panel.setBackground(Theme().panel_background_color);
         panel.setLayout(new GridBagLayout());
 
+        setBackground(Color.cyan);
+
         scrollPane = JScrollPane(panel);
         scrollPane.setBorder(null);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.getVerticalScrollBar().setUnitIncrement(Resource().scroll_speed);
-        add(scrollPane, ctr);
-        ctr.gridy++;
+        scrollPane.getHorizontalScrollBar().setUnitIncrement(Resource().scroll_speed);
+        add(scrollPane, gbc);
+        gbc.gridy++;
 
-
-        PropertyTableGUIPanel propertyTableGUIPanel = new PropertyTableGUIPanel(parent, this, null);
+        PropertyTableGUIPanel propertyTableGUIPanel = new PropertyTableGUIPanel(parent, this, null, false);
         propertyFacilityFilter = new PropertyFacilityFilterGUIPanel(parent, this);
         parent.tenantController.setTablePanel(propertyTableGUIPanel);
 
-        panel.add(propertyFacilityFilter, ctr);
+        panel.add(propertyFacilityFilter, gbc);
         executePanelLifecycle(propertyFacilityFilter);
-        ctr.gridy++;
+        gbc.gridy++;
 
-        panel.add(propertyTableGUIPanel, ctr);
+        gbc.fill = 0;
+        JLabel sortInstructions = JLabel(Resource().property_str_sort_instructions);
+        panel.add(sortInstructions, gbc);
+        gbc.gridy++;
+
+        gbc.fill = 1;
+        panel.add(propertyTableGUIPanel, gbc);
         executePanelLifecycle(propertyTableGUIPanel);
     }
 
@@ -97,7 +107,7 @@ public class TenantGUIPanel extends MenuContentGUIPanel<TenantGUIWindow> impleme
 
     @Override
     public ItemListener getOnFacilityChangedFor(Facility facility) {
-        return null;    //Not used
+        return parent.tenantController.getOnFacilityChanged(facility, propertyFacilityFilter);
     }
 
     @Override
@@ -107,8 +117,7 @@ public class TenantGUIPanel extends MenuContentGUIPanel<TenantGUIWindow> impleme
 
     @Override
     public PropertyFacilityFilterGUIPanel getFacilityFilterPanel() {
-        // TODO Auto-generated method stub
-        return null;
+        return propertyFacilityFilter;
     }
     
 }

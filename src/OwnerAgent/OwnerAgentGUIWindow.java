@@ -38,23 +38,13 @@ public class OwnerAgentGUIWindow extends MenuGUIWindow {
     }
 
     @Override
-    public void onFrozen() {
-        
-    }
-
-    @Override
-    public void onThawed() {
-        
-    }
-
-    @Override
     public void onDestroy() {
         
     }
 
     @Override
     protected MenuBarGUIPanel getMenuBarContentPanel() {
-        return new OwnerAgentBarGUIPanel(this);
+        return new OwnerAgentBarGUIPanel(this, ownerAgentController.loggedInOwnerAgent);
     }
 
     @Override
