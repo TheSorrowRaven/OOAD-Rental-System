@@ -2,15 +2,21 @@ package src.Admin;
 
 
 import src.*;
-import src.Users.User;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This is a base class for any sub menu view for the admin
+ */
 public class AdminViewGUIPanel extends GUIPanel<AdminGUIWindow>{
 
     public String title;
 
+    /**
+     * Constructor
+     * @param parent
+     */
     public AdminViewGUIPanel(AdminGUIWindow parent) {
         super(parent);
     }
@@ -18,10 +24,17 @@ public class AdminViewGUIPanel extends GUIPanel<AdminGUIWindow>{
     protected GridBagConstraints gbc;
 
 
+    /**
+     * Sets the title of this Sub menu
+     * @param title
+     */
     public void initializeTitle(String title){
         this.title = title;
     }
 
+    /**
+     * Creates the necessary components to view
+     */
     @Override
     public void onCreate() {
 

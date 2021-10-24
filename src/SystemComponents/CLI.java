@@ -5,6 +5,7 @@ import java.io.IOException;
 /**
  * 
  * This class is for debugging purposes by writing into the CLI interface
+ * This uses PrintWriter to write to terminal
  * 
  */
 public class CLI {

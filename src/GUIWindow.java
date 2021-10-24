@@ -16,11 +16,17 @@ import javax.swing.*;
 public abstract class GUIWindow extends JFrame implements IObservableViewable, IViewable, IPanelHandler {
 
 
-    //This serves as a quick lookup for the Resource singleton
+    /**
+     * This serves as a quick lookup for the Resource singleton
+     */
     public static Resource Resource(){
         return Resource.instance();
     }
 
+    /**
+     * Returns itself
+     * @return
+     */
     public GUIWindow self(){
         return this;
     }
@@ -31,24 +37,39 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
 
 
     public final Resource.Theme theme;
+    /**
+     * Returns the current theme
+     * @return
+     */
     public Resource.Theme Theme(){
         return theme;
     }
 
     private ArrayList<GUIPanel<?>> panels = new ArrayList<GUIPanel<?>>();
 
+    /**
+     * Returns the attached panels
+     * @return
+     */
     public ArrayList<GUIPanel<?>> getPanels(){
         return panels;
     }
 
+    /**
+     * Constructor accepting a theme
+     */
     public GUIWindow(Resource.Theme theme){
         this.theme = theme;
     }
 
+    /**
+     * Gets the title of the window
+     * @return
+     */
     public abstract String getWindowTitle();
 
     /**
-     * Call this in onCreatePanel
+     * Attachs a panel to this window
      */
     @Override
     public void attachPanel(GUIPanel<?> panel){
@@ -56,6 +77,9 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
         panel.onCreateInternal();
         panel.onCreatePanel();
     }
+    /**
+     * Dettachs a panel from this panel
+     */
     @Override
     public void detachPanel(GUIPanel<?> panel){
         panels.remove(panel);
@@ -65,6 +89,9 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
      * This is for child classes to initialize window based values, such as size
      */
     public abstract void onCreate();
+    /**
+     * Calls its default settings and callback to create
+     */
     public final void onCreateInternal(){
         defaultWindowSettings();
         defaultCreation();
@@ -72,12 +99,18 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
         created();
     }
 
+    /**
+     * Sets the default window settings including the window name and background color
+     */
     private void defaultWindowSettings(){
         setTitle(getWindowTitle());
         //setResizable(false);
         setBackground(Theme().window_background_color);
     }
 
+    /**
+     * Creates the default close behaviour
+     */
     private void defaultCreation(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addWindowListener(new WindowListener(){
@@ -113,6 +146,9 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
      * This is when everything is initialized and can view (setVisible here)
      */
     public abstract void onView();
+    /**
+     * Calls on view, attach and viewed callback
+     */
     public final void onViewInternal(){
         onView();
         onViewAttachPanels();
@@ -151,18 +187,31 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
      * Window is destroyed (back button)
      */
     public abstract void onDestroy();
+    /**
+     * Calls the callback after calling destroy
+     */
     public final void onDestroyInternal(){
         onDestroy();
         destroyed();
     }
+    /**
+     * Calls the internal destroy when the window is closed
+     */
     private final void windowClosedDestroy(){
         onDestroyInternal();
     }
+    /**
+     * Calls the internal destroy and dispose of the window
+     */
     public final void disposeWindow(){
         onDestroyInternal();
         dispose();
     }
 
+    /**
+     * Navigate the window to another window
+     * @param window
+     */
     protected void navigateWindowTo(GUIWindow window){
         Main.instance().nav.newWindow(window);
     }
@@ -171,22 +220,37 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
      * Observer implementation
      */
     public HashSet<IObserverViewable> observers = new HashSet<IObserverViewable>();
+    /**
+     * Returns this observable
+     */
     @Override
     public IObservableViewable getObservable(){
         return this;
     }
+    /**
+     * Observe this
+     */
     @Override
     public void observe(IObserverViewable observer){
         observers.add(observer);
     }
+    /**
+     * Stop observing this
+     */
     @Override
     public void stopObserving(IObserverViewable observer){
         observers.remove(observer);
     }
+    /**
+     * Content is updated, notify observers
+     */
     @Override
     public void contentUpdated(){
         notifyObservers(ViewableObservableComponents.none);
     }
+    /**
+     * Notify observers based on an object
+     */
     @Override
     public void notifyObservers(Object o){
         
@@ -217,14 +281,21 @@ public abstract class GUIWindow extends JFrame implements IObservableViewable, I
             command.execute(observer);
         }
     }
+    /**
+     * Notify observers after creation
+     */
     @Override
     public void created(){
         notifyObservers(ViewableObservableComponents.creation);
     }
+    /**
+     * Notify observers after view
+     */
     @Override
     public void viewed(){
         notifyObservers(ViewableObservableComponents.view);
     }
+    /**Notify observers after destruction */
     @Override
     public void destroyed(){
         notifyObservers(ViewableObservableComponents.destroy);

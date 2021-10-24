@@ -2,19 +2,28 @@ package src.Admin;
 
 import src.*;
 import src.Users.*;
-import src.SystemComponents.CLI;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class is contains the buttons to go go through sub menus of admin
+ */
 public class AdminSubMenuGUIPanel extends GUIPanel<AdminGUIWindow> {
 
     protected GridBagConstraints gbc;
 
+    /**
+     * Constructor
+     * @param parent
+     */
     public AdminSubMenuGUIPanel(AdminGUIWindow parent) {
         super(parent);
     }
 
+    /**
+     * Creates the buttons for admin sub menus
+     */
     @Override
     public void onCreate() {
         BorderLayout borderLayout = new BorderLayout();
@@ -73,43 +82,78 @@ public class AdminSubMenuGUIPanel extends GUIPanel<AdminGUIWindow> {
 
     private GUIPanel<?> currentTablePanel;
 
+    /**
+     * Sets the current table to disable panel refreshing/recreation when already in the same panel
+     * @param newPanel
+     */
     public void setCurrentTablePanel(GUIPanel<?> newPanel){
         currentTablePanel = newPanel;
     }
+    /**
+     * Returns the current panel
+     * @return
+     */
     public GUIPanel<?> getCurrentTablePanel(){
         return currentTablePanel;
     }
+    /**
+     * Creates and returns the all users list panel
+     * @return
+     */
     public AdminUserViewGUIPanel<?> getAllUsersTablePanel(){
         AdminUserViewGUIPanel<?> allUsersTablePanel = new AdminUserViewGUIPanel<>(parent);
         allUsersTablePanel.initializeTitle(Resource().admin_str_content_title_AllUsers);
         return allUsersTablePanel;
     }
+    /**
+     * Creates and returns the tenant list panel
+     * @return
+     */
     public AdminUserViewGUIPanel<TenantUser> getTenantsTablePanel(){
         AdminUserViewGUIPanel<TenantUser> tenantsTablePanel = new AdminUserViewGUIPanel<TenantUser>(parent, TenantUser.class);
         tenantsTablePanel.initializeTitle(Resource().admin_str_content_title_Tenants);
         return tenantsTablePanel;
     }
+    /**
+     * Creates and returns the owner list panel
+     * @return
+     */
     public AdminUserViewGUIPanel<OwnerAgentUser> getOwnersTablePanel(){
         AdminUserViewGUIPanel<OwnerAgentUser> ownersTablePanel = new AdminUserViewGUIPanel<OwnerAgentUser>(parent, OwnerAgentUser.class, true);
         ownersTablePanel.initializeTitle(Resource().admin_str_content_title_Owners);
         return ownersTablePanel;
     }
+    /**
+     * Creates and returns the agent list panel
+     * @return
+     */
     public AdminUserViewGUIPanel<OwnerAgentUser> getAgentsTablePanel(){
         AdminUserViewGUIPanel<OwnerAgentUser> agentsTablePanel = new AdminUserViewGUIPanel<OwnerAgentUser>(parent, OwnerAgentUser.class, false);
         agentsTablePanel.initializeTitle(Resource().admin_str_content_title_Agents);
         return agentsTablePanel;
     }
+    /**
+     * Creates and returns the admin list panel
+     * @return
+     */
     public AdminUserViewGUIPanel<AdminUser> getAdminsTablePanel(){
         AdminUserViewGUIPanel<AdminUser> adminsTablePanel = new AdminUserViewGUIPanel<AdminUser>(parent, AdminUser.class);
         adminsTablePanel.initializeTitle(Resource().admin_str_content_title_Admins);
         return adminsTablePanel;
     }
+    /**
+     * Creates and returns the property list panel
+     * @return
+     */
     public AdminPropertyViewGUIPanel getPropertiesTablePanel(){
         AdminPropertyViewGUIPanel propertiesPanel = new AdminPropertyViewGUIPanel(parent);
         propertiesPanel.initializeTitle(Resource().admin_str_content_title_Properties);
         return propertiesPanel;
     }
 
+    /**
+     * Sets the target panel and switch to the default entry panel - All Users List
+     */
     @Override
     public void onCreatePanel() {
 
@@ -118,6 +162,10 @@ public class AdminSubMenuGUIPanel extends GUIPanel<AdminGUIWindow> {
         
     }
 
+    /**
+     * Switches the view of the sub menu content panels
+     * @param newPanel
+     */
     public void switchTableView(GUIPanel<?> newPanel){
         setTargetPanel(this);
         GUIPanel<?> previous = getCurrentTablePanel();

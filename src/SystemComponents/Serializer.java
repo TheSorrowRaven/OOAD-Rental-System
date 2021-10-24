@@ -7,32 +7,46 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.print.DocFlavor.STRING;
-
 import src.*;
-import src.Users.OwnerAgentUser;
-import src.Users.User;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 
+/**
+ * Serializer for serializing objects into raw string and vice versa for deserializing
+ */
 public class Serializer {
 
+    /**
+     * Shorthand for resource singleton
+     * @return
+     */
     public static Resource Resource(){
         return Resource.instance();
     }
 
     private String savePath;
 
+    /**
+     * Constructor accepting the save directory
+     */
     public Serializer(String savePath){
         this.savePath = savePath;
     }
 
+    /**
+     * Checks and creates the specified directory
+     * @param directory
+     */
     private void checkCreateDirectory(File directory){
         if (!directory.exists()){
             directory.mkdirs();
         }
     }
+    /**
+     * Checks and creates the specified file
+     * @param file
+     */
     private void checkCreateFile(File file){
         checkCreateDirectory(file.getParentFile());
         if (!file.exists()){
@@ -45,31 +59,48 @@ public class Serializer {
                 ex.printStackTrace();
             }
         }
-        else{
-            CLI.log("File Exists - " + file.getPath());
-        }
+        // else{
+        //     CLI.log("File Exists - " + file.getPath());
+        // }
     }
     private void checkCreateFile(String filePath){
         File file = new File(filePath);
         checkCreateFile(file);
     }
 
-    //Appends the savePath into the file path from serializable
+    /**
+     * Appends the savePath into the file path from serializable
+     */
     private String getFilePathFromSerializable(ISerializable<?> serializable){
         return savePath + serializable.getFilePath();
     }
 
 
+    /**
+     * Last Layer serializing to prevent new lines from corrupting the file
+     * @param text
+     * @return
+     */
     private String newLineSerialize(String text){
         String t = text.replace('\n', Resource().newLineReplacementCharacter);
         return t;
     }
+    /**
+     * First Layer deserializing to add back the new line of the file
+     * @param text
+     * @return
+     */
     private String newLineDeserialize(String text){
         String t = text.replace(Resource().newLineReplacementCharacter, '\n');
         return t;
     }
 
 
+    /**
+     * Writes the object into the file
+     * @param <T>
+     * @param serializable
+     */
     public <T extends ISerializable<T>> void write(T serializable){
         String filePath = getFilePathFromSerializable(serializable);
         checkCreateFile(filePath);
@@ -91,6 +122,11 @@ public class Serializer {
 
     }
 
+    /**
+     * Writes all data in an array list to the file
+     * @param <T>
+     * @param serializables
+     */
     public <T extends ISerializable<T>> void writeAll(ArrayList<T> serializables){
         for (T serializable : serializables){
             write(serializable);
@@ -126,6 +162,12 @@ public class Serializer {
         remove(serializable, linesToDelete);
     }
 
+    /**
+     * Removes multiple line numbers from the dummy serializable
+     * @param <T>
+     * @param serializable
+     * @param lineNumbers
+     */
     public <T extends ISerializable<T>> void remove(T serializable, ArrayList<Integer> lineNumbers){
         String filePath = getFilePathFromSerializable(serializable);
         File file = new File(filePath);
@@ -148,11 +190,23 @@ public class Serializer {
         
         removeWrite(file, fileLines);
     }
+    /**
+     * Removes a line number from the dummy serializable
+     * @param <T>
+     * @param serializable
+     * @param lineNumber
+     */
     public <T extends ISerializable<T>> void remove(T serializable, int lineNumber){
         ArrayList<Integer> lineNumbers = new ArrayList<>(1);
         lineNumbers.add(lineNumber);
         remove(serializable, lineNumbers);
     }
+    /**
+     * Process and remove a line
+     * @param br
+     * @param fileLines
+     * @param lineNumbers
+     */
     private void removeProcessLine(BufferedReader br, ArrayList<String> fileLines, ArrayList<Integer> lineNumbers){
         String line;
         int lineCount = 1;
@@ -170,6 +224,11 @@ public class Serializer {
             e.printStackTrace();
         }
     }
+    /**
+     * Process and write back the entire file
+     * @param file
+     * @param fileLines
+     */
     private void removeWrite(File file, ArrayList<String> fileLines){
         //No append mode, rewrite the entire file
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))){

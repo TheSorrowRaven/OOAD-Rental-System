@@ -2,11 +2,12 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
-import src.SystemComponents.*;
-import src.*;
 import src.Profile.*;
 import src.Users.*;
 
+/**
+ * This is the menu bar for all menus
+ */
 public abstract class MenuBarGUIPanel extends GUIPanel<MenuGUIWindow> {
 
     protected JPanel gridBagPanel;
@@ -16,6 +17,11 @@ public abstract class MenuBarGUIPanel extends GUIPanel<MenuGUIWindow> {
 
     private User<?> loggedInUser;
 
+    /**
+     * Constructor accepting a logged in user
+     * @param parent
+     * @param loggedInUser
+     */
     public MenuBarGUIPanel(MenuGUIWindow parent, User<?> loggedInUser) {
         super(parent);
         this.loggedInUser = loggedInUser;
@@ -27,6 +33,9 @@ public abstract class MenuBarGUIPanel extends GUIPanel<MenuGUIWindow> {
      */
     public abstract String getMenuBarTitle();
 
+    /**
+     * Creates the menu bar settings and buttons
+     */
     @Override
     public void onCreate() {
         setBackground(Theme().bar_color);
@@ -75,6 +84,9 @@ public abstract class MenuBarGUIPanel extends GUIPanel<MenuGUIWindow> {
         add(editProfileButton, gbc);
     }
 
+    /**
+     * Resets the menu bar title by requesting get title again
+     */
     public void resetMenuBarTitle(){
         titleLabel.setText(getMenuBarTitle());
     }
@@ -84,11 +96,17 @@ public abstract class MenuBarGUIPanel extends GUIPanel<MenuGUIWindow> {
         
     }
 
+    /**
+     * Resets the menu bar title on thawed (re-viewed)
+     */
     @Override
     public void onThawed(){
         resetMenuBarTitle();
     }
 
+    /**
+     * Sets itself to be visible on view
+     */
     @Override
     public void onView() {
         setVisible(true);

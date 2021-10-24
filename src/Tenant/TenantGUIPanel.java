@@ -9,6 +9,10 @@ import src.MenuContentGUIPanel;
 import src.Property.*;
 import src.Property.PropertyListing.Facility;
 
+/**
+ * View for tenant
+ * Contains the content for displaying the properties and filter
+ */
 public class TenantGUIPanel extends MenuContentGUIPanel<TenantGUIWindow> implements IProperty {
 
 
@@ -19,10 +23,17 @@ public class TenantGUIPanel extends MenuContentGUIPanel<TenantGUIWindow> impleme
     
     private PropertyFacilityFilterGUIPanel propertyFacilityFilter;
 
+    /**
+     * Constructor
+     * @param parent
+     */
     public TenantGUIPanel(TenantGUIWindow parent) {
         super(parent);
     }
 
+    /**
+     * Creates the components, scroll pane, table and usage instructions
+     */
     @Override
     public void onCreate() {
         gbc = new GridBagConstraints();
@@ -90,21 +101,25 @@ public class TenantGUIPanel extends MenuContentGUIPanel<TenantGUIWindow> impleme
         
     }
 
+    /**
+     * Returns the tenant controller downcasted as a property controller
+     */
     @Override
     public PropertyController getPropertyController() {
         return parent.tenantController;
     }
 
-    @Override
-    public boolean isEditable() {
-        return false;
-    }
-
+    /**
+     * Returns the number of columns to display the facilties filter
+     */
     @Override
     public int getFacilityIntendedColumns() {
         return 3;
     }
 
+    /**
+     * Event for when any of the facility filter is clicked (will then filter - refresh table)
+     */
     @Override
     public ItemListener getOnFacilityChangedFor(Facility facility) {
         return parent.tenantController.getOnFacilityChanged(facility, propertyFacilityFilter);
@@ -115,6 +130,9 @@ public class TenantGUIPanel extends MenuContentGUIPanel<TenantGUIWindow> impleme
         
     }
 
+    /**
+     * Returns the facilities filter panel
+     */
     @Override
     public PropertyFacilityFilterGUIPanel getFacilityFilterPanel() {
         return propertyFacilityFilter;

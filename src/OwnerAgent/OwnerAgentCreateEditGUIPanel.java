@@ -2,12 +2,14 @@ package src.OwnerAgent;
 
 import src.*;
 import src.Property.*;
-import src.SystemComponents.CLI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.*;
 
+/**
+ * This panel contains the creation and editing of properties
+ */
 public class OwnerAgentCreateEditGUIPanel extends GUIPanel<OwnerAgentGUIWindow> {
 
     public src.Button createEditButton;
@@ -30,6 +32,9 @@ public class OwnerAgentCreateEditGUIPanel extends GUIPanel<OwnerAgentGUIWindow> 
     private boolean isEditing = false;
     
 
+    /**
+     * Constructor receiving the window, property and the table panel
+     */
     public OwnerAgentCreateEditGUIPanel(OwnerAgentGUIWindow parent, IProperty property, PropertyTableGUIPanel tablePanel) {
         super(parent);
         this.property = property;
@@ -37,6 +42,18 @@ public class OwnerAgentCreateEditGUIPanel extends GUIPanel<OwnerAgentGUIWindow> 
         parent.ownerAgentController.setPanels(this, tablePanel);
     }
 
+    /**
+     * Starts edit mode of a property by receiving all data about the editing property and setting to all its field
+     * @param isActive
+     * @param name
+     * @param address
+     * @param type
+     * @param size
+     * @param rooms
+     * @param bathrooms
+     * @param rent
+     * @param facilitiesString
+     */
     public void setupEditMode(boolean isActive, String name, String address, String type, String size, int rooms, int bathrooms, int rent, String facilitiesString){
         activeCheckBox.setSelected(isActive);
         nameField.setText(name);
@@ -52,14 +69,25 @@ public class OwnerAgentCreateEditGUIPanel extends GUIPanel<OwnerAgentGUIWindow> 
         updateCreateEditButton();
     }
     
+    /**
+     * Sets the property table panel of the property display
+     * @param tablePanel
+     */
     public void setPropertyTablePanel(PropertyTableGUIPanel tablePanel){
         this.tablePanel = tablePanel;
     }
 
+    /**
+     * Returns if this is currently editing a property
+     * @return
+     */
     public boolean getIsEditing(){
         return isEditing;
     }
 
+    /**
+     * Set to stop editing a property and hide the stop editing button
+     */
     public void setNotEditing(){
         isEditing = false;
         restoreEditButton.setVisible(false);
@@ -67,11 +95,16 @@ public class OwnerAgentCreateEditGUIPanel extends GUIPanel<OwnerAgentGUIWindow> 
         tablePanel.clearSelection();
     }
 
+    /**
+     * Updates the create or edit button basede on if its editing or not
+     */
     public void updateCreateEditButton(){
         createEditButton.setText(isEditing ? Resource().ownerAgent_str_button_createEdit_edit : Resource().ownerAgent_str_button_createEdit_create);
     }
 
-    
+    /**
+     * Creates the components necessary to display the create edit panel
+     */
     @Override
     public void onCreate() {
         

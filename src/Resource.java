@@ -14,7 +14,7 @@ import java.io.*;
 
 /**
  * 
- * This Resource class contains string data of file paths, colors etc
+ * This Resource class contains string data of file paths, colors, themes, text, symbols, values etc
  * 
  */
 public final class Resource {
@@ -62,10 +62,17 @@ public final class Resource {
 
 
 
-
+    /**
+     * This is a class containing colors and a border to setup for different themes
+     * Uses a "semi-builder" pattern
+     */
     public static class Theme{
 
-        public Resource Resource(){
+        /**
+         * Shorthand for Resource singleton
+         * @return
+         */
+        public static Resource Resource(){
             return Resource.instance();
         }
 
@@ -84,6 +91,13 @@ public final class Resource {
         public Color border_color;
         public CompoundBorder border;
 
+        /**
+         * Sets and creates a border
+         * @param color
+         * @param width
+         * @param emptyBorder defined empty border for spacing purposes
+         * @return
+         */
         public Theme border(Color color, int width, EmptyBorder emptyBorder){
             border_color = color;
             LineBorder line_border = new LineBorder(color, width, true);
@@ -91,6 +105,14 @@ public final class Resource {
             return this;
             //border = new CompoundBorder(line_border, emptyBorder);
         }
+
+        /*
+
+            Below are setting colors. Self explanatory
+
+        */
+
+
         public Theme windowBackground(Color color){
             window_background_color = color;
             return this;
@@ -123,6 +145,11 @@ public final class Resource {
             bar_color = color;
             return this;
         }
+        /**
+         * A sub background for slight contrast
+         * @param color
+         * @return
+         */
         public Theme subBackground(Color color){
             sub_background_color = color;
             return this;
@@ -138,6 +165,10 @@ public final class Resource {
 
 
 
+    /*
+     * These characters are special empty blank characters (referred to wikipedia)
+     * to put into text files for saving purposes, and to make the save file look cleaner and more readable
+     */
     public final char splittingInputCharacter = '\u2000';
     public final char newLineReplacementCharacter = '\u2001';
     public final char nullPlacementCharacter = '\u2002';
@@ -149,6 +180,10 @@ public final class Resource {
         return Character.toString(arraySplittingCharacter);
     }
 
+    /*
+     * This is the default admin user that will be *always* created (checked on launch)
+     * to ensure the program always has an admin in case of accidental deletion
+     */
     public final String defaultAdminUUID = "00000000-0000-0000-0000-000000000000";
     public final String defaultAdminUsername = "admin";
     public final String defaultAdminPassword = "password";
@@ -158,12 +193,18 @@ public final class Resource {
         splittingInputCharacter + defaultAdminPassword + 
         splittingInputCharacter + defaultAdminName;
 
+    /*
+     * These strings define the save directory and file
+     */
     public final String savePath = "save/";
     public final String tenantLoginFile = "tenantLogin.txt";
     public final String ownerAgentLoginFile = "ownerAgentLogin.txt";
     public final String adminLoginFile = "adminLogin.txt";
     public final String propertyFile = "properties.txt";
 
+    /**
+     * Theses are for images files and its directory
+     */
     //IMAGES
     public final String imgPath = "img/";
     public final String logout_icon_img = imgPath + "logout_icon.png";
@@ -185,6 +226,9 @@ public final class Resource {
         return getImgFrom(logout_icon_img);
     }
 
+    /**
+     * These values defines the default window size
+     */
     //WINDOW
     public final int menu_window_width = 1280;
     public final int menu_window_height = 720;
@@ -195,6 +239,9 @@ public final class Resource {
     public final int profile_window_width = 450;
     public final int profile_window_height = 200;
 
+    /**
+     * These are the fonts used. The sizes are remade into font objects
+     */
     //FONT
     public final int general_font_size = 16;
     public final int general_font_highlight_size = 20;
@@ -212,6 +259,9 @@ public final class Resource {
     //TABLE
     public final int table_cell_height = 24;
 
+    /**
+     * Below are all the specific hex code colors used to create the themes
+     */
     //COLOR
     public final Color color_invisible = new Color(0, 0, 0, 0);
     //Palettes
@@ -274,6 +324,10 @@ public final class Resource {
     public final Color color_theme_violeto_sub_0 = Color.decode("#beeef3");
     public final Color color_theme_violeto_sub_1 = Color.decode("#328c95");
 
+    /**
+     * These colors are remapped colors for the original color design.
+     * Now switched and managed by Themes although some specific ones are still in use
+     */
     //Main Colors
     public final Color window_background_color = color_black_0;
     public final Color panel_background_color = color_black_1;
@@ -291,6 +345,9 @@ public final class Resource {
 
 
 
+    /**
+     * Defines borders to use in themes
+     */
     //BORDER
     public final int general_border_inset_value = 6;
     public final int general_border_width = 1;
@@ -299,6 +356,9 @@ public final class Resource {
     public final CompoundBorder general_border_compound = new CompoundBorder(general_border_line, general_border_empty);
 
 
+    /**
+     * These are to create the 4 themes in the program, the colors are mapped to the theme's builder
+     */
     //THEME
     public final Theme black_theme = new Theme().windowBackground(window_background_color)
         .panelBackgroundColor(panel_background_color)
@@ -345,6 +405,17 @@ public final class Resource {
         .subBackground(color_theme_violeto_sub_1)
         .subTextColor(color_theme_violeto_sub_0);
 
+
+    
+    /**
+     * 
+     * THEMES designation
+     * 
+     * These defines what window uses what theme
+     * 
+     * These can be changed instantly by just changing the values below
+     * 
+     */
     public final Theme login_theme = black_theme;
     public final Theme admin_theme = red_theme;
     public final Theme tenant_theme = violeto_theme;
@@ -352,7 +423,9 @@ public final class Resource {
     public final Theme profile_theme = black_theme;
 
     
-
+    /**
+     * These are for grid bag constraints' insets layout for spacing between components
+     */
     //LAYOUT
     public final int general_inset_value = 5;
     public final int general_inset_tiny_value = 2;
@@ -366,6 +439,9 @@ public final class Resource {
     public final Insets general_inset_medium = new Insets(general_inset_medium_value, general_inset_medium_value, general_inset_medium_value, general_inset_medium_value);
     public final Insets general_inset_tiny = new Insets(general_inset_tiny_value, general_inset_tiny_value, general_inset_tiny_value, general_inset_tiny_value);
 
+    /**
+     * Raw string data
+     */
     //STRING
     public final String str_user = "User";
     public final String str_username = "Username";

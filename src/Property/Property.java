@@ -4,9 +4,15 @@ import java.util.*;
 import src.*;
 import src.SystemComponents.*;
 
+/**
+ * Model for Property
+ */
 public class Property {
     
-    
+    /**
+     * Returns all properties in an array list
+     * @return
+     */
     public ArrayList<PropertyListing> fetchAllProperties(){
         
         Serializer serializer = Main.instance().serializer;

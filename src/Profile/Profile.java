@@ -3,8 +3,19 @@ package src.Profile;
 import src.*;
 import src.Users.*;
 
+/**
+ * This is Model for Profile
+ * This handles changing name and password of a user
+ */
 public class Profile {
     
+    /**
+     * Change the name and password of a user
+     * @param user
+     * @param name
+     * @param password
+     * @return
+     */
     public boolean changeNamePasswordOf(User<?> user, String name, String password){
         user.name = name;
         user.password = password;
@@ -20,6 +31,13 @@ public class Profile {
         return false;
     }
 
+    /**
+     * Save the changes of a user
+     * @param <T>
+     * @param userClass
+     * @param user
+     * @return
+     */
     private <T extends User<T>> boolean changeNamePassword(Class<T> userClass, T user){
         var command = new Command<T>(){
             public int lineNumber = -1;

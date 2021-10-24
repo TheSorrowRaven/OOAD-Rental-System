@@ -26,7 +26,9 @@ public class Navigation implements IObserverViewable {
 
     private Stack<GUIWindow> windowsStack = new Stack<GUIWindow>();
 
-    //Startup lifecycle and switching of a viewable
+    /**
+     * Startup lifecycle and switching of a viewable
+     */
     private <T extends IViewable> void newViewable(T viewable, Stack<T> stack, ICommand<T> startCreationCommand, ICommand<T> viewCommand){
         IViewable removingWindow = null;
         if (!stack.empty()){
@@ -45,7 +47,9 @@ public class Navigation implements IObserverViewable {
         viewCommand.execute(viewable);
     }
 
-    //Startups a new window
+    /**
+     * Startups a new window
+     */
     public void newWindow(GUIWindow window){
         newViewable(window, windowsStack, new Command<GUIWindow>(){
             @Override
@@ -63,10 +67,17 @@ public class Navigation implements IObserverViewable {
         });
     }
 
+    /**
+     * Sets the viewable as an observable of this
+     */
     private void attachObserverToViewable(IObservableViewable viewable){
         viewable.observe(this);
     }
 
+    /**
+     * Unsets the viewable as an observable from this
+     * @param viewable
+     */
     private void detachObserverFromViewable(IObservableViewable viewable){
         viewable.stopObserving(this);
     }
@@ -79,6 +90,10 @@ public class Navigation implements IObserverViewable {
         window.onCreateInternal();
         window.onCreatePanel();
     }
+    /**
+     * Starts the internal viewing of the window
+     * @param window
+     */
     private void startWindowView(GUIWindow window){
         window.onViewInternal();
     }

@@ -8,6 +8,7 @@ import src.Users.*;
 import src.SystemComponents.*;
 
 /**
+ * This class is the Model for Admin
  * This Admin class is capable of creating all 3 types of accounts, and delete them too
  */
 public class Admin {
@@ -15,6 +16,9 @@ public class Admin {
 
     public AdminUser loggedInAdmin;
 
+    /**
+     * This class is created to return a boolean and a User
+     */
     public static class UserCreationResult{
         private boolean successful;
         private User<?> user;
@@ -45,7 +49,7 @@ public class Admin {
 
     /**
      * Only function to create an account. Will check if username already used
-     * @param <T>
+     * @param <T> User
      * @param userClass
      * @param username
      * @param password
@@ -67,6 +71,16 @@ public class Admin {
         return result;
 
     }
+    /**
+     * This function will write to the save file directly after checking is done
+     * @param <T>
+     * @param userClass
+     * @param username
+     * @param password
+     * @param name
+     * @param isOwnerAgent
+     * @return
+     */
     private <T extends User<T>> User<T> checkedCreateAccount(Class<T> userClass, String username, String password, String name, boolean isOwnerAgent){
         T user = User.getNewUserFromClass(userClass);
         user.newUserSet(username, password, name);
@@ -90,6 +104,12 @@ public class Admin {
     public ArrayList<AdminUser> fetchAllAdmins(){
         return fetchAllUsersOfType(AdminUser.class);
     }
+    /**
+     * This function will get all users of a type, like Tenant, Owner/Agent or Admin
+     * @param <T>
+     * @param userClass
+     * @return
+     */
     public <T extends User<T>> ArrayList<T> fetchAllUsersOfType(Class<T> userClass){
         Serializer serializer = Main.instance().serializer;
         ArrayList<T> uncastedArray = serializer.readAll(User.getNewUserFromClass(userClass));
@@ -103,12 +123,19 @@ public class Admin {
         }
         return finalArray;
     }
+    /**
+     * This serves as a return object to send all fetched users in several arranged arrayLists
+     */
     public static class AllUsers{
         public ArrayList<User<?>> allUsers;
         public ArrayList<TenantUser> tenants;
         public ArrayList<OwnerAgentUser> ownerAgents;
         public ArrayList<AdminUser> admins;
 
+        /**
+         * This function will call to generate all users
+         * @param admin
+         */
         public void generate(Admin admin){
             tenants = admin.fetchAllTenants();
             ownerAgents = admin.fetchAllOwnerAgent();
@@ -120,12 +147,21 @@ public class Admin {
             allUsers.addAll(admins);
         }
     }
+    /**
+     * Get all users
+     * @return the class containing all users
+     */
     public AllUsers fetchAllUsers(){
         AllUsers allUsers = new AllUsers();
         allUsers.generate(this);
         return allUsers;
     }
 
+    /**
+     * Checks if a user with this username exists
+     * @param username
+     * @return the User if it exists, null if not
+     */
     private User<?> userExists(String username){
         User<TenantUser> tenantUser = userExistsForType(TenantUser.class, username);
         if (tenantUser != null){
@@ -174,10 +210,18 @@ public class Admin {
         return user;
     }
 
+    /**
+     * Constructor
+     * @param loggedInAdmin
+     */
     public Admin(AdminUser loggedInAdmin){
         this.loggedInAdmin = loggedInAdmin;
     }
 
+    /**
+     * Deletes all users regardless of their type (checked in here)
+     * @param users
+     */
     public void deleteAllAnyUsers(ArrayList<User<?>> users){
         ArrayList<TenantUser> tenants = new ArrayList<TenantUser>();;
         ArrayList<OwnerAgentUser> ownerAgents = new ArrayList<OwnerAgentUser>();
@@ -207,6 +251,12 @@ public class Admin {
         deleteUser(AdminUser.class, admins);
     }
 
+    /**
+     * Deletes all users of a single type, like tenant, owner/agent, admin
+     * @param <T>
+     * @param userClass
+     * @param users
+     */
     public <T extends User<T>> void deleteUser(Class<T> userClass, ArrayList<T> users){
         if (users.size() == 0){
             return;
@@ -227,6 +277,9 @@ public class Admin {
     }
     
 
+    /**
+     * Deletes all properties selected in an arrayList
+     */
     public void deleteProperties(ArrayList<PropertyListing> delete){
         
         if (delete.size() == 0){
