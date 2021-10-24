@@ -5,42 +5,47 @@ import src.*;
 import java.util.*;
 
 /**
- * Owner or Agent
+ * Serializable Object - Owner or Agent User (Since both have exactly the same capabilities/functionalities, they're combined)
  */
 public class OwnerAgentUser extends User<OwnerAgentUser>{
 
+    /**
+     * Creates a new Owner/Agent user object
+     */
     @Override
     public OwnerAgentUser createUser() {
         return new OwnerAgentUser();
     }
     
+    /**
+     * This boolean is to identify whether it is an owner or agent
+     */
     public boolean isOwner;
 
-    // private UUID supportingOwnerAgentID;
-
-    // public UUID getSupportingOwnerAgentID(){
-    //     return supportingOwnerAgentID;
-    // }
-
+    /**
+     * Returns the owner/agent file path in resource
+     */
     @Override
     public String getFilePath() {
         return Resource().ownerAgentLoginFile;
     }
 
+    /**
+     * Returns the converted saveable text of the owner agent (adds the isOwner value only)
+     */
     @Override
     public String getSaveableText() {
-        // String ownerAgentID = supportingOwnerAgentID != null ? supportingOwnerAgentID.toString() : Character.toString(Resource().nullPlacementCharacter);
-        return Input.combineData(super.getSaveableText(), Boolean.toString(isOwner)/*, ownerAgentID*/);
+        return Input.combineData(super.getSaveableText(), Boolean.toString(isOwner));
     }
 
+    /**
+     * Loads the owner agent from a split string (Loads isOwner only)
+     */
     @Override
     public int loadSaveableSplitTextIntoUser(String[] split, OwnerAgentUser user) {
         int c = super.loadSaveableSplitTextIntoUser(split, user);
         OwnerAgentUser ownerAgent = (OwnerAgentUser)user;
         ownerAgent.isOwner = Boolean.parseBoolean(split[c++]);
-        /*if (split[c] != null){
-            ownerAgent.supportingOwnerAgentID = Resource().getUUIDFrom(split[c++]);
-        }*/
         return c;
     }
 
@@ -49,6 +54,9 @@ public class OwnerAgentUser extends User<OwnerAgentUser>{
         
     }
 
+    /**
+     * Override equals to compare via id
+     */
     @Override
     public boolean equals(Object obj){
         if (obj instanceof OwnerAgentUser ownerAgentUser){
@@ -59,42 +67,5 @@ public class OwnerAgentUser extends User<OwnerAgentUser>{
         }
         return false;
     }
-
-    /**
-     * For when displaying tables of this data, total columns required, override if require more
-     * @return
-     */
-    // @Override
-    // public int getTableDisplayColumns(){
-    //     return 4;   //Username, password, name, supporting owner agent name
-    // }
-    /**
-     * Creates the object data required to display on a table
-     * @return
-     */
-    // @Override
-    // public ArrayList<Object> getTableDisplayColumnsData(){
-    //     var column = getBaseTableDisplayColumnsData();
-    //     var command = new Command<OwnerAgentUser>(){
-    //         public String name = Resource().str_unassigned_ownerAgent;
-    //         @Override
-    //         public boolean execute(OwnerAgentUser ownerAgent, Object discard){
-    //             if (ownerAgent.getID().equals(supportingOwnerAgentID)){
-    //                 name = ownerAgent.name;
-    //                 return true;
-    //             }
-    //             return false;
-    //         }
-    //     };
-    //     Main.instance().serializer.readForEach(this, command);
-    //     column.add(command.name);
-    //     return column;
-    // }
-    // @Override
-    // public ArrayList<String> getColumnHeaders(boolean isOwnerAgent){
-    //     ArrayList<String> headers = getBaseColumnHeaders();
-    //     headers.add(!isOwnerAgent ? Resource().str_owner : Resource().str_agent);
-    //     return headers;
-    // }
 
 }

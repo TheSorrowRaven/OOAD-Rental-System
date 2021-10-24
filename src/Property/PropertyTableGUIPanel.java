@@ -2,7 +2,6 @@ package src.Property;
 
 import src.*;
 import src.Property.PropertyListing.Facilities;
-import src.SystemComponents.CLI;
 import src.Users.*;
 
 import javax.swing.*;
@@ -12,6 +11,9 @@ import java.awt.*;
 import java.util.*;
 import javax.swing.table.*;
 
+/**
+ * Table of the properties panel
+ */
 public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
 
     public PropertyController propertyController;
@@ -24,6 +26,13 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
     public int deletionTickboxColumn;
     private OwnerAgentUser limitingOwnerAgent;
 
+    /**
+     * Constructor
+     * @param parent
+     * @param property
+     * @param limitingOwnerAgent only show properties for a certain owner/agent
+     * @param canDelete if delete checkbox is available
+     */
     public PropertyTableGUIPanel(GUIWindow parent, IProperty property, OwnerAgentUser limitingOwnerAgent, boolean canDelete) {
         super(parent);
         propertyController = property.getPropertyController();
@@ -31,10 +40,16 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
         this.canDelete = canDelete;
     }
 
+    /**
+     * Clears the selection from the table
+     */
     public void clearSelection(){
         table.clearSelection();
     }
 
+    /**
+     * Creates the components for the table and scroll pane
+     */
     @Override
     public void onCreate() {
 
@@ -61,17 +76,31 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
 
     }
 
+    /**
+     * Returns the editing property
+     * @return
+     */
     public PropertyListing getEditingProperty(){
         return editingProperty;
     }
+    /**
+     * Sets the editing property
+     */
     public void setEditingProperty(PropertyListing editingProp){
         editingProperty = editingProp;
     }
 
+    /**
+     * Sets the table listener when a row is clicked
+     * @param listener
+     */
     public void setTableListener(ListSelectionListener listener){
         table.getSelectionModel().addListSelectionListener(listener);
     }
 
+    /**
+     * Returns the table
+     */
     public Table getTable(){
         return table;
     }
@@ -80,6 +109,9 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
     private Comparator<PropertyListing> lastComparator;
     private Facilities lastFilter;
 
+    /**
+     * Refreshes the table based on the sorter and filter facilities
+     */
     public void refreshTable(Comparator<PropertyListing> comparator, Facilities facilities){
         var unsortedProperties = propertyController.getAllProperties();
 
@@ -154,14 +186,24 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
 
     }
 
+    /**
+     * Refreshes the table only based on the sorters
+     * @param comparator
+     */
     public void refreshTable(Comparator<PropertyListing> comparator){
         refreshTable(comparator, null);
     }
 
+    /**
+     * Refreshes the table
+     */
     public void refreshTable(){
         refreshTable(null);
     }
 
+    /**
+     * Refreshes the headers from the given model
+     */
     private void refreshHeader(DefaultTableModel model){
 
         PropertyListing.PropertyTableMetaData propertyTableMetaData = new PropertyListing.PropertyTableMetaData();

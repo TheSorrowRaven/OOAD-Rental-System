@@ -4,12 +4,23 @@ import src.MenuBarGUIPanel;
 import src.MenuGUIWindow;
 import src.Users.*;
 
+/**
+ * This is the menu bar for the owner/agent panel
+ */
 public class OwnerAgentBarGUIPanel extends MenuBarGUIPanel {
 
+    /**
+     * Constructor receiving a logged in Owner agent user
+     * @param parent
+     * @param loggedInUser
+     */
     public OwnerAgentBarGUIPanel(MenuGUIWindow parent, User<?> loggedInUser) {
         super(parent, loggedInUser);
     }
 
+    /**
+     * Returns the logged in user's name as title
+     */
     @Override
     public String getMenuBarTitle() {
         OwnerAgentController ownerAgentController = ((OwnerAgentGUIWindow)parent).ownerAgentController;

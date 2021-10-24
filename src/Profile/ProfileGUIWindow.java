@@ -3,26 +3,37 @@ package src.Profile;
 import src.*;
 import src.Users.*;
 import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * The window view for Profile
+ */
 public class ProfileGUIWindow extends GUIWindow {
 
     public ProfileController profileController;
     public User<?> loggedInUser;
 
+    /**
+     * Constructor accepting a logged in user
+     * @param loggedInUser
+     */
     public ProfileGUIWindow(User<?> loggedInUser) {
         super(Resource().profile_theme);
         this.loggedInUser = loggedInUser;
         profileController = new ProfileController(this, loggedInUser);
     }
 
+    /**
+     * Returns the profile window title retrieved from resource
+     */
     @Override
     public String getWindowTitle() {
         return Resource().profile_window_title;
     }
 
+    /**
+     * Creates the components to display
+     */
     @Override
     public void onCreate() {
 
@@ -56,6 +67,9 @@ public class ProfileGUIWindow extends GUIWindow {
         attachPanel(profilePanel);
     }
 
+    /**
+     * Use close window to navigate back instead of shutting down the program
+     */
     private void closeWindow(){
         profileController.back();
     }
@@ -65,6 +79,9 @@ public class ProfileGUIWindow extends GUIWindow {
         
     }
 
+    /**
+     * Sets the window visible
+     */
     @Override
     public void onView() {
         setVisible(true);

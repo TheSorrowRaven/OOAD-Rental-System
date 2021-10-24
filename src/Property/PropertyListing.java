@@ -9,12 +9,21 @@ import src.Property.PropertyListing.Facility;
 import src.Users.*;
 import src.SystemComponents.*;
 
+/**
+ * This is the object (saveable) of the property
+ */
 public class PropertyListing implements ISerializable<PropertyListing> {
     
+    /**
+     * Shorthand for the Resource singleton
+     */
     public static Resource Resource(){
         return Resource.instance();
     }
 
+    /**
+     * Type of property
+     */
     public enum Type{
 
         Mansion("Mansion"),
@@ -30,13 +39,24 @@ public class PropertyListing implements ISerializable<PropertyListing> {
 
         private final String name;
 
+        /**
+         * Enum Constructor to create the display text
+         * @param name
+         */
         Type(String name){
             this.name = name;
         }
+        /**
+         * Returns the name of the enum defined
+         */
         public String getName(){
             return name;
         }
 
+        /**
+         * Returns all of the enums in string format (their names)
+         * @return
+         */
         public static String[] stringNameValues(){
             var types = Type.values();
             String[] strings = new String[types.length];
@@ -46,6 +66,11 @@ public class PropertyListing implements ISerializable<PropertyListing> {
             return strings;
         }
 
+        /**
+         * Returns the converted type from string (name)
+         * @param text
+         * @return
+         */
         public static Type getFromString(String text){
             var types = Type.values();
             for (Type type : types){
@@ -57,6 +82,9 @@ public class PropertyListing implements ISerializable<PropertyListing> {
         }
 
     }
+    /**
+     * The Facilitiy provided of the property
+     */
     public enum Facility{
 
         Wifi("WiFi"),
@@ -69,13 +97,24 @@ public class PropertyListing implements ISerializable<PropertyListing> {
         ;
 
         private final String name;
+        /**
+         * Constructor to define the display name
+         * @param name
+         */
         Facility(String name){
             this.name = name;
         }
+        /**
+         * Returns the display name
+         * @return
+         */
         public String getName(){
             return name;
         }
 
+        /**
+         * Returns the facility from the display name
+         */
         public static Facility getFromString(String text){
             var facilities = Facility.values();
             for (Facility f : facilities){
@@ -86,9 +125,16 @@ public class PropertyListing implements ISerializable<PropertyListing> {
             return null;
         }
     }
+    /**
+     * Facilities container
+     */
     public static class Facilities{
         public ArrayList<Facility> facilities = new ArrayList<Facility>();
 
+        /**
+         * Converts the facilities into a display string by adding commas
+         * @return
+         */
         public String displayString(){
             String text = "";
             for (int i = 0; i < facilities.size(); i++){
@@ -100,6 +146,11 @@ public class PropertyListing implements ISerializable<PropertyListing> {
             }
             return text;
         }
+        /**
+         * Creates a new object of this class from the display string above
+         * @param text
+         * @return
+         */
         public static Facilities createFromDisplayString(String text){
             Facilities f = new Facilities();
             String[] split = text.split(", ");
@@ -115,9 +166,17 @@ public class PropertyListing implements ISerializable<PropertyListing> {
             return f;
         }
 
+        /**
+         * Combines and returns the string for saving
+         */
         public String toString(){
             return Input.combineArray(facilities);
         }
+        /**
+         * Uncombine and returns the facilities from the string above
+         * @param text
+         * @return
+         */
         public static Facilities fromString(String text){
             Facilities facilities = new Facilities();
             ArrayList<String> strings = Input.separateArray(text);
@@ -127,9 +186,17 @@ public class PropertyListing implements ISerializable<PropertyListing> {
             return facilities;
         }
 
+        /**
+         * Adds a facility
+         * @param facility
+         */
         public void add(Facility facility){
             facilities.add(facility);
         }
+        /**
+         * Removes a facility
+         * @param facility
+         */
         public void remove(Facility facility){
             facilities.remove(facility);
         }
@@ -149,87 +216,178 @@ public class PropertyListing implements ISerializable<PropertyListing> {
 
     private UUID ownerAgentID;
 
+    /**
+     * Returns the ID
+     * @return
+     */
     public UUID getID(){
         return id;
     }
+    /**
+     * Generates an new ID for this
+     */
     public void newPropertyGenerateUUID(){
         id = Resource().getUUID();
     }
 
+    /**
+     * Sets the name of the property
+     * @param name
+     */
     public void setName(String name){
         this.name = name;
     }
+    /**
+     * Returns the name of the property
+     * @return
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Sets the address of the property
+     */
     public void setAddress(String address){
         this.address = address;
     }
+    /**
+     * Returns the address of the property
+     * @return
+     */
     public String getAddress(){
         return address;
     }
 
+    /**
+     * Sets the active status of the property
+     */
     public void setIsActive(boolean isActive){
         this.isActive = isActive;
     }
+    /**
+     * Returns the active status of the property
+     * @return
+     */
     public boolean getIsActive(){
         return isActive;
     }
 
+    /**
+     * Sets the type of the property
+     * @param type
+     */
     public void setType(Type type){
         this.type = type;
     }
+    /**
+     * Returns the type of the property
+     */
     public Type getType(){
         return type;
     }
 
+    /**
+     * Sets the size of the property
+     */
     public void setSize(String size){
         this.size = size;
     }
+    /**
+     * Returns the size of the property
+     */
     public String getSize(){
         return size;
     }
 
+    /**
+     * Sets the number of rooms of the property
+     * @param rooms
+     */
     public void setRooms(int rooms){
         this.rooms = rooms;
     }
+    /**
+     * Returns the number of rooms of the property
+     * @return
+     */
     public int getRooms(){
         return rooms;
     }
 
+    /**
+     * Sets the number of bathrooms of the property
+     * @param bathrooms
+     */
     public void setBathrooms(int bathrooms){
         this.bathrooms = bathrooms;
     }
+    /**
+     * Returns the number of bathrooms of the property
+     * @return
+     */
     public int getBathrooms(){
         return bathrooms;
     }
 
+    /**
+     * Sets the rent of the property
+     */
     public void setRent(int rent){
         this.rent = rent;
     }
+    /**
+     * Returns the rent of the property
+     */
     public int getRent(){
         return rent;
     }
 
+    /**
+     * Sets the owner or agent of the property
+     */
     public void setOwnerAgent(OwnerAgentUser ownerAgent){
         ownerAgentID = ownerAgent.getID();
     }
+    /**Returns the owner or agent's ID */
     public UUID getOwnerAgentID(){
         return ownerAgentID;
     }
     
+    /**
+     * Remove the facility from the property
+     */
     public void removeFacility(Facility facility){
         facilities.remove(facility);
     }
+    /**
+     * Adds the facility from the property
+     */
     public void addFacility(Facility facility){
         facilities.add(facility);
     }
 
+    /**
+     * Returns the faciltiies of the property
+     * @return
+     */
     public Facilities getFacilities(){
         return facilities;
     }
 
+    /**
+     * Sets all of the values of the property
+     * @param active
+     * @param name
+     * @param address
+     * @param type
+     * @param size
+     * @param rooms
+     * @param bathrooms
+     * @param rent
+     * @param facilities
+     * @param ownerAgent
+     */
     public void setAll(boolean active, String name, String address, Type type, String size, int rooms, int bathrooms, int rent, Facilities facilities, OwnerAgentUser ownerAgent){
         this.isActive = active;
         this.name = name;
@@ -243,6 +401,9 @@ public class PropertyListing implements ISerializable<PropertyListing> {
         setOwnerAgent(ownerAgent);
     }
 
+    /**
+     * Creates a new property and generate a new id
+     */
     public PropertyListing newPropertyCreate(){
         PropertyListing prop = createProperty();
         newPropertyGenerateUUID();
@@ -251,6 +412,9 @@ public class PropertyListing implements ISerializable<PropertyListing> {
 
 
 
+    /**
+     * Object to define the display data in table
+     */
     public static class PropertyTableMetaData{
 
         public final int columnCount = 9;
@@ -280,6 +444,11 @@ public class PropertyListing implements ISerializable<PropertyListing> {
             String.class,
         };
 
+        /**
+         * Returns the sorter when each header is clicked
+         * @param column
+         * @return
+         */
         public final Comparator<PropertyListing> getComparatorFromColumn(int column){
             switch (column){
                 case 0: return new PLActive();
@@ -297,6 +466,10 @@ public class PropertyListing implements ISerializable<PropertyListing> {
 
     }
 
+    /**
+     * Returns the table data in a list format
+     * @return
+     */
     public ArrayList<Object> getTableData(){
         ArrayList<Object> data = new ArrayList<Object>();
         data.add(isActive);
@@ -311,14 +484,23 @@ public class PropertyListing implements ISerializable<PropertyListing> {
         return data;
     }
 
+    /**
+     * Returns the file path of the property
+     */
     @Override
     public String getFilePath() {
         return Resource().propertyFile;
     }
+    /**
+     * Returns the saveable text of the property by combining all the elements
+     */
     @Override
     public String getSaveableText() {
         return Input.combineData(id.toString(), name, address, Boolean.toString(isActive), type.toString(), size, Integer.toString(rooms), Integer.toString(bathrooms), facilities.toString(), Integer.toString(rent), ownerAgentID.toString());
     }
+    /**
+     * Decompiles the text data from the save into a property
+     */
     @Override
     public PropertyListing loadSaveableText(String text) {
         String[] split = Input.separateIntoData(text);
@@ -332,6 +514,12 @@ public class PropertyListing implements ISerializable<PropertyListing> {
     }
 
 
+    /**
+     * Loads the saveable split text into the property
+     * @param split
+     * @param property
+     * @return
+     */
     protected int loadSaveableSplitTextIntoProperty(String[] split, PropertyListing property){
         int c = 0;
         property.id = Resource().getUUIDFrom(split[c++]);
@@ -348,29 +536,18 @@ public class PropertyListing implements ISerializable<PropertyListing> {
         return c;
     }
 
+    /**
+     * Creates a new property
+     */
     public static PropertyListing createProperty(){
         return new PropertyListing();
     }
 
-    public static int compareStrings(String a, String b){
-        int aSize = a.length();
-        int bSize = b.length();
-        int min = Math.min(aSize, bSize);
-        for (int i = 0; i < min; i++) {
-            int aChar = (int)a.charAt(i);
-            int bChar = (int)b.charAt(i);
-            if (aChar != bChar) {
-                return aChar - bChar;
-            }
-        }
-        if (aSize != bSize) {
-            return aSize - bSize;
-        }
-        return 0;
-    }
-
 }
 
+/**
+ * Propert Listing Active Sorter
+ */
 class PLActive implements Comparator<PropertyListing>{
 
     @Override
@@ -390,6 +567,9 @@ class PLActive implements Comparator<PropertyListing>{
     }
 
 }
+/**
+ * Property Listing Name sorter
+ */
 class PLName implements Comparator<PropertyListing>{
     @Override
     public int compare(PropertyListing o1, PropertyListing o2) {
@@ -400,6 +580,9 @@ class PLName implements Comparator<PropertyListing>{
         //return PropertyListing.compareStrings(a, b);
     }
 }
+/**
+ * Property Listing Address sorter
+ */
 class PLAddress implements Comparator<PropertyListing>{
     @Override
     public int compare(PropertyListing o1, PropertyListing o2) {
@@ -410,6 +593,9 @@ class PLAddress implements Comparator<PropertyListing>{
         //return PropertyListing.compareStrings(a, b);
     }
 }
+/**
+ * Property Listing Type sorter
+ */
 class PLType implements Comparator<PropertyListing>{
     @Override
     public int compare(PropertyListing o1, PropertyListing o2) {
@@ -418,6 +604,9 @@ class PLType implements Comparator<PropertyListing>{
         return a.compareTo(b);
     }
 }
+/**
+ * Property Listing Size sorter
+ */
 class PLSize implements Comparator<PropertyListing>{
     @Override
     public int compare(PropertyListing o1, PropertyListing o2) {
@@ -428,6 +617,9 @@ class PLSize implements Comparator<PropertyListing>{
         //return PropertyListing.compareStrings(a, b);
     }
 }
+/**
+ * Property Listing rooms sorter
+ */
 class PLRooms implements Comparator<PropertyListing>{
     @Override
     public int compare(PropertyListing o1, PropertyListing o2) {
@@ -437,6 +629,9 @@ class PLRooms implements Comparator<PropertyListing>{
         return a - b;
     }
 }
+/**
+ * Property Listing bathrooms sorter
+ */
 class PLBathrooms implements Comparator<PropertyListing>{
     @Override
     public int compare(PropertyListing o1, PropertyListing o2) {
@@ -446,6 +641,9 @@ class PLBathrooms implements Comparator<PropertyListing>{
         return a - b;
     }
 }
+/**
+ * Property Listing rent sorter
+ */
 class PLRent implements Comparator<PropertyListing>{
     @Override
     public int compare(PropertyListing o1, PropertyListing o2) {
@@ -455,6 +653,9 @@ class PLRent implements Comparator<PropertyListing>{
         return a - b;
     }
 }
+/**
+ * Property Listing Facilities sorter
+ */
 class PLFacilities implements Comparator<PropertyListing>{
     @Override
     public int compare(PropertyListing o1, PropertyListing o2) {

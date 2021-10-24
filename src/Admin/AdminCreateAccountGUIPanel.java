@@ -6,6 +6,9 @@ import src.Users.*;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panel that creates a user account (internally attached)
+ */
 public class AdminCreateAccountGUIPanel<T extends User<T>> extends GUIPanel<AdminGUIWindow> {
 
     private Class<T> userClass;
@@ -15,12 +18,21 @@ public class AdminCreateAccountGUIPanel<T extends User<T>> extends GUIPanel<Admi
     private JTextField nameField;
     private JLabel infoLabel;
 
+    /**
+     * Constructor accepting a logged in user and if needs an owner or agent
+     * @param parent
+     * @param userClass
+     * @param isOwnerAgent
+     */
     public AdminCreateAccountGUIPanel(AdminGUIWindow parent, Class<T> userClass, boolean isOwnerAgent) {
         super(parent);
         this.userClass = userClass;
         ownerAgent = isOwnerAgent;
     }
 
+    /**
+     * Creates all components to form the final view
+     */
     @Override
     public void onCreate() {
 
@@ -83,6 +95,9 @@ public class AdminCreateAccountGUIPanel<T extends User<T>> extends GUIPanel<Admi
 
     }
 
+    /**
+     * Clears the text fields and information label when successfully created a user
+     */
     public void finishCreateClear(){
         usernameField.setText("");
         passwordField.setText("");
@@ -93,6 +108,9 @@ public class AdminCreateAccountGUIPanel<T extends User<T>> extends GUIPanel<Admi
         infoLabel.setVisible(true);
     }
 
+    /**
+     * Shows an error via the information label when failed to create a user (username already exist)
+     */
     public void failedCreate(){
         infoLabel.setText(Resource().admin_str_content_create_fail);
         infoLabel.setForeground(Resource().general_error_text_color);

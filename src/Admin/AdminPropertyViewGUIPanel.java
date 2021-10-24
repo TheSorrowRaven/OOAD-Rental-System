@@ -9,14 +9,24 @@ import src.Property.PropertyFacilityFilterGUIPanel;
 import src.Property.*;
 import src.Property.PropertyListing.Facility;
 
+/**
+ * Sub menu content panel for the properties
+ */
 public class AdminPropertyViewGUIPanel extends AdminViewGUIPanel implements IProperty {
 
     private PropertyFacilityFilterGUIPanel propertyFacilityFilter;
 
+    /**
+     * Constructor
+     * @param parent
+     */
     public AdminPropertyViewGUIPanel(AdminGUIWindow parent) {
         super(parent);
     }
     
+    /**
+     * Setups the components for properties
+     */
     @Override
     public void onCreate(){
         super.onCreate();
@@ -52,21 +62,25 @@ public class AdminPropertyViewGUIPanel extends AdminViewGUIPanel implements IPro
 
     }
 
+    /**
+     * Returns the admin controller down casted as property controller
+     */
     @Override
     public PropertyController getPropertyController() {
         return parent.adminController;
     }
 
-    @Override
-    public boolean isEditable() {
-        return false;
-    }
-
+    /**
+     * Returns the number of columns for the facilities
+     */
     @Override
     public int getFacilityIntendedColumns() {
         return 3;
     }
 
+    /**
+     * Returns the event for facilities that changed
+     */
     @Override
     public ItemListener getOnFacilityChangedFor(Facility facility) {
         return parent.adminController.getOnFacilityChanged(facility, propertyFacilityFilter);
@@ -77,9 +91,12 @@ public class AdminPropertyViewGUIPanel extends AdminViewGUIPanel implements IPro
         
     }
 
+    /**
+     * Returns the filter panel
+     */
     @Override
     public PropertyFacilityFilterGUIPanel getFacilityFilterPanel() {
-        return null;
+        return propertyFacilityFilter;
     }
 
 }

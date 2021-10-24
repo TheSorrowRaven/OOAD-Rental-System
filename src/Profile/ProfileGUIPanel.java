@@ -5,24 +5,41 @@ import src.Users.*;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This is the View of Profile
+ */
 public class ProfileGUIPanel extends GUIPanel<ProfileGUIWindow> {
 
 
     private JTextField changeNameField;
     private JTextField changePasswordField;
 
+    /**
+     * Returns the change name field for text retrieval
+     */
     public JTextField getChangeNameField(){
         return changeNameField;
     }
+    /**
+     * Returns the change password field for text retrieval
+     */
     public JTextField getChangePasswordField(){
         return changePasswordField;
     }
 
+    /**
+     * Constructor accepting a logged in user
+     * @param parent
+     * @param loggedInUser
+     */
     public ProfileGUIPanel(ProfileGUIWindow parent, User<?> loggedInUser) {
         super(parent);
         parent.profileController.setProfilePanel(this);
     }
 
+    /**
+     * Creates the components for display
+     */
     @Override
     public void onCreate() {
         

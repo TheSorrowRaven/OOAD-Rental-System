@@ -1,7 +1,6 @@
 package src.Login;
 
 import src.*;
-import src.SystemComponents.CLI;
 import src.Users.*;
 
 import java.util.ArrayList;
@@ -10,6 +9,10 @@ import javax.swing.*;
 
 import java.awt.*;
 
+/**
+ * This is the view of Login
+ * This displays all the components, which is attached to the login window
+ */
 public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnable {
     
 
@@ -18,10 +21,17 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
 
     private JLabel errorLabel;
 
+    /**
+     * Constructor for the login panel
+     * @param parent
+     */
     public LoginGUIPanel(LoginGUIWindow parent) {
         super(parent);
     }
 
+    /**
+     * Creates all the components to display on the panel
+     */
     @Override
     public void onCreate() {
         
@@ -86,6 +96,9 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
     public void onCreatePanel() {
     }
 
+    /**
+     * Sets the panel itself to be visible
+     */
     @Override
     public void onView() {
         setVisible(true);
@@ -111,17 +124,26 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
         
     }
 
+    /**
+     * Resets the input fields after successful login
+     */
     private void clearTextFields(){
         usernameField.setText("");
         passwordField.setText("");
     }
 
     public ArrayList<ILoginnable> loginnables = new ArrayList<ILoginnable>();
+    /**
+     * Keeps track of child panels of login to notify
+     */
     @Override
     public ArrayList<ILoginnable> getLoginnables() {
         return loginnables;
     }
 
+    /**
+     * Adds the panel if the panel is a loginnable to notify the children
+     */
     @Override
     public void attachPanel(GUIPanel<?> panel){
         super.attachPanel(panel);
@@ -130,6 +152,9 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
         }
     }
 
+    /**
+     * Notify the children about the login error
+     */
     @Override
     public void notifyLoginError() {
 
@@ -138,6 +163,9 @@ public class LoginGUIPanel extends GUIPanel<LoginGUIWindow> implements ILoginnab
         notifyLoginErrorChildren();
     }
 
+    /**
+     * Notify the children about the successful login
+     */
     @Override
     public void notifyLoginSuccessful(User<?> user){
         errorLabel.setVisible(false);

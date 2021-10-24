@@ -2,36 +2,47 @@ package src.OwnerAgent;
 
 import src.Users.*;
 import java.util.*;
-import javax.swing.table.*;
 
 import src.*;
 import src.Property.*;
-import src.Property.PropertyListing.*;
-import src.SystemComponents.CLI;
 
 import javax.swing.event.*;
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
+/**
+ * This class is the controller for Owner/Agent
+ * This handles the events and execution of owner/agent interface
+ */
 public class OwnerAgentController extends PropertyController {
 
     public OwnerAgent ownerAgent;
     public OwnerAgentUser loggedInOwnerAgent;
     public OwnerAgentCreateEditGUIPanel createEditPanel;
     
+    /**
+     * Constructor receiving a logged in owner agent user
+     * @param loggedInOwnerAgent
+     */
     public OwnerAgentController(OwnerAgentUser loggedInOwnerAgent){
         this.loggedInOwnerAgent = loggedInOwnerAgent;
         ownerAgent = new OwnerAgent();
     }
 
+    /**
+     * Setups the panels required to reference to
+     * @param createEditPanel
+     * @param tablePanel
+     */
     public void setPanels(OwnerAgentCreateEditGUIPanel createEditPanel, PropertyTableGUIPanel tablePanel){
         this.createEditPanel = createEditPanel;
         setTablePanel(tablePanel);
     }
 
+    /**
+     * Gets the action when a table row is selected
+     */
     @Override
     public <T extends GUIPanel<?>> ListSelectionListener getTableSelected(T panel, final PropertyTableGUIPanel propertyPanel, final Table table){
         return new ListSelectionListener(){
@@ -75,6 +86,11 @@ public class OwnerAgentController extends PropertyController {
         };
     }
 
+    /**
+     * Event for creating or editing the property
+     * @param propertyPanel
+     * @return
+     */
     public ActionListener getCreateEditListener(final PropertyTableGUIPanel propertyPanel){
         return e -> {
             boolean isEditing = createEditPanel.getIsEditing();
@@ -109,6 +125,10 @@ public class OwnerAgentController extends PropertyController {
         };
     }
 
+    /**
+     * Event for deleting properties
+     * @return
+     */
     public ActionListener getDeleteActionListener(){
         return e -> {
             Table table = tablePanel.table;
@@ -126,6 +146,10 @@ public class OwnerAgentController extends PropertyController {
     }
 
 
+    /**
+     * Event for stop editing a property when it is in edit mode
+     * @return
+     */
     public ActionListener getNotEditingListener(){
         return e -> {
             createEditPanel.setNotEditing();

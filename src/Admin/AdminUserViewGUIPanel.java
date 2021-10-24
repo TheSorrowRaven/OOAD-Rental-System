@@ -6,10 +6,12 @@ import javax.swing.table.*;
 import java.awt.*;
 
 import src.*;
-import src.SystemComponents.CLI;
 import src.Users.*;
 import java.util.*;
 
+/**
+ * This panel shows the user list depending on the type (T)
+ */
 public class AdminUserViewGUIPanel<T extends User<T>> extends AdminViewGUIPanel implements IOnUsersChangedObserver {
 
     public boolean isAllUsers;
@@ -21,10 +23,16 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends AdminViewGUIPanel 
     public Table table;
     public ArrayList<User<?>> users = new ArrayList<User<?>>();
 
+    /**
+     * Constructor
+     */
     public AdminUserViewGUIPanel(AdminGUIWindow parent, Class<T> userClass) {
         super(parent);
         handlingUserClass = userClass;
     }
+    /**
+     * Constructor specific for owner agents
+     */
     public AdminUserViewGUIPanel(AdminGUIWindow parent, Class<T> userClass, boolean ownerAgent) {
         super(parent);
         handlingUserClass = userClass;
@@ -32,18 +40,31 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends AdminViewGUIPanel 
             this.ownerAgent = ownerAgent;
         }
     }
+    /**
+     * Constructor for all users
+     */
     public AdminUserViewGUIPanel(AdminGUIWindow parent){
         super(parent);
         isAllUsers = true;
     }
 
+    /**
+     * Returns the handling table
+     * @return
+     */
     public Table getTable(){
         return table;
     }
+    /**
+     * Returns the handling users
+     */
     public ArrayList<User<?>> getUsers(){
         return users;
     }
 
+    /**
+     * Creates the interface, and mainly the table
+     */
     @Override
     public void onCreate() {
 
@@ -88,18 +109,28 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends AdminViewGUIPanel 
         add(scrollPane, gbc);
     }
 
+    /**
+     * Old
+     * When re-viewed, refresh the table
+     */
     @Override
     public void onThawed() {
         super.onThawed();
         refreshTable();
     }
 
+    /**
+     * Releases the cache for this as the observer
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
         parent.adminController.stopObserving(this);
     }
 
+    /**
+     * Refreshes the table in case of any updates
+     */
     public void refreshTable(){
         if (isAllUsers){
             Admin.AllUsers allUsers = parent.adminController.fetchAllUsers();
@@ -111,6 +142,10 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends AdminViewGUIPanel 
         }
         table.setPreferredScrollableViewportSize(table.getPreferredSize());
     }
+    /**
+     * Refreshes the table based on the specific user types
+     * @param array
+     */
     private void refreshTable(ArrayList<T> array){
         users.clear();
         for (T user : array){
@@ -179,10 +214,16 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends AdminViewGUIPanel 
             }
         }
     }
+    /**
+     * Adds the checkbox to the table for deleting
+     */
     private void addDeletionToArrayList(ArrayList<Object> array){
         array.add(false);
     }
 
+    /**
+     * Receiver for observing admin (observable), and refresh if has any changes
+     */
     @Override
     public <E extends User<E>> void usersChanged() {
         refreshTable();

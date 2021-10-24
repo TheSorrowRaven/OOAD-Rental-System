@@ -1,21 +1,17 @@
 package src.Login;
 
 import src.*;
-import src.SystemComponents.CLI;
 import src.Users.*;
 
 /**
  * 
+ * This class is the model
  * This Login class is the internal handling of the Login system
  * 
  */
 public class Login {
 
     //Line numbers are for deletion
-    private int lastReadUserLineNumber = 0;
-    public int getLastReadUserLineNumber(){
-        return lastReadUserLineNumber;
-    }
 
     /**
      * Try to login with username and password. Uses User class as generic function
@@ -31,6 +27,12 @@ public class Login {
     }
 
 
+    /**
+     * 
+     * @param defaultUserame
+     * @param defaultPassword
+     * @param defaultSerializedAdmin
+     */
     public void ensureDefaultAdminExists(String defaultUserame, String defaultPassword, String defaultSerializedAdmin){
         AdminUser admin = tryLogin(AdminUser.class, defaultUserame, defaultPassword);
         if (admin == null){
@@ -54,12 +56,8 @@ public class Login {
         //var is used here to accomodate the new lambda type extended from Command
         var checkCommand = new Command<T>(){
             private T user = null;
-            private int lineNumber = 0;
             public T getUser(){
                 return user;
-            }
-            public int getLineNumber(){
-                return lineNumber;
             }
             @Override
             public boolean execute(T user){
@@ -73,7 +71,6 @@ public class Login {
             public boolean execute(T user, Object lineNumber){
                 if (user.username.equals(username) && user.password.equals(password)){
                     this.user = userClass.cast(user);
-                    this.lineNumber = (Integer)lineNumber;
                     return true;
                 }
                 return false;
@@ -82,7 +79,6 @@ public class Login {
         Main.instance().serializer.readForEach(dummy, checkCommand);
         //tenant would be inaccessible if the checkCommand was "ICommand" or "Command<User>"
         foundUser = checkCommand.getUser();
-        lastReadUserLineNumber = checkCommand.getLineNumber();
         
         return foundUser;
     }

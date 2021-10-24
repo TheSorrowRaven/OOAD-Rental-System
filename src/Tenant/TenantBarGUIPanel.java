@@ -2,24 +2,24 @@ package src.Tenant;
 
 import src.MenuBarGUIPanel;
 import src.MenuGUIWindow;
-import src.SystemComponents.CLI;
 
-import javax.swing.*;
 import src.Users.*;
 
+/**
+ * Tenant's menu bar
+ */
 public class TenantBarGUIPanel extends MenuBarGUIPanel {
 
+    /**
+     * Constructor accepting a logged in tenant user
+     */
     public TenantBarGUIPanel(MenuGUIWindow parent, User<?> loggedInUser) {
         super(parent, loggedInUser);
     }
 
-    @Override
-    public void onCreate(){
-        super.onCreate();
-        gbc.gridx++;
-        
-    }
-
+    /**
+     * Returns the logged in tenant name as the menu bar title
+     */
     @Override
     public String getMenuBarTitle() {
         TenantController tenantController = ((TenantGUIWindow)parent).tenantController;

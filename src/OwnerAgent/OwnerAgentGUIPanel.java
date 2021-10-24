@@ -7,11 +7,13 @@ import javax.swing.*;
 
 import src.MenuContentGUIPanel;
 
-import src.*;
 import src.Property.*;
 import src.Property.PropertyListing.Facility;
-import src.SystemComponents.CLI;
 
+/**
+ * This is the view of the Owner/Agent
+ * This is the content of the menu of owner/agent
+ */
 public class OwnerAgentGUIPanel extends MenuContentGUIPanel<OwnerAgentGUIWindow> implements IProperty{
 
     //public PropertyController propertyController;
@@ -22,10 +24,17 @@ public class OwnerAgentGUIPanel extends MenuContentGUIPanel<OwnerAgentGUIWindow>
 
     private PropertyFacilityFilterGUIPanel propertyFacilityFilter;
 
+    /**
+     * Constructor
+     * @param parent
+     */
     public OwnerAgentGUIPanel(OwnerAgentGUIWindow parent) {
         super(parent);
     }
 
+    /**
+     * This creates the scroll panel for the components
+     */
     @Override
     public void onCreate() {
         gbc = new GridBagConstraints();
@@ -49,6 +58,9 @@ public class OwnerAgentGUIPanel extends MenuContentGUIPanel<OwnerAgentGUIWindow>
 
     }
 
+    /**
+     * This creates the panels for the create/edit of property, the table for display and the filter to filter the table
+     */
     @Override
     public void onCreatePanel() {
         PropertyTableGUIPanel propertyTableGUIPanel = new PropertyTableGUIPanel(parent, this, parent.ownerAgentController.loggedInOwnerAgent, true);
@@ -76,6 +88,9 @@ public class OwnerAgentGUIPanel extends MenuContentGUIPanel<OwnerAgentGUIWindow>
 
     }
 
+    /**
+     * When a table row is selected, edit is assumed thus it will automatically scroll to the top for editing
+     */
     @Override
     public void snapScrollToTop(){
         scrollPane.getVerticalScrollBar().setValue(0);
@@ -101,26 +116,33 @@ public class OwnerAgentGUIPanel extends MenuContentGUIPanel<OwnerAgentGUIWindow>
         
     }
 
+    /**
+     * Returns the owner agent controller downcasted as a property controller
+     */
     @Override
     public PropertyController getPropertyController() {
         return parent.ownerAgentController;
     }
 
-    @Override
-    public boolean isEditable() {
-        return true;
-    }
-
+    /**
+     * Returns the columns of the facility for display
+     */
     @Override
     public int getFacilityIntendedColumns() {
         return 3;
     }
 
+    /**
+     * Gets the listener when a facility filter is changed so it can refresh the table
+     */
     @Override
     public ItemListener getOnFacilityChangedFor(Facility facility) {
         return parent.ownerAgentController.getOnFacilityChanged(facility, propertyFacilityFilter);
     }
 
+    /**
+     * Returns the faciltiy filter panel
+     */
     @Override
     public PropertyFacilityFilterGUIPanel getFacilityFilterPanel() {
         return propertyFacilityFilter;

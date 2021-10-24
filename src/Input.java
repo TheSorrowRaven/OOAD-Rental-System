@@ -7,6 +7,9 @@ import java.util.ArrayList;
  */
 public class Input {
     
+    /**
+     * Shorthand for resource singleton
+     */
     public static Resource Resource(){
         return Resource.instance();
     }
@@ -26,6 +29,11 @@ public class Input {
         return str.toString();
     }
 
+    /**
+     * Separates a string into a split string
+     * @param combined
+     * @return
+     */
     public static String[] separateIntoData(String combined){
         String[] split = combined.split(Resource().splittingInputCharacterStr());
         for (int i = 0; i < split.length; i++){
@@ -36,6 +44,12 @@ public class Input {
         return split;
     }
 
+    /**
+     * Combines an array into a string
+     * @param <T>
+     * @param array
+     * @return
+     */
     public static <T> String combineArray(ArrayList<T> array){
         if (array == null || array.size() == 0){
             return "";
@@ -53,6 +67,11 @@ public class Input {
     }
 
 
+    /**
+     * Separates a string into an array
+     * @param arrayText
+     * @return
+     */
     public static ArrayList<String> separateArray(String arrayText){
         ArrayList<String> array = new ArrayList<String>();
         if (arrayText == null || arrayText.equals("")){

@@ -1,6 +1,8 @@
 package src;
 
-
+/**
+ * For GUIWindow and GUIPanel, defines its lifecycle
+ */
 public interface IViewable {
 
     /**
@@ -8,6 +10,9 @@ public interface IViewable {
      */
     void onCreate();
     
+    /**
+     * This is for creating panels and attaching
+     */
     void onCreatePanel();
 
     /**

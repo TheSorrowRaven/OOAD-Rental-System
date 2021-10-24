@@ -4,23 +4,37 @@ import javax.swing.*;
 import java.awt.*;
 
 import src.*;
-import src.SystemComponents.CLI;
 
+/**
+ * The Property Facility Filter panel
+ */
 public class PropertyFacilityFilterGUIPanel extends GUIPanel<GUIWindow> {
 
     private IProperty property;
 
     private PropertyFacilityGUIPanel facilityPanel;
 
+    /**
+     * Constructor accepting the property interface
+     * @param parent
+     * @param property
+     */
     public PropertyFacilityFilterGUIPanel(GUIWindow parent, IProperty property) {
         super(parent);
         this.property = property;
     }
 
+    /**
+     * Returns the facility panel
+     * @return
+     */
     public PropertyFacilityGUIPanel getPropertyFacilityGUIPanel(){
         return facilityPanel;
     }
 
+    /**
+     * Creates the components to show the filters
+     */
     @Override
     public void onCreate() {
         setLayout(new GridBagLayout());
@@ -44,6 +58,11 @@ public class PropertyFacilityFilterGUIPanel extends GUIPanel<GUIWindow> {
 
     }
 
+    /**
+     * Calls to filter the facilities when changes occured
+     * @param facilityCheckBox
+     * @param f
+     */
     public void facilityFilterChanged(JCheckBox facilityCheckBox, PropertyListing.Facility f){
         PropertyListing.Facilities fs = facilityPanel.getFacilities();
         var controller = property.getPropertyController();
@@ -55,6 +74,9 @@ public class PropertyFacilityFilterGUIPanel extends GUIPanel<GUIWindow> {
         
     }
 
+    /**
+     * Explicitly sets the background color for the facility to override it
+     */
     @Override
     public void onView() {
         facilityPanel.setBackground(Theme().sub_background_color);

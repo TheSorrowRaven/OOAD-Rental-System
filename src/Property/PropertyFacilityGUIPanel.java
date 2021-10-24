@@ -4,12 +4,20 @@ import src.*;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Property Facility panel
+ */
 public class PropertyFacilityGUIPanel extends GUIPanel<GUIWindow> {
 
     public JCheckBox[] checkBoxes;
     public int columns;
     private IProperty property;
 
+    /**
+     * Constructor accepting the property interface
+     * @param parent
+     * @param property
+     */
     public PropertyFacilityGUIPanel(GUIWindow parent, IProperty property) {
         super(parent);
         this.property = property;
@@ -17,6 +25,10 @@ public class PropertyFacilityGUIPanel extends GUIPanel<GUIWindow> {
         columns = property.getFacilityIntendedColumns();
     }
 
+    /**
+     * Sets the ticks only in the facilties in an array
+     * @param facilities
+     */
     public void tickOnlyIn(String[] facilities){
         for (JCheckBox box : checkBoxes){
             boolean found = false;
@@ -32,6 +44,9 @@ public class PropertyFacilityGUIPanel extends GUIPanel<GUIWindow> {
         }
     }
 
+    /**
+     * Returns all of the checked the facilities
+     */
     public PropertyListing.Facilities getFacilities(){
         PropertyListing.Facilities fs = new PropertyListing.Facilities();
         for (JCheckBox box : checkBoxes){
@@ -42,6 +57,9 @@ public class PropertyFacilityGUIPanel extends GUIPanel<GUIWindow> {
         return fs;
     }
 
+    /**
+     * Creates the components to display the facilities
+     */
     @Override
     public void onCreate() {
         setBackground(Theme().background_color);
@@ -71,6 +89,9 @@ public class PropertyFacilityGUIPanel extends GUIPanel<GUIWindow> {
 
     }
 
+    /**
+     * Reset all the check boxes of the facilties
+     */
     public void reset(){
         for (JCheckBox box : checkBoxes){
             box.setSelected(false);
