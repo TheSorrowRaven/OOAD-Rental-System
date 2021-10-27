@@ -2,7 +2,6 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
-import src.Profile.*;
 import src.Users.*;
 
 /**
@@ -60,9 +59,7 @@ public abstract class MenuBarGUIPanel extends GUIPanel<MenuGUIWindow> {
 
         Image logoutImage = Resource().getLogoutIcon();
         Button backButton = Button();
-        backButton.addActionListener(e ->{
-            Main.instance().nav.backToLastWindow();
-        });
+        backButton.addActionListener(parent.menuController.getLogoutAction());
         backButton.setIcon(new ImageIcon(logoutImage));
         add(backButton, gbc);
 
@@ -73,12 +70,7 @@ public abstract class MenuBarGUIPanel extends GUIPanel<MenuGUIWindow> {
         gbc.gridx++;
 
         Button editProfileButton = Button(Resource().profile_str_button_edit);
-        editProfileButton.addActionListener(
-            e -> {
-                Navigation nav = Main.instance().nav;
-                nav.newWindow(new ProfileGUIWindow(loggedInUser));
-            }
-        );
+        editProfileButton.addActionListener(parent.menuController.getProfileAction(loggedInUser));
 
         
         add(editProfileButton, gbc);

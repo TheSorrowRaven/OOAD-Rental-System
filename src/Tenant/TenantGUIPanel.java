@@ -49,7 +49,7 @@ public class TenantGUIPanel extends MenuContentGUIPanel<TenantGUIWindow> impleme
         panel.setBackground(Theme().panel_background_color);
         panel.setLayout(new GridBagLayout());
 
-        setBackground(Color.cyan);
+        //setBackground(Color.cyan);
 
         scrollPane = JScrollPane(panel);
         scrollPane.setBorder(null);

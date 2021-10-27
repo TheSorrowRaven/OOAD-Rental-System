@@ -6,6 +6,7 @@ package src;
 public abstract class MenuGUIWindow extends GUIWindow {
 
     private MenuGUIPanel menuPanel;
+    public MenuController menuController;
 
     /**
      * Constructor accepting a theme
@@ -13,7 +14,7 @@ public abstract class MenuGUIWindow extends GUIWindow {
      */
     public MenuGUIWindow(src.Resource.Theme theme) {
         super(theme);
-        
+        menuController = new MenuController();
     }
 
     /**

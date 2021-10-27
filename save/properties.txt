@@ -1,3 +1,4 @@
 57e9712c-f9f7-4dea-a24b-036b253a2a25 Peaceful Town Block World false Apartment 23 sqr inch 2 1 Gym Kitchen 100 098f3645-8e0f-4f42-bcec-b67caacf45ab
 f5ec2b7e-5ce3-433d-af07-b23ba4b39a31 TRAHSH GSDF true Apartment 60 sqr ft 21 7 Wifi Aircon SwimmingPool 14060 098f3645-8e0f-4f42-bcec-b67caacf45ab
 fe6fa269-2d6b-40ff-b2b9-34c541b96336 Apple Nowhere World false Apartment 1200sq 4 2 Wifi Aircon SwimmingPool Kitchen 5000 93cb4b4a-5b6c-471a-bf2f-58fe4aa3931c
+5943e534-9d5f-436c-9fd2-3ada2e68380a Cyberia Apartments Jalan Cyberia 1, 63000, Cyberjaya true Apartment 500 square feet 4 2 Wifi Aircon WaterHeater Gym Security Kitchen 500 93cb4b4a-5b6c-471a-bf2f-58fe4aa3931c

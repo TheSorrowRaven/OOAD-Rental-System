@@ -23,5 +23,28 @@ public class Property {
         return properties;
 
     }
+    
+    /**
+     * Deletes all properties selected in an arrayList
+     */
+    public void deleteProperties(ArrayList<PropertyListing> delete){
+        
+        if (delete.size() == 0){
+            return;
+        }
+        var executionCommand = new Command<PropertyListing>(){
+            @Override
+            public boolean execute(PropertyListing prop, Object lineNumber){
+                for (PropertyListing p : delete){
+                    if (p.getID().equals(prop.getID())){
+                        return true;
+                    }
+                }
+                return false;
+            }
+        };
+        PropertyListing dummy = PropertyListing.createProperty();
+        Main.instance().serializer.removeForEach(dummy, executionCommand);
+    }
 
 }

@@ -21,9 +21,6 @@ public class Button extends JButton implements TableCellRenderer {
     private Color pressedColor = Resource().general_button_pressed_color;
     private Color hoverColor = Resource().general_button_hover_color;
 
-    private ICommand<?> onPressed;
-    private ICommand<?> onHover;
-
     private String name;
 
     /**
@@ -52,11 +49,9 @@ public class Button extends JButton implements TableCellRenderer {
         ButtonModel model = getModel();
         if (model.isPressed()){
             g.setColor(pressedColor);
-            onPressed();
         }
         else if (model.isRollover()){
             g.setColor(hoverColor);
-            onHover();
         }
         else{
             g.setColor(getBackground());
@@ -90,39 +85,6 @@ public class Button extends JButton implements TableCellRenderer {
      */
     public void setHoverColor(Color hoverColor){
         this.hoverColor = hoverColor;
-    }
-
-    /**
-     * Sets the on pressed action command
-     * @param onPressed
-     */
-    public void setOnPressed(ICommand<?> onPressed){
-        this.onPressed = onPressed;
-    }
-    /**
-     * Sets the on hover action command
-     */
-    public void setOnHover(ICommand<?> onHover){
-        this.onHover = onHover;
-    }
-
-    /**
-     * Executes (if any of) the on pressed action command
-     */
-    private void onPressed(){
-        if (onPressed == null){
-            return;
-        }
-        onPressed.execute(null);
-    }
-    /**
-     * Executes (if any of) the on hover command
-     */
-    private void onHover(){
-        if (onHover == null){
-            return;
-        }
-        onHover.execute(null);
     }
 
     /**

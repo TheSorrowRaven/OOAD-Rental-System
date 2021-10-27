@@ -492,7 +492,7 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
 
     /**
      * This is for child classes to create the panel, and attach to the view
-     * Panels can attach as many panels down the hierarchy, but will cause a stack overflow if is attached together
+     * Panels can attach as many panels down the hierarchy
      * Creation of panels will go down the hierarchy, then view will go down again
      */
     public abstract void onCreatePanel();
@@ -610,10 +610,10 @@ public abstract class GUIPanel<T extends GUIWindow> extends JPanel implements IO
     public void contentUpdated(){
         notifyObservers(ViewableObservableComponents.none);
     }
-    @Override
     /**
      * Notify observers based on the object
      */
+    @Override
     public void notifyObservers(Object o){
         
         ViewableObservableComponents c = (ViewableObservableComponents)o;

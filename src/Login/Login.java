@@ -28,7 +28,7 @@ public class Login {
 
 
     /**
-     * 
+     * Makes sure defult admin exists
      * @param defaultUserame
      * @param defaultPassword
      * @param defaultSerializedAdmin

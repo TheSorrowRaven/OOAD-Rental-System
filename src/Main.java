@@ -24,18 +24,10 @@ public class Main {
     }
 
     /**
-     * Shorthand for Resource singleton
-     * @return
-     */
-    public Resource Resource(){
-        return Resource.instance();
-    }
-
-    /**
      * Constructor to initialize Serializer and Navigation
      */
     private Main(){
-        serializer = new Serializer(Resource().savePath);
+        serializer = new Serializer(Resource.instance().savePath);
         nav = new Navigation();
     }
     /**
