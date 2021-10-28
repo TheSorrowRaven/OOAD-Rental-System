@@ -5,6 +5,8 @@ import src.*;
 import java.util.*;
 
 /**
+ * Raihan
+ * 
  * Serializable Object - Owner or Agent User (Since both have exactly the same capabilities/functionalities, they're combined)
  */
 public class OwnerAgentUser extends User<OwnerAgentUser>{

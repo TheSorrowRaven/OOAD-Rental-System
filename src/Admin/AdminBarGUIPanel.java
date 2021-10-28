@@ -4,6 +4,8 @@ import src.*;
 import src.Users.*;
 
 /**
+ * Tasha
+ * 
  * This class is the menu bar (containing logout and edit profile options)
  */
 public class AdminBarGUIPanel extends MenuBarGUIPanel {

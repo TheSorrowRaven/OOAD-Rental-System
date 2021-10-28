@@ -2,6 +2,8 @@ package src.Users;
 
 
 /**
+ * Raihan
+ * 
  * Serializable Object - Potential Tenant User
  */
 public class TenantUser extends User<TenantUser> {

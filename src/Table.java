@@ -5,6 +5,8 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 /**
+ * Raven
+ * 
  * Creates a custom table to set the column class types and editable cells
  */
 public class Table extends JTable {

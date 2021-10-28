@@ -5,6 +5,8 @@ import java.awt.*;
 import src.Users.*;
 
 /**
+ * Raven
+ * 
  * This is the menu bar for all menus
  */
 public abstract class MenuBarGUIPanel extends GUIPanel<MenuGUIWindow> {

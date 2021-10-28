@@ -4,6 +4,8 @@ import src.*;
 import src.Users.*;
 
 /**
+ * CG
+ * 
  * This is the window of the owner agent
  */
 public class OwnerAgentGUIWindow extends MenuGUIWindow {

@@ -8,6 +8,8 @@ import src.Users.*;
 import src.SystemComponents.*;
 
 /**
+ * Tasha
+ * 
  * This class is the Model for Admin
  * This Admin class is capable of creating all 3 types of accounts, and delete them too
  */

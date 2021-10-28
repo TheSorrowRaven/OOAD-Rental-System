@@ -5,6 +5,8 @@ import src.MenuGUIWindow;
 import src.Users.*;
 
 /**
+ * CG
+ * 
  * This is the menu bar for the owner/agent panel
  */
 public class OwnerAgentBarGUIPanel extends MenuBarGUIPanel {

@@ -5,6 +5,8 @@ import src.*;
 import src.SystemComponents.*;
 
 /**
+ * Raven
+ * 
  * Model for Property
  */
 public class Property {

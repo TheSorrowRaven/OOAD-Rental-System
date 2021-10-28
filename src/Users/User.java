@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
+ * Raven
+ * 
  * Base Serializable Object - User (base)
  * This User class represents a loginnable user
  */

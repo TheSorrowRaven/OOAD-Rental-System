@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * CG
+ * 
  * This is the View of Profile
  */
 public class ProfileGUIPanel extends GUIPanel<ProfileGUIWindow> {

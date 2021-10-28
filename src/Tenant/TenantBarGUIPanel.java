@@ -6,6 +6,8 @@ import src.MenuGUIWindow;
 import src.Users.*;
 
 /**
+ * Raihan
+ * 
  * Tenant's menu bar
  */
 public class TenantBarGUIPanel extends MenuBarGUIPanel {

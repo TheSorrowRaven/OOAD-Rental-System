@@ -12,6 +12,8 @@ import java.util.*;
 import javax.swing.table.*;
 
 /**
+ * Raven
+ * 
  * Table of the properties panel
  */
 public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {

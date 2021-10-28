@@ -1,6 +1,8 @@
 package src.SystemComponents;
 
 /**
+ * Raven
+ * 
  * Interface to serialize the class itself
  */
 public interface ISerializable<T extends ISerializable<T>> {

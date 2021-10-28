@@ -7,6 +7,8 @@ import src.Property.*;
 import src.Users.OwnerAgentUser;
 
 /**
+ * CG
+ * 
  * This is the model of the owner agent
  */
 public class OwnerAgent {

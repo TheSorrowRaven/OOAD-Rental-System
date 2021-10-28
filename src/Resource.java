@@ -14,6 +14,8 @@ import java.io.*;
 
 /**
  * 
+ * Raven, CG, Tasha, Raihan
+ * 
  * This Resource class contains string data of file paths, colors, themes, text, symbols, values etc
  * 
  */
@@ -63,6 +65,8 @@ public final class Resource {
 
 
     /**
+     * Raven
+     * 
      * This is a class containing colors and a border to setup for different themes
      * Uses a "semi-builder" pattern
      */

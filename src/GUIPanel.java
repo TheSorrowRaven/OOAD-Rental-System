@@ -10,6 +10,7 @@ import java.text.NumberFormat;
 import javax.swing.table.*;
 
 /**
+ * Raven
  * 
  * This GUIPanel serves as a GUI container (like a page container below menu bar)
  * This is a base abstract class that manages theme automatically and consists of the lifecycle of itself

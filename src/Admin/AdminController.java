@@ -10,6 +10,8 @@ import src.Property.*;
 import javax.swing.JTextField;
 
 /**
+ * Tasha
+ * 
  * This class is a Controller for Admin
  * Handles events and fetch component data from the view
  */

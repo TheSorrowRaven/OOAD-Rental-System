@@ -9,6 +9,7 @@ import java.util.HashSet;
 import javax.swing.*;
 
 /**
+ * Raven
  * 
  * This GUIWindow serves as a base parent class to handle all windows, including popup windows
  * 

@@ -6,6 +6,8 @@ import javax.swing.table.*;
 import java.awt.*;
 
 /**
+ * Raven
+ * 
  * Custom button to fit the coloring/theme of the progarm
  */
 public class Button extends JButton implements TableCellRenderer {

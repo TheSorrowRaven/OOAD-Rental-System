@@ -1,6 +1,8 @@
 package src.Users;
 
 /**
+ * Raihan
+ * 
  * Serializable Object to contiain the admin user
  */
 public class AdminUser extends User<AdminUser> {

@@ -13,6 +13,8 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 
 /**
+ * Raven
+ * 
  * Serializer for serializing objects into raw string and vice versa for deserializing
  */
 public class Serializer {

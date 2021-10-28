@@ -6,6 +6,8 @@ import java.awt.*;
 import src.*;
 
 /**
+ * Raven
+ * 
  * The Property Facility Filter panel
  */
 public class PropertyFacilityFilterGUIPanel extends GUIPanel<GUIWindow> {

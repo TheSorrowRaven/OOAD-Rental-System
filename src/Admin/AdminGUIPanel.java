@@ -5,6 +5,8 @@ import src.*;
 import java.awt.*;
 
 /**
+ * Tasha
+ * 
  * This is the view content extending the menu content panel (for menu bar)
  */
 public class AdminGUIPanel extends MenuContentGUIPanel<AdminGUIWindow> {

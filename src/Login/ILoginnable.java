@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import src.Users.User;
 
 /**
+ * Raven
+ * 
  * This class is to create default behaviours to handle same functions across different inherited classes
  */
 public interface ILoginnable {

@@ -3,9 +3,11 @@ import java.io.PrintWriter;
 import java.io.IOException;
 
 /**
+ * Raven
  * 
  * This class is for debugging purposes by writing into the CLI interface
  * This uses PrintWriter to write to terminal
+ * This is only for debugging and is disabled in the final implementation
  * 
  */
 public class CLI {

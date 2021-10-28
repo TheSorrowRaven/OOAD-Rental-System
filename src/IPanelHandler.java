@@ -1,6 +1,8 @@
 package src;
 
 /**
+ * Raven
+ * 
  * Any class that can attach a panel
  */
 public interface IPanelHandler {

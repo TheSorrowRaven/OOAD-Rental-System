@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.event.*;
 
 /**
+ * CG
+ * 
  * The window view for Profile
  */
 public class ProfileGUIWindow extends GUIWindow {

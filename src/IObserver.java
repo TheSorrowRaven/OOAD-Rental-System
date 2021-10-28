@@ -1,6 +1,7 @@
 package src;
 
 /**
+ * Raven
  * 
  * Observer DP - Observer GUIWindow changes
  * 
@@ -15,6 +16,8 @@ public abstract interface IObserver {
 }
 
 /**
+ * Raven
+ * 
  * Observable
  */
 abstract interface IObservable<TObservable extends IObservable<TObservable, EObserver>, EObserver extends IObserver>{
@@ -45,6 +48,8 @@ abstract interface IObservable<TObservable extends IObservable<TObservable, EObs
 }
 
 /**
+ * Raven
+ * 
  * Defines what function the object needs to notify
  */
 enum ViewableObservableComponents{
@@ -55,6 +60,8 @@ enum ViewableObservableComponents{
 
 }
 /**
+ * Raven
+ * 
  * A Viewable (Window and Panel) observer
  */
 interface IObserverViewable extends IObserver{
@@ -76,6 +83,8 @@ interface IObserverViewable extends IObserver{
 
 }
 /**
+ * Raven
+ * 
  * A Viewable observable
  */
 interface IObservableViewable extends IObservable<IObservableViewable, IObserverViewable>{

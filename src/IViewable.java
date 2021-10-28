@@ -1,6 +1,8 @@
 package src;
 
 /**
+ * Raven
+ * 
  * For GUIWindow and GUIPanel, defines its lifecycle
  */
 public interface IViewable {

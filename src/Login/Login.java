@@ -4,6 +4,8 @@ import src.*;
 import src.Users.*;
 
 /**
+ * Raven
+ * 
  * 
  * This class is the model
  * This Login class is the internal handling of the Login system

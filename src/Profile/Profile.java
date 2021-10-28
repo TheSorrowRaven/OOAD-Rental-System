@@ -4,6 +4,8 @@ import src.*;
 import src.Users.*;
 
 /**
+ * CG
+ * 
  * This is Model for Profile
  * This handles changing name and password of a user
  */

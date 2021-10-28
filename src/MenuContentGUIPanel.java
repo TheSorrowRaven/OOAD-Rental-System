@@ -1,6 +1,8 @@
 package src;
 
 /**
+ * Raven
+ * 
  * This menu content panel defines the content below the menu bar
  */
 public abstract class MenuContentGUIPanel<T extends GUIWindow> extends GUIPanel<T> {

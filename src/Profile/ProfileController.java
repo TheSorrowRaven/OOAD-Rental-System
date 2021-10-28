@@ -6,6 +6,8 @@ import src.*;
 import java.awt.event.*;
 
 /**
+ * CG
+ * 
  * This the Controller for Profile
  * This handles the save button event and returning to the menu
  */

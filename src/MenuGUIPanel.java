@@ -3,6 +3,8 @@ package src;
 import java.awt.*;
 
 /**
+ * Raven
+ * 
  * Creates the bar and content panel
  */
 public final class MenuGUIPanel extends GUIPanel<MenuGUIWindow> {

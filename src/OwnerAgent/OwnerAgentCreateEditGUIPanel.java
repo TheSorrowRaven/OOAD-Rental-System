@@ -8,6 +8,8 @@ import java.awt.*;
 import java.text.*;
 
 /**
+ * CG
+ * 
  * This panel contains the creation and editing of properties
  */
 public class OwnerAgentCreateEditGUIPanel extends GUIPanel<OwnerAgentGUIWindow> {

@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * Tasha
+ * 
  * This is a base class for any sub menu view for the admin
  */
 public class AdminViewGUIPanel extends GUIPanel<AdminGUIWindow>{

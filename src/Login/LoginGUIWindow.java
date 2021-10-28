@@ -5,6 +5,8 @@ import src.GUIPanel;
 import src.GUIWindow;
 
 /**
+ * Raven
+ * 
  * 
  * This LoginGUIWindow is the main greeting page when the app is opened
  * 

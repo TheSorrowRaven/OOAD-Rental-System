@@ -3,6 +3,8 @@ package src.Property;
 import java.awt.event.*;
 
 /**
+ * Raven
+ * 
  * Property interface to get and set data and call functions
  */
 public interface IProperty {

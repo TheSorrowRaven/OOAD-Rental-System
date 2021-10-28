@@ -3,6 +3,8 @@ package src;
 import java.util.ArrayList;
 
 /**
+ * Raven
+ * 
  * This Input class handles string inputs like login details, property names etc for easier saving and loading
  */
 public class Input {

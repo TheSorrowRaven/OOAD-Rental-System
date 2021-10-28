@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * Raven
+ * 
  * This is the view of Login
  * This displays all the components, which is attached to the login window
  */

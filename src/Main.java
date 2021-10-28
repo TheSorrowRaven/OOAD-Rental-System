@@ -4,6 +4,7 @@ import src.Login.*;
 import src.SystemComponents.*;
 
 /**
+ * Raven
  * 
  * This Main class serves as an entry point and thread handling
  * 

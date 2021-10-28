@@ -1,6 +1,8 @@
 package src;
 
 /**
+ * Raven
+ * 
  * This defines the menu window
  */
 public abstract class MenuGUIWindow extends GUIWindow {
