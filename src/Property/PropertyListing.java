@@ -37,6 +37,7 @@ public class PropertyListing implements ISerializable<PropertyListing> {
         DoubleStorey("Double Storey"),
         TripleStorey("Triple Storey"),
         Condominium("Condominium"),
+        ServicedResidence("Serviced Residence"),
         ;
 
         private final String name;
@@ -96,6 +97,13 @@ public class PropertyListing implements ISerializable<PropertyListing> {
         Gym("Gym"),
         Security("Security"),
         Kitchen("Kitchen"),
+        Balcony("Balcony"),
+        Garden("Garden"),
+        Garage("Garage"),
+        BathTub("Bath Tub"),
+        Playground("Playground"),
+        Badminton("Badminton Court"),
+        Basketball("Baketball Court"),
         ;
 
         private final String name;

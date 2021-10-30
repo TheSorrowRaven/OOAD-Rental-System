@@ -61,22 +61,31 @@ public class OwnerAgent {
 
         var command = new Command<PropertyListing>(){
             
-            public int lineNumber;
+            public int lineNumber = -1;
 
             @Override
             public boolean execute(PropertyListing data, Object add) {
                 if (data.getID().equals(prop.getID())){
                     lineNumber = (int)add;
+                    src.SystemComponents.CLI.log("Found - " + data.getID() + ", Name: " + data.getName() + " Rent: " + data.getRent());
                     return true;
                 }
                 return false;
             }
         };
 
+
         Main.instance().serializer.readForEach(prop, command);
         int lineNumber = command.lineNumber;
 
-        Main.instance().serializer.remove(prop, lineNumber);
+        if (lineNumber == -1){
+            src.SystemComponents.CLI.log("Cannot find property to edit? ID" + prop.getID());
+            return;
+        }
+        else{
+            Main.instance().serializer.remove(prop, lineNumber);
+        }
+
         Main.instance().serializer.write(prop);
 
     }
@@ -95,6 +104,8 @@ public class OwnerAgent {
             public boolean execute(PropertyListing prop, Object lineNumber){
                 for (PropertyListing p : delete){
                     if (p.getID().equals(prop.getID())){
+                        src.SystemComponents.CLI.log("Deleting " + p.getID() + " vs " + prop.getID());
+                        src.SystemComponents.CLI.log(prop.getName() + "Rent: " + prop.getRent());
                         return true;
                     }
                 }

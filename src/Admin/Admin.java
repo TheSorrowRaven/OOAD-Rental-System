@@ -268,6 +268,7 @@ public class Admin {
             public boolean execute(T user, Object lineNumber){
                 for (T t : users){
                     if (t.username.equals(user.username)){
+                        src.SystemComponents.CLI.log("Delete " + user.username);
                         return true;
                     }
                 }

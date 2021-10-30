@@ -150,6 +150,7 @@ public class AdminController extends PropertyController implements IOnUsersChang
                     deletingUsers.add(users.get(i));
                 }
             }
+            src.SystemComponents.CLI.log("Deleting " + deletingUsers.size());
             admin.deleteAllAnyUsers(deletingUsers);
             createDeleteRefreshCallback();
         };
@@ -208,6 +209,7 @@ public class AdminController extends PropertyController implements IOnUsersChang
                     deletingProps.add(properties.get(i));
                 }
             }
+            src.SystemComponents.CLI.log("Deleting " + deletingProps.size());
             admin.deleteProperties(deletingProps);
             tablePanel.refreshTable();
         };

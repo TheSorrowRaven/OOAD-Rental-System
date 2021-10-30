@@ -1,2 +1,8 @@
-93cb4b4a-5b6c-471a-bf2f-58fe4aa3931c o o Owner true  
-098f3645-8e0f-4f42-bcec-b67caacf45ab a a Agent false  
+d4c3085c-ad7e-4cac-a571-7b9d319fea8f johnlee johnlee123 John Lee false
+25af779a-6f1c-4d4d-80f3-7058ca436979 gracekoo gracekoo123 Grace Koo false
+5dee4980-0b80-41ae-a207-48624506f112 jasoneng jasoneng123 Jason Eng false
+30c52030-b38c-4fa1-8ed7-c1160a5da0e2 traceyloi traceyloi123 Tracy Loi false
+fc4d1896-c41b-4a3f-a3cd-70a1848a3e51 justintan justintan123 Justin Tan true
+533b5ae8-2163-4824-85a8-4c9c65fc414f michaelchua michaelchua123 Michael Chua true
+931dc69f-905d-49b5-a9c7-1d2133d2d106 vinchin vinchin123 Vin Chin false
+8a883ebb-84a2-40d3-a48b-d399790ea646 nicholassiah nicholassiah123 Nicholas Siah true

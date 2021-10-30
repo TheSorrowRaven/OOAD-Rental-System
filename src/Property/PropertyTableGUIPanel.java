@@ -90,6 +90,8 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
      */
     public void setEditingProperty(PropertyListing editingProp){
         editingProperty = editingProp;
+        src.SystemComponents.CLI.log("Set Editing Property -> " + editingProp.getName() + editingProp.getRent());
+        src.SystemComponents.CLI.log("Total Properties in table: "+ properties.size());
     }
 
     /**
@@ -161,12 +163,13 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
             }
         }
 
-        this.properties = properties;
 
 
         DefaultTableModel model = (DefaultTableModel)(table.getModel());
         model.setRowCount(0);
         refreshHeader(model);
+
+        ArrayList<PropertyListing> ownerAgentFilteredProperties = new ArrayList<PropertyListing>();
 
         if (properties.size() != 0){
             for (PropertyListing prop : properties){
@@ -180,8 +183,11 @@ public class PropertyTableGUIPanel extends GUIPanel<GUIWindow> {
                     propDisplayColumns.add(false);
                 }
                 model.addRow(propDisplayColumns.toArray());
+                ownerAgentFilteredProperties.add(prop);
             }
         }
+
+        this.properties = ownerAgentFilteredProperties;
 
         table.setPreferredScrollableViewportSize(table.getPreferredSize());
         revalidate();

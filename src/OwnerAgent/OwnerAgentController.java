@@ -77,6 +77,8 @@ public class OwnerAgentController extends PropertyController {
                 String facilitiesString = (String)table.getValueAt(row, c++);
                 createEditPanel.setupEditMode(isActive, name, address, type, size, rooms, bathrooms, rent, facilitiesString);
 
+                src.SystemComponents.CLI.log("Editing Row " + row);
+
                 propertyPanel.setEditingProperty(propertyPanel.properties.get(row));
                 
                 if (panel instanceof OwnerAgentGUIPanel ownerAgentPanel){
@@ -110,7 +112,6 @@ public class OwnerAgentController extends PropertyController {
             try {
                 rent = NumberFormat.getIntegerInstance().parse(createEditPanel.rentField.getText()).intValue();
             } catch (ParseException e1) {
-                e1.printStackTrace();
             }
             PropertyListing.Facilities facilities = createEditPanel.facilitiesPanel.getFacilities();
 

@@ -150,9 +150,6 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends AdminViewGUIPanel 
      */
     private void refreshTable(ArrayList<T> array){
         users.clear();
-        for (T user : array){
-            users.add(user);
-        }
         DefaultTableModel model = (DefaultTableModel)(table.getModel());
         model.setRowCount(0);
 
@@ -182,8 +179,10 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends AdminViewGUIPanel 
                 ArrayList<Object> userDisplayColumns = user.getTableDisplayColumnsData();
                 addDeletionToArrayList(userDisplayColumns);
                 model.addRow(userDisplayColumns.toArray());
+                users.add(user);
             }
         }
+        revalidate();
     }
     /**
      * Same as refreshTable, with many slight changes
@@ -215,6 +214,7 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends AdminViewGUIPanel 
                 model.addRow(userDisplayColumns.toArray());
             }
         }
+        revalidate();
     }
     /**
      * Adds the checkbox to the table for deleting
@@ -228,6 +228,7 @@ public class AdminUserViewGUIPanel<T extends User<T>> extends AdminViewGUIPanel 
      */
     @Override
     public <E extends User<E>> void usersChanged() {
+        
         refreshTable();
     }
     
