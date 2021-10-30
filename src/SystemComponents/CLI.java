@@ -63,7 +63,7 @@ public class CLI {
     }
 
     public static String debugPrepend = "DEBUG: ";
-    public static boolean debugPrint = true;
+    public static boolean debugPrint = false;
 
     //get debugPrint
     private static boolean canDebugLog(){
